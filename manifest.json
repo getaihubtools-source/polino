@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "پولینو | داشبورد مالی شخصی",
+  "short_name": "پولینو",
+  "description": "دفتر مالی شخصی فارسی با تاریخ شمسی؛ آفلاین و بدون ثبت‌نام. داده‌ها فقط روی دستگاه شما ذخیره می‌شود.",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./app/",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#070c1c",
+  "theme_color": "#0c1648",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {"src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
+    {"src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ],
+  "screenshots": [
+    {"src": "assets/shots/desktop.webp", "sizes": "1920x1200", "type": "image/webp", "form_factor": "wide", "label": "داشبورد"},
+    {"src": "assets/shots/dash.webp", "sizes": "780x1688", "type": "image/webp", "form_factor": "narrow", "label": "داشبورد موبایل"}
+  ]
+}

@@ -1,0 +1,11 @@
+# Netlify / Cloudflare Pages: فایل‌های حساس به نسخه هرگز نباید مدت طولانی کش شوند
+/service-worker.js
+  Cache-Control: no-cache
+/manifest.json
+  Cache-Control: no-cache
+/
+  Cache-Control: no-cache
+/app/*
+  Cache-Control: no-cache
+/assets/*
+  Cache-Control: public, max-age=604800

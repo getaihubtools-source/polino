@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<defs>
+<linearGradient id="bg" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#3550d8"/><stop offset=".55" stop-color="#18297f"/><stop offset="1" stop-color="#0c1752"/></linearGradient>
+<radialGradient id="glow" cx=".78" cy=".1" r=".7"><stop offset="0" stop-color="#f2b84b" stop-opacity=".2"/><stop offset="1" stop-color="#f2b84b" stop-opacity="0"/></radialGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd98a"/><stop offset="1" stop-color="#e9a620"/></linearGradient>
+<linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#b9c6ff"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<rect width="512" height="512" rx="112" fill="url(#glow)"/>
+<g transform="translate(256 256) scale(1.0) translate(-256 -256)">
+<path d="M256 40 L300 150 L408 104 L362 212 L472 256 L362 300 L408 408 L300 362 L256 472 L212 362 L104 408 L150 300 L40 256 L150 212 L104 104 L212 150 Z" fill="none" stroke="#fff" stroke-opacity=".10" stroke-width="3"/>
+<circle cx="256" cy="256" r="150" fill="#0b1647" fill-opacity=".55" stroke="url(#gold)" stroke-width="16"/>
+<circle cx="256" cy="256" r="124" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="2"/>
+<rect x="190" y="268" width="36" height="62" rx="11" fill="url(#bar)"/>
+<rect x="238" y="226" width="36" height="104" rx="11" fill="url(#bar)"/>
+<rect x="286" y="178" width="36" height="152" rx="11" fill="url(#gold)"/>
+
+</g></svg>

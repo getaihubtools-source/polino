@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>پولینو | داشبورد مالی شخصی فارسی، آفلاین و بدون ثبت‌نام</title>
+<meta name="description" content="پولینو؛ دفتر مالی شخصی با تاریخ شمسی: ثبت سریع هزینه و درآمد، بودجه، وام و چک، پیش‌بینی نقدینگی و ثروت خالص. داده‌ها فقط روی دستگاه شما می‌ماند و برنامه آفلاین کار می‌کند.">
+<meta name="theme-color" content="#070c1c">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="پولینو | داشبورد مالی شخصی">
+<meta property="og:description" content="فارسی، شمسی، آفلاین و بدون ثبت‌نام. داده‌ها فقط روی دستگاه شما.">
+<meta property="og:type" content="website">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/vazirmatn-arabic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Vazirmatn Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(assets/fonts/vazirmatn-arabic-wght-normal.woff2) format('woff2');unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:'Vazirmatn Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(assets/fonts/vazirmatn-latin-wght-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--bg:#070c1c;--surface:#0f1730;--surface2:#16203f;--text:#e8ecfa;--muted:#8e99bd;--faint:#6a7498;--line:#1f2a4d;--accent:#8aa0ff;--accent-ink:#0a1230;--accent-soft:#18265a;--gold:#f2b84b;--gold-soft:#3a2d10;--income:#3ed6a0;--expense:#ff7189;--hero-a:#1b2f8f;--hero-b:#0e1a55;--hero-c:#0a1240;--ring:rgba(138,160,255,.4);--shadow:0 30px 80px -24px rgba(0,0,0,.75)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Vazirmatn Variable',Vazirmatn,Tahoma,system-ui,sans-serif;line-height:1.85;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%;height:auto}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}
+section{position:relative;padding:76px 0}
+h1,h2,h3{margin:0;line-height:1.35;letter-spacing:-.01em}
+h2{font-size:clamp(1.55rem,4.2vw,2.2rem);font-weight:800}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;color:var(--gold);background:var(--gold-soft);padding:3px 13px;border-radius:99px;margin-bottom:14px}
+.lead{color:var(--muted);font-size:1.02rem;max-width:62ch;margin:10px 0 0}
+.sec-h{margin-bottom:34px}.sec-h.c{text-align:center}.sec-h.c .lead{margin-inline:auto}
+/* دکمه‌ها */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:0 24px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-weight:700;font-size:.97rem;cursor:pointer;transition:transform .15s,background .2s,box-shadow .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+.btn.primary{background:linear-gradient(135deg,#9db0ff,#7088f5);color:var(--accent-ink);border-color:transparent;box-shadow:0 12px 34px -12px rgba(138,160,255,.7)}
+.btn.primary:hover{box-shadow:0 16px 40px -10px rgba(138,160,255,.85)}
+.btn.gold{background:linear-gradient(135deg,#ffd98a,#f2b84b);color:#2a1d02;border-color:transparent;box-shadow:0 12px 34px -14px rgba(242,184,75,.7)}
+.btn svg{width:19px;height:19px;flex:none}
+.btn[hidden]{display:none}
+/* ناوبری */
+.top{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(7,12,28,.72);border-bottom:1px solid rgba(31,42,77,.7)}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:66px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:1.12rem}
+.brand img{width:38px;height:38px;border-radius:11px;box-shadow:0 0 0 1px rgba(138,160,255,.28),0 6px 18px -6px rgba(88,118,255,.6)}
+.top nav{display:flex;gap:4px;margin-inline-start:18px}
+.top nav a{padding:6px 13px;border-radius:11px;color:var(--muted);font-size:.9rem;font-weight:600}
+.top nav a:hover{color:var(--text);background:var(--surface2)}
+.top .btn{min-height:42px;padding:0 18px;border-radius:13px;font-size:.88rem;margin-inline-start:auto}
+/* هیرو */
+.hero{padding:64px 0 40px;background:radial-gradient(700px 420px at 85% -10%,rgba(242,184,75,.16),transparent 62%),radial-gradient(760px 520px at 8% 20%,rgba(88,118,255,.26),transparent 62%)}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='white' stroke-opacity='.06'%3E%3Crect x='6.4' y='6.4' width='31.2' height='31.2'/%3E%3Cpath d='M22 0L44 22 22 44 0 22z'/%3E%3C/g%3E%3C/svg%3E");-webkit-mask-image:linear-gradient(180deg,#000 0,transparent 78%);mask-image:linear-gradient(180deg,#000 0,transparent 78%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.02fr 1fr;gap:34px;align-items:center}
+.hero h1{font-size:clamp(2.1rem,6.2vw,3.5rem);font-weight:900}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,#ffd98a,#f2b84b 55%,#ffb35c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:1.08rem}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:.84rem;color:var(--muted);background:rgba(22,32,63,.7);border:1px solid var(--line);border-radius:99px;padding:4px 13px}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--income)}
+.note-i{margin-top:12px;font-size:.8rem;color:var(--faint)}
+.stage{position:relative;min-height:430px}
+.laptop{position:absolute;inset-inline-start:0;top:20px;width:92%;border-radius:16px;overflow:hidden;border:1px solid #2a3a73;background:#0a1030;box-shadow:var(--shadow)}
+.laptop .bar{display:flex;gap:6px;align-items:center;padding:9px 12px;background:#0d1538;border-bottom:1px solid var(--line)}
+.laptop .bar b{width:9px;height:9px;border-radius:50%;background:#2a3a73}
+.laptop .bar span{flex:1;text-align:center;font-size:.7rem;color:var(--faint);direction:ltr}
+.phone{border-radius:34px;padding:7px;background:linear-gradient(160deg,#2a3a73,#111a45);box-shadow:var(--shadow),inset 0 0 0 1px rgba(255,255,255,.08);position:relative}
+.phone img{border-radius:28px;width:100%;background:#070c1c}
+.phone:before{content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);width:64px;height:5px;border-radius:9px;background:rgba(255,255,255,.14);z-index:2}
+.stage .phone{position:absolute;inset-inline-end:2%;bottom:0;width:36%;max-width:230px;transform:rotate(-3deg)}
+.floaty{animation:fl 7s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-8px) rotate(-3deg)}}
+/* آمار */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+.fact{background:linear-gradient(180deg,var(--surface),rgba(15,23,48,.55));border:1px solid var(--line);border-radius:20px;padding:18px 18px}
+.fact b{display:block;font-size:1.08rem;color:var(--gold);font-weight:800}
+.fact span{font-size:.85rem;color:var(--muted)}
+/* امکانات */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:linear-gradient(180deg,var(--surface),rgba(15,23,48,.6));border:1px solid var(--line);border-radius:24px;padding:24px;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:#34478f}
+.ico{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-bottom:16px}
+.ico.g{background:var(--gold-soft);color:var(--gold)}.ico.i{background:rgba(62,214,160,.13);color:var(--income)}.ico.e{background:rgba(255,113,137,.13);color:var(--expense)}
+.ico svg{width:24px;height:24px}
+.card h3{font-size:1.06rem;font-weight:800;margin-bottom:6px}
+.card p{margin:0;color:var(--muted);font-size:.92rem}
+/* پیش‌نمایش */
+.gal-wrap{position:relative}
+.gal{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 26px;scrollbar-width:thin;scrollbar-color:#34478f transparent}
+.gal::-webkit-scrollbar{height:8px}.gal::-webkit-scrollbar-thumb{background:#34478f;border-radius:9px}
+.shot{flex:0 0 auto;width:min(270px,72vw);scroll-snap-align:center}
+.shot .cap{margin-top:16px;text-align:center}
+.shot .cap b{display:block;font-weight:800}.shot .cap span{font-size:.85rem;color:var(--muted)}
+.arrows{display:flex;gap:10px;justify-content:center;margin-top:6px}
+.arrows button{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;display:grid;place-items:center}
+.arrows button:hover{border-color:var(--accent)}.arrows svg{width:20px;height:20px}
+.real{display:flex;justify-content:center;margin-top:12px;font-size:.82rem;color:var(--faint)}
+/* مراحل */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:26px 24px 24px}
+.step:before{counter-increment:s;content:counter(s,persian);position:absolute;top:-16px;inset-inline-start:22px;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#ffd98a,#f2b84b);color:#2a1d02;font-weight:850}
+.step h3{margin-bottom:6px;font-size:1.04rem}.step p{margin:0;color:var(--muted);font-size:.92rem}
+/* داده و حریم خصوصی */
+.priv{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.box{border:1px solid var(--line);background:var(--surface);border-radius:24px;padding:26px}
+.box h3{font-size:1.08rem;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.box ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+.box li{display:flex;gap:10px;color:var(--muted);font-size:.93rem}
+.box li:before{content:"";flex:none;width:8px;height:8px;border-radius:50%;margin-top:11px;background:var(--income)}
+.box.warn li:before{background:var(--gold)}
+/* پرسش‌ها */
+.faq{display:grid;gap:10px;max-width:820px;margin:0 auto}
+details{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:2px 20px}
+details[open]{border-color:#34478f}
+summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;font-weight:700}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:1.4rem;color:var(--accent);line-height:1}
+details[open] summary:after{content:"−"}
+details p{margin:0 0 16px;color:var(--muted);font-size:.93rem}
+/* CTA پایانی */
+.final{text-align:center;border-radius:32px;padding:56px 22px;overflow:hidden;position:relative;isolation:isolate;background:radial-gradient(420px 220px at 90% -20%,rgba(242,184,75,.3),transparent 62%),radial-gradient(380px 260px at 0% 120%,rgba(88,118,255,.38),transparent 60%),linear-gradient(155deg,var(--hero-a),var(--hero-b) 55%,var(--hero-c));border:1px solid #2a3a73}
+.final h2{margin-bottom:10px}.final p{margin:0 auto 26px;color:#c9d1f6;max-width:52ch}
+.final .cta{justify-content:center;margin:0}
+footer{padding:34px 0 46px;border-top:1px solid var(--line);color:var(--faint);font-size:.85rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between}
+footer a{color:var(--muted)}footer a:hover{color:var(--text)}
+/* دیالوگ نصب */
+dialog{border:1px solid #34478f;background:var(--surface);color:var(--text);border-radius:26px;padding:26px;max-width:min(440px,92vw);box-shadow:var(--shadow);font-family:inherit}
+dialog::backdrop{background:rgba(3,6,16,.72);backdrop-filter:blur(4px)}
+dialog h3{margin:0 0 10px}dialog ol{margin:0 0 16px;padding-inline-start:20px;color:var(--muted);font-size:.93rem}
+dialog .btn{width:100%}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.reveal.in{opacity:1;transform:none}
+@media(max-width:940px){.hero .wrap{grid-template-columns:1fr}.stage{min-height:0;display:flex;justify-content:center;padding-top:6px}.laptop{display:none}.stage .phone{position:relative;inset:auto;width:min(280px,72vw);max-width:none}.grid{grid-template-columns:repeat(2,1fr)}.facts{grid-template-columns:repeat(2,1fr)}.steps,.priv{grid-template-columns:1fr}.top nav{display:none}.top .btn{margin-inline-start:auto}section{padding:56px 0}.step{margin-top:12px}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.cta .btn{flex:1 1 100%}.hero{padding-top:40px}.brand span{font-size:1.02rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="wrap">
+  <a class="brand" href="./" aria-label="پولینو"><img src="assets/icons/icon-192.png" alt="" width="38" height="38"><span>پولینو</span></a>
+  <nav aria-label="بخش‌ها"><a href="#features">امکانات</a><a href="#preview">پیش‌نمایش</a><a href="#data">داده‌های شما</a><a href="#faq">پرسش‌ها</a></nav>
+  <a class="btn primary" href="app/">ورود به برنامه</a>
+ </div>
+</header>
+
+<main>
+<section class="hero">
+ <div class="wrap">
+  <div>
+   <span class="eyebrow">داشبورد مالی شخصی · فارسی و شمسی</span>
+   <h1>پولتان را <em>ببینید</em>؛<br>نه فقط ثبتش کنید</h1>
+   <p class="lead">هزینه و درآمد، بودجه ماهانه، وام و چک، پیش‌بینی نقدینگی و ثروت خالص؛ همه در یک برنامه‌ی سریع که بدون ثبت‌نام باز می‌شود و پس از اولین بارگذاری، آفلاین هم کار می‌کند.</p>
+   <div class="cta">
+    <a class="btn primary" href="app/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>ورود به برنامه</a>
+    <button class="btn gold" type="button" data-install><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg><span>نصب پولینو</span></button>
+   </div>
+   <p class="note-i" data-installed hidden>پولینو روی این دستگاه نصب است و هم‌اکنون در حالت برنامه باز شده.</p>
+   <div class="chips"><span class="chip"><i></i>بدون ثبت‌نام و حساب کاربری</span><span class="chip"><i></i>داده فقط روی دستگاه شما</span><span class="chip"><i></i>آفلاین پس از اولین بارگذاری</span></div>
+  </div>
+  <div class="stage" aria-hidden="true">
+   <div class="laptop"><div class="bar"><b></b><b></b><b></b><span>polino / app</span></div><img src="assets/shots/desktop.webp" width="1920" height="1200" alt="" fetchpriority="high"></div>
+   <div class="phone floaty"><img src="assets/shots/dash.webp" width="780" height="1688" alt="" fetchpriority="high"></div>
+  </div>
+ </div>
+</section>
+
+<section style="padding-top:34px;padding-bottom:20px">
+ <div class="wrap"><div class="facts reveal">
+  <div class="fact"><b>تاریخ شمسی</b><span>ثبت، فیلتر و گزارش با ماه‌های ایرانی</span></div>
+  <div class="fact"><b>تومان، ریال، ریال جدید</b><span>تبدیل واحد با یک کلیک (حذف چهار صفر)</span></div>
+  <div class="fact"><b>موبایل و دسکتاپ</b><span>ریسپانسیو، تم روشن و تیره</span></div>
+  <div class="fact"><b>Backup و CSV</b><span>خروجی کامل داده‌ها در هر زمان</span></div>
+ </div></div>
+</section>
+
+<section id="features">
+ <div class="wrap">
+  <div class="sec-h c reveal"><span class="eyebrow">امکانات</span><h2>هرچه برای کنترل پول روزمره لازم است</h2><p class="lead">از ثبت ده‌ثانیه‌ای یک هزینه تا دیدن وضعیت ۹۰ روز آینده؛ همه با همان ظاهر و همان سرعت.</p></div>
+  <div class="grid">
+   <article class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 4 14h7l-1 7 9-11h-7z"/></svg></div><h3>ثبت سریع تراکنش</h3><p>مبلغ، دسته و حساب را وارد کنید، یا جمله را تایپ یا با میکروفون بگویید («ناهار دویست و پنجاه هزار تومان»). دسته‌های دلخواه، تاریخ شمسی و جابه‌جایی بین حساب‌ها.</p></article>
+   <article class="card reveal"><div class="ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M6 8V5l6-2 6 2v3M6 8v10M10 8v10M14 8v10M18 8v10M3 21h18"/></svg></div><h3>حساب‌ها و کارت‌ها</h3><p>حساب جاری، پس‌انداز، کارت اعتباری و کیف پول نقدی؛ هرکدام با موجودی و گردش جدا.</p></article>
+   <article class="card reveal"><div class="ico e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg></div><h3>وام، اقساط و چک</h3><p>جدول اقساط خودکار، چک‌های دریافتی و پرداختی با وضعیت، و هشدار سررسیدهای نزدیک.</p></article>
+   <article class="card reveal"><div class="ico i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".6"/></svg></div><h3>بودجه ماهانه</h3><p>سقف برای هر دسته، هشدار نزدیک‌شدن به سقف و «امروز چقدر می‌توانم خرج کنم».</p></article>
+   <article class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 8-9M16 5h4v4"/></svg></div><h3>پیش‌نمایش نقدینگی ۳۰ تا ۹۰ روزه</h3><p>با اقساط، چک‌ها و تراکنش‌های تکراری حدس می‌زند موجودی کجا منفی می‌شود (تخمینی، نه قطعی).</p></article>
+   <article class="card reveal"><div class="ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10 6h4M12 18h.01"/></svg></div><h3>ثبت از متن پیامک بانکی</h3><p>متن پیامک را بچسبانید؛ مبلغ، نوع، تاریخ و مانده خوانده می‌شود و پیش از ثبت قابل ویرایش است (از جمله پیامک ایران‌زمین).</p></article>
+   <article class="card reveal"><div class="ico i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></div><h3>دارایی و ثروت خالص</h3><p>طلا، سکه و ارز با قیمت دستی، سود و زیان، و ثروت خالص با کسر وام و بدهی.</p></article>
+   <article class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.2 2.7-5.5 6-5.5s6 2.3 6 5.5M16 5.5a3 3 0 0 1 0 5.7M18 15c2 .6 3 2.3 3 5"/></svg></div><h3>دفتر اشخاص</h3><p>چه کسی چقدر به شما بدهکار است و شما به چه کسی؛ با پرداخت‌های قسطی و سررسید.</p></article>
+   <article class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h12l-2.5 4L17 12H5"/></svg></div><h3>صندوق‌های هدف</h3><p>برای گوشی، سفر یا پس‌انداز اضطراری صندوق بسازید؛ مبلغ و موعد بگذارید، درصدی از هر درآمد را خودکار کنار بگذارید و نوار پیشرفت را ببینید.</p></article>
+   <article class="card reveal"><div class="ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></div><h3>نکته‌های هوشمند</h3><p>پیش‌بینی تاریخ تمام‌شدن بودجه از روی سرعت خرج، تشخیص دسته‌ی غیرعادی و هشدار قسط و چک نزدیک؛ همه روی همین دستگاه محاسبه می‌شود.</p></article>
+   <article class="card reveal"><div class="ico e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6"/></svg></div><h3>ورودی صوتی فارسی</h3><p>تراکنش را بگویید تا نوشته شود (اختیاری؛ به تشخیص گفتار مرورگر وابسته است).</p></article>
+   <article class="card reveal"><div class="ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg></div><h3>Backup، CSV و گزارش چاپی</h3><p>پشتیبان کامل داده‌ها، خروجی Excel/CSV و گزارش ماهانه‌ی قابل چاپ یا ذخیره به‌صورت PDF.</p></article>
+  </div>
+ </div>
+</section>
+
+<section id="preview" style="padding-top:20px">
+ <div class="wrap">
+  <div class="sec-h c reveal"><span class="eyebrow">پیش‌نمایش واقعی</span><h2>همین چیزی که پس از ورود می‌بینید</h2><p class="lead">تصاویر زیر از خود برنامه (تم تیره) و با داده‌ی نمونه گرفته شده‌اند؛ نه طرح گرافیکی.</p></div>
+  <div class="gal-wrap">
+   <div class="gal" id="gal" tabindex="0" aria-label="تصاویر برنامه">
+    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/dash.webp" width="780" height="1688" alt="داشبورد پولینو: جریان نقدی ماه، نرخ پس‌انداز و دارایی حساب‌ها"></div><figcaption class="cap"><b>داشبورد</b><span>جریان نقدی ماه و سررسیدها</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/budget.webp" width="780" height="1688" alt="صفحه بودجه ماهانه با سقف دسته‌ها"></div><figcaption class="cap"><b>بودجه ماهانه</b><span>سقف هر دسته و هشدار عبور</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/forecast.webp" width="780" height="1688" alt="پیش‌بینی نقدینگی ۳۰ تا ۹۰ روز آینده"></div><figcaption class="cap"><b>پیش‌بینی نقدینگی</b><span>تا ۹۰ روز آینده</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/wealth.webp" width="780" height="1688" alt="دارایی و ثروت خالص"></div><figcaption class="cap"><b>دارایی و ثروت خالص</b><span>طلا، سکه، ارز و بدهی‌ها</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/people.webp" width="780" height="1688" alt="دفتر اشخاص: بدهی و طلب"></div><figcaption class="cap"><b>دفتر اشخاص</b><span>بدهی و طلب با پرداخت قسطی</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/sms.webp" width="780" height="1688" alt="ثبت تراکنش از متن پیامک بانکی"></div><figcaption class="cap"><b>ثبت از پیامک</b><span>چسباندن، بررسی و ثبت</span></figcaption></figure>
+   </div>
+   <div class="arrows"><button type="button" id="gNext" aria-label="بعدی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" id="gPrev" aria-label="قبلی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="sec-h c reveal"><span class="eyebrow">شروع</span><h2>در سه قدم آماده‌اید</h2></div>
+  <div class="steps">
+   <div class="step reveal"><h3>وارد شوید</h3><p>روی «ورود به برنامه» بزنید. حساب‌تان را بسازید یا با «داده‌ی نمونه» محیط را امتحان کنید.</p></div>
+   <div class="step reveal"><h3>ثبت کنید</h3><p>هزینه و درآمد را وارد کنید یا متن پیامک بانک را بچسبانید. بودجه و تعهدات را تعریف کنید.</p></div>
+   <div class="step reveal"><h3>نصب و پشتیبان‌گیری</h3><p>برنامه را روی صفحه‌ی اصلی نصب کنید و گاهی یک Backup بگیرید تا اطلاعات‌تان همیشه در دسترس باشد.</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="data" style="padding-top:20px">
+ <div class="wrap">
+  <div class="sec-h c reveal"><span class="eyebrow">داده‌های شما</span><h2>شفاف درباره‌ی اینکه اطلاعات کجاست</h2></div>
+  <div class="priv">
+   <div class="box reveal"><h3>چه چیزی درست است</h3><ul>
+    <li>اطلاعات مالی در حافظه‌ی مرورگر همین دستگاه (IndexedDB) ذخیره می‌شود و به سرور ارسال نمی‌شود.</li>
+    <li>ثبت‌نام و حساب کاربری وجود ندارد.</li>
+    <li>پس از اولین بارگذاری و فعال‌سازی، برنامه بدون اینترنت اجرا می‌شود.</li>
+    <li>به‌روزرسانی برنامه فقط فایل‌های برنامه را عوض می‌کند و اطلاعات ثبت‌شده‌ی شما را پاک نمی‌کند.</li>
+   </ul></div>
+   <div class="box warn reveal"><h3>چه چیزی را باید بدانید</h3><ul>
+    <li>اگر داده‌های مرورگر را پاک کنید یا برنامه را حذف کنید، اطلاعات از بین می‌رود؛ پس Backup بگیرید.</li>
+    <li>برنامه با کد لایسنس یک‌ساله (حداکثر ۳ دستگاه) فعال می‌شود. فعال‌سازی فقط یک بار اینترنت (و اگر سرور فیلتر بود، VPN) می‌خواهد و فقط کد لایسنس و یک کد تصادفی دستگاه ارسال می‌شود، نه اطلاعات مالی شما. اگر اتصال ممکن نبود، فعال‌سازی دستی از طریق پشتیبانی هست.</li>
+    <li>قفل PIN فقط جلوی دیدن اتفاقی را می‌گیرد؛ داده‌ها رمزنگاری نمی‌شوند.</li>
+    <li>داده‌ها خودکار بین دستگاه‌ها همگام نمی‌شود؛ انتقال با فایل Backup انجام می‌شود.</li>
+    <li>ورودی صوتی اختیاری است و از تشخیص گفتار مرورگر استفاده می‌کند؛ در Chrome و Edge صدا معمولاً برای پردازش به سرور مرورگر (مثلاً گوگل) فرستاده می‌شود و ممکن است در ایران بدون VPN کار نکند. پولینو صدا را ذخیره نمی‌کند.</li>
+    <li>قیمت طلا و ارز دستی وارد می‌شود و برنامه به پیامک‌های گوشی دسترسی ندارد (کپی و چسباندن).</li>
+   </ul></div>
+  </div>
+ </div>
+</section>
+
+<section id="faq" style="padding-top:20px">
+ <div class="wrap">
+  <div class="sec-h c reveal"><span class="eyebrow">پرسش‌های متداول</span><h2>پاسخ کوتاه به چند سؤال</h2></div>
+  <div class="faq">
+   <details><summary>بدون اینترنت هم کار می‌کند؟</summary><p>بله. بار اول باید با اینترنت باز شود تا فایل‌ها روی دستگاه ذخیره شوند؛ از آن پس ورود، ثبت و گزارش‌ها آفلاین است.</p></details>
+   <details><summary>چطور نصبش کنم؟</summary><p>در کروم و اج روی «نصب پولینو» بزنید. در آیفون با Safari از دکمه‌ی اشتراک‌گذاری «Add to Home Screen» را انتخاب کنید. نصب فقط روی آدرس امن (https) یا localhost ممکن است.</p></details>
+   <details><summary>اطلاعاتم را به گوشی یا کامپیوتر دیگر چطور ببرم؟</summary><p>در برنامه از «تنظیمات ← Backup» یک فایل بگیرید و در دستگاه دیگر «بازیابی از فایل» را بزنید.</p></details>
+   <details><summary>ثبت از پیامک چگونه کار می‌کند؟</summary><p>متن پیامک را کپی و در برنامه می‌چسبانید. برنامه مبلغ، واریز یا برداشت، تاریخ، مانده و ۴ رقم کارت را می‌خواند و قبل از ثبت به شما نشان می‌دهد تا اصلاح کنید. قالب پیامک بانک‌ها متفاوت است، بنابراین همیشه یک‌بار مقادیر را ببینید.</p></details>
+   <details><summary>یادآور سررسید چطور کار می‌کند؟</summary><p>سررسیدها روی داشبورد برجسته می‌شوند و می‌توانید «فایل تقویم» را به تقویم گوشی اضافه کنید؛ این مطمئن‌ترین راه است. اعلان مرورگر را هم می‌توانید روشن کنید: هنگام باز بودن برنامه (و در اندروید/دسکتاپ پس از نصب، گاهی در پس‌زمینه) نمایش داده می‌شود، اما برنامه‌ی کاملاً بسته بدون سرور نمی‌تواند زمان دقیق را تضمین کند. در آیفون اعلان فقط پس از افزودن برنامه به صفحه‌ی اصلی ممکن است.</p></details>
+   <details><summary>صندوق هدف و نکته‌های هوشمند چطور کار می‌کنند؟</summary><p>صندوق فقط یک «پاکت مجازی» روی حساب‌های شماست و پول واقعی جابه‌جا نمی‌شود. نکته‌های هوشمند تخمین ساده‌ای از روند ثبت‌شده‌ی خودتان هستند (نه توصیه‌ی مالی) و اگر داده‌ی کافی ثبت نشده باشد نمایش داده نمی‌شوند.</p></details>
+   <details><summary>فعال‌سازی و لایسنس چطور کار می‌کند؟</summary><p>بار اول کد لایسنس را وارد می‌کنید و برنامه با سرور لایسنس چک می‌شود (اینترنت و در صورت نیاز VPN). از آن به بعد برنامه بدون اینترنت کار می‌کند و هر چند روز، در صورت اتصال، اعتبار را خودکار تأیید می‌کند. اگر اشتراک تمام شود، اطلاعات شما پاک نمی‌شود و همیشه می‌توانید Backup بگیرید؛ بعد از تمدید دوباره فعال می‌شود.</p></details>
+   <details><summary>واحد پول چیست؟</summary><p>پیش‌فرض تومان است و می‌توانید به ریال یا ریال جدید (بدون چهار صفر) تبدیل کنید؛ همه‌ی مبلغ‌ها با هم تبدیل می‌شوند.</p></details>
+  </div>
+ </div>
+</section>
+
+<section style="padding-top:20px">
+ <div class="wrap"><div class="final reveal">
+  <h2>امروز با یک تراکنش شروع کنید</h2>
+  <p>بدون ثبت‌نام و بدون پرداخت وارد شوید؛ اگر خوشتان آمد، آن را روی صفحه‌ی اصلی گوشی یا کامپیوتر نصب کنید.</p>
+  <div class="cta"><a class="btn primary" href="app/">ورود به برنامه</a><button class="btn gold" type="button" data-install><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg><span>نصب پولینو</span></button></div>
+ </div></div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© پولینو · نسخه ۶٫۱</span><span><a href="#features">امکانات</a> · <a href="#data">داده‌های شما</a> · <a href="app/">ورود به برنامه</a></span></div></footer>
+
+<dialog id="help" aria-labelledby="hTitle">
+ <h3 id="hTitle">نصب پولینو</h3>
+ <div id="hBody"></div>
+ <button class="btn primary" type="button" id="hClose">متوجه شدم</button>
+</dialog>
+
+<script>
+(function(){
+ var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+ /* Service Worker: فقط روی http/https */
+ if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){addEventListener('load',function(){navigator.serviceWorker.register('./service-worker.js').catch(function(){})})}
+ /* نصب */
+ var dp=null,btns=$$('[data-install]');
+ var standalone=function(){return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true};
+ function refresh(){var s=standalone();btns.forEach(function(b){b.hidden=s});$$('[data-installed]').forEach(function(n){n.hidden=!s})}
+ refresh();
+ addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e});
+ addEventListener('appinstalled',function(){dp=null;refresh()});
+ var help=$('#help'),body=$('#hBody');
+ function openHelp(){
+  var ua=navigator.userAgent,ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),h;
+  if(!window.isSecureContext){h='<p>نصب فقط روی آدرس امن (https) یا localhost ممکن است. این صفحه با آدرس فعلی (<b dir="ltr">'+location.protocol+'</b>) نصب‌پذیر نیست؛ آن را روی یک هاست HTTPS قرار دهید یا با سرور محلی باز کنید.</p>'}
+  else if(ios){h='<ol><li>این صفحه را در <b>Safari</b> باز کنید.</li><li>دکمه‌ی اشتراک‌گذاری (مربع با فلش رو به بالا) را بزنید.</li><li>گزینه‌ی <b>Add to Home Screen</b> را انتخاب و تأیید کنید.</li></ol>'}
+  else{h='<ol><li>منوی مرورگر (⋮) را باز کنید.</li><li>گزینه‌ی <b>Install app</b> یا <b>Install پولینو</b> (در اج: <b>Apps ← Install this site as an app</b>) را بزنید.</li></ol><p style="color:var(--muted);font-size:.85rem">اگر گزینه را نمی‌بینید، صفحه را یک‌بار تازه کنید و چند ثانیه صبر کنید تا برنامه کامل ذخیره شود.</p>'}
+  body.innerHTML=h;if(help.showModal)help.showModal();else help.setAttribute('open','')
+ }
+ btns.forEach(function(b){b.addEventListener('click',function(){
+  if(dp){var p=dp;dp=null;p.prompt();p.userChoice.then(function(){refresh()}).catch(function(){})}else openHelp()
+ })});
+ $('#hClose').addEventListener('click',function(){help.close?help.close():help.removeAttribute('open')});
+ help.addEventListener('click',function(e){if(e.target===help&&help.close)help.close()});
+ /* گالری */
+ var g=$('#gal');function step(d){g.scrollBy({left:d*(g.clientWidth*0.7),behavior:'smooth'})}
+ /* در RTL مقدار scrollLeft منفی است؛ «بعدی» یعنی به سمت چپ */
+ $('#gNext').addEventListener('click',function(){step(-1)});$('#gPrev').addEventListener('click',function(){step(1)});
+ /* ظاهر شدن بخش‌ها */
+ var rv=$$('.reveal');
+ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});rv.forEach(function(n){io.observe(n)})}else rv.forEach(function(n){n.classList.add('in')});
+})();
+</script>
+</body>
+</html>
