@@ -335,6 +335,58 @@ body.locked #lock{overflow-y:auto;align-items:start}
 .licman textarea{width:100%;margin-top:8px;resize:vertical}
 .licbox>*{align-self:stretch}.licbox .lm,.licbox h1{align-self:center}
 
+/* گروه‌بندی دارایی‌ها */
+.grp{margin-top:6px}.grp+.grp{margin-top:14px}
+.grp-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 2px 4px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.grp-t{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.grp-t .dot{width:10px;height:10px;border-radius:4px;flex:none}
+.grp-v{text-align:end;font-variant-numeric:tabular-nums}
+
+/* ===== فاز ۷: تم، تاریخ‌انتخاب‌کن، لیست بازشو، گزارش‌ها ===== */
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+select option,select optgroup{background:var(--surface);color:var(--text)}
+.sel{cursor:pointer}.sel select{pointer-events:none}
+input[data-date],#fdate,input[id^=sm_d]{cursor:pointer;padding-left:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b94b0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='5' width='16' height='16' rx='3'/%3E%3Cpath d='M8 3v4M16 3v4M4 10h16'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center;background-size:19px}
+.dp-scrim,.dd-scrim{position:fixed;inset:0;z-index:70;background:rgba(6,10,28,.5);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);animation:fin .15s}
+.dd-scrim{background:rgba(6,10,28,.18);backdrop-filter:none;-webkit-backdrop-filter:none}
+.dp{position:fixed;z-index:71;inset-inline:0;margin:auto;top:50%;transform:translateY(-50%);width:min(348px,calc(100vw - 28px));height:max-content;max-height:calc(100dvh - 24px);overflow:auto;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:24px;padding:16px;box-shadow:var(--shadow);animation:fin .15s}
+.dp-top{background:linear-gradient(135deg,var(--hero-a),var(--hero-b));color:#fff;border-radius:16px;padding:12px 16px;margin-bottom:12px}
+.dp-selw{font-size:.74rem;opacity:.75}.dp-seld{font-size:1.15rem;font-weight:800;line-height:1.5}.dp-selg{font-size:.74rem;opacity:.7;direction:ltr;text-align:start;font-variant-numeric:tabular-nums}
+.dp-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.dp-title{flex:1;border:0;background:none;font-weight:800;font-size:1rem;padding:8px;border-radius:12px;color:var(--text);display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.dp-title:hover{background:var(--surface2)}.dp-title.static{cursor:default}.dp-title.static:hover{background:none}
+.dp-car{width:7px;height:7px;border:solid var(--muted);border-width:0 2px 2px 0;transform:translateY(-2px) rotate(45deg)}
+.dp-wd{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:.76rem;font-weight:700;color:var(--muted);margin-bottom:4px}
+.dp-wd .fri,.dp-d.fri{color:var(--expense)}
+.dp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.dp-d{aspect-ratio:1;border:0;background:none;border-radius:13px;font-weight:700;font-size:.95rem;color:var(--text);display:grid;place-items:center;transition:background .12s}
+.dp-d:hover{background:var(--surface2)}
+.dp-d.today{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.dp-d.pk{background:var(--accent);color:var(--accent-ink);box-shadow:none}
+.dp-d:focus-visible,.dp-c:focus-visible,.dd-i:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.dp-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dp-c{border:1px solid var(--line);background:var(--surface);padding:13px 6px;border-radius:14px;font-weight:700;color:var(--text)}
+.dp-c:hover{background:var(--surface2)}.dp-c.today{border-color:var(--accent)}.dp-c.pk{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.dp-foot{display:flex;gap:8px;align-items:center;margin-top:12px}
+.dd{position:fixed;z-index:72;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;animation:fin .12s}
+.dd.sheet-m{inset-inline:0;bottom:0;max-height:72dvh;border-radius:24px 24px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom)}
+.dd-t{padding:14px 18px 6px;font-weight:800;font-size:.92rem}
+.dd-s{padding:8px 10px 4px}.dd-s .inp{min-height:40px;padding:8px 12px;border-radius:11px}
+.dd-list{overflow:auto;padding:6px;overscroll-behavior:contain}
+.dd-i{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:start;border:0;background:none;color:var(--text);padding:11px 12px;border-radius:11px;font-size:.93rem}
+.dd-i:hover,.dd-i:focus{background:var(--surface2)}
+.dd-i.on{background:var(--accent-soft);color:var(--accent);font-weight:800}
+.dd-i[disabled]{opacity:.45}
+.dd-g{padding:10px 12px 4px;font-size:.74rem;font-weight:800;color:var(--muted)}
+.dd-empty{padding:18px;text-align:center;color:var(--muted);font-size:.88rem}
+.rp-pick{display:flex;gap:8px;flex:1;min-width:0}.rp-pick .sel{flex:1;min-width:0}
+.rp-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.rp-d{font-size:.74rem;margin-top:4px;font-weight:700}
+.rp-chart{overflow-x:auto}.rp-chart text{font-size:10px;fill:var(--muted);font-family:inherit}.rp-grid{stroke:var(--line);stroke-width:1}
+.rpcat{margin-bottom:12px}.rpcat-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+.rpcat-n{display:flex;align-items:center;gap:9px;min-width:0}.rpcat-n b{font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rpcat-v{text-align:end;white-space:nowrap;font-variant-numeric:tabular-nums}
+
 </style>
 </head>
 <body>
@@ -1029,7 +1081,14 @@ function splitSms(raw){
 }
 function smsSig(r){return[r.date||'',r.time||'',r.amount||'',r.balance==null?'':r.balance].join('|')}
 /* ---------- دارایی و ثروت خالص ---------- */
-const ASSET_KINDS={gold18:{label:'طلای ۱۸ عیار',unit:'گرم',icon:'🥇'},gold24:{label:'طلای ۲۴ عیار',unit:'گرم',icon:'🥇'},coin_emami:{label:'سکه‌ی تمام (امامی)',unit:'عدد',icon:'🪙'},coin_half:{label:'نیم‌سکه',unit:'عدد',icon:'🪙'},coin_quarter:{label:'ربع‌سکه',unit:'عدد',icon:'🪙'},coin_gram:{label:'سکه‌ی گرمی',unit:'عدد',icon:'🪙'},usd:{label:'دلار آمریکا',unit:'دلار',icon:'💵'},eur:{label:'یورو',unit:'یورو',icon:'💶'},other:{label:'سایر',unit:'واحد',icon:'📦'}};
+const ASSET_KINDS={
+gold18:{label:'طلای ۱۸ عیار',unit:'گرم',icon:'🥇',group:'metal'},gold24:{label:'طلای ۲۴ عیار',unit:'گرم',icon:'🥇',group:'metal'},
+coin_emami:{label:'سکه‌ی تمام (امامی)',unit:'عدد',icon:'🪙',group:'metal'},coin_half:{label:'نیم‌سکه',unit:'عدد',icon:'🪙',group:'metal'},coin_quarter:{label:'ربع‌سکه',unit:'عدد',icon:'🪙',group:'metal'},coin_gram:{label:'سکه‌ی گرمی',unit:'عدد',icon:'🪙',group:'metal'},
+silver:{label:'نقره‌ی ۹۹۹ (شمش و ساچمه)',unit:'گرم',icon:'🥈',group:'metal'},silver925:{label:'نقره‌ی ۹۲۵ (زیورآلات)',unit:'گرم',icon:'🥈',group:'metal'},
+usd:{label:'دلار آمریکا',unit:'دلار',icon:'💵',group:'fx'},eur:{label:'یورو',unit:'یورو',icon:'💶',group:'fx'},gbp:{label:'پوند انگلیس',unit:'پوند',icon:'💷',group:'fx'},aed:{label:'درهم امارات',unit:'درهم',icon:'💴',group:'fx'},try:{label:'لیر ترکیه',unit:'لیر',icon:'💴',group:'fx'},fx_other:{label:'ارز دیگر',unit:'واحد',icon:'💱',group:'fx'},
+btc:{label:'بیت‌کوین (BTC)',unit:'BTC',icon:'₿',group:'crypto'},eth:{label:'اتریوم (ETH)',unit:'ETH',icon:'Ξ',group:'crypto'},usdt:{label:'تتر (USDT)',unit:'USDT',icon:'₮',group:'crypto'},bnb:{label:'بایننس‌کوین (BNB)',unit:'BNB',icon:'◈',group:'crypto'},sol:{label:'سولانا (SOL)',unit:'SOL',icon:'◎',group:'crypto'},ton:{label:'تون‌کوین (TON)',unit:'TON',icon:'💎',group:'crypto'},trx:{label:'ترون (TRX)',unit:'TRX',icon:'⬡',group:'crypto'},xrp:{label:'ریپل (XRP)',unit:'XRP',icon:'✕',group:'crypto'},crypto_other:{label:'ارز دیجیتال دیگر',unit:'واحد',icon:'🪙',group:'crypto'},
+stock:{label:'سهام بورسی',unit:'سهم',icon:'📈',group:'bourse'},fund_fixed:{label:'صندوق درآمد ثابت',unit:'واحد',icon:'🏦',group:'bourse'},fund_equity:{label:'صندوق سهامی',unit:'واحد',icon:'📊',group:'bourse'},fund_mixed:{label:'صندوق مختلط',unit:'واحد',icon:'⚖️',group:'bourse'},fund_gold:{label:'صندوق طلا',unit:'واحد',icon:'🏅',group:'bourse'},fund_other:{label:'صندوق دیگر (اهرمی، شاخصی…)',unit:'واحد',icon:'📉',group:'bourse'},
+other:{label:'سایر',unit:'واحد',icon:'📦',group:'other'}};
 function validateAsset(a){
   const e=[];
   if(!a||!a.name||!String(a.name).trim())e.push('نام دارایی را وارد کنید.');
@@ -1291,7 +1350,123 @@ function makeDemoP5(o){
 }
 const P5={SCHEMA:SCHEMA5,GOAL_ICONS,validateGoal,goalSaved,goalProgress,goalsTotals,autoPctTotal,allocateIncome,smartInsights,convertAmounts:convertAmounts5,validateBackup:validateBackup5,makeDemoP5};
 
-return Object.assign(BASE,ADD,P3,P4,P5);
+/* ================= فاز ۷: گروه‌های دارایی (ارز دیجیتال، بورس، نقره…) + گزارش‌گیری ================= */
+const ASSET_GROUPS=[
+  {id:'metal',label:'طلا، سکه و نقره',icon:'🥇'},
+  {id:'fx',label:'ارز',icon:'💵'},
+  {id:'crypto',label:'ارز دیجیتال',icon:'₿'},
+  {id:'bourse',label:'بورس (سهام و صندوق‌ها)',icon:'📈'},
+  {id:'other',label:'سایر',icon:'📦'}
+];
+const assetGroupOf=kind=>{const k=ASSET_KINDS[kind];return k&&k.group||'other'};
+/* تجمیع دارایی‌ها بر اساس گروه: ارزش، سهم از کل و سود/زیان (فقط دارایی‌هایی که قیمت خرید دارند) */
+function assetGroups(assets){
+  const m=new Map();let total=0;
+  for(const a of assets||[]){
+    const g=assetGroupOf(a.kind);if(!m.has(g))m.set(g,{items:[],value:0,cost:0,cval:0});
+    const o=m.get(g),v=assetValue(a);o.items.push(a);o.value+=v;total+=v;
+    const p=assetPnl(a);if(p){o.cost+=p.cost;o.cval+=p.value}
+  }
+  return ASSET_GROUPS.filter(g=>m.has(g.id)).map(g=>{
+    const o=m.get(g.id),pnl=o.cost>0?r6(o.cval-o.cost):null;
+    return{id:g.id,label:g.label,icon:g.icon,count:o.items.length,items:o.items,value:r6(o.value),share:total>0?o.value/total:0,pnl,pct:o.cost>0?pnl/o.cost:null};
+  }).sort((a,b)=>b.value-a.value);
+}
+/* مقدار دارایی: تا ۸ رقم اعشار (برای ارز دیجیتال) بدون صفرهای اضافی */
+function fmtQty(n){
+  if(typeof n!=='number'||!isFinite(n))return '—';
+  const neg=n<0;n=Math.abs(n);
+  const s=n.toFixed(8).replace(/\.?0+$/,''),p=s.split('.');
+  const ii=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'٬');
+  return (neg?'−':'')+toFa(ii+(p[1]?'٫'+p[1]:''));
+}
+/* ---------- گزارش‌گیری ---------- */
+const SEASONS=['بهار','تابستان','پاییز','زمستان'];
+const seasonOf=jm=>Math.ceil(jm/3);
+/* بازه‌ی گزارش: kind = month | season | year | all | custom */
+function reportPeriod(o){
+  const k=o.kind;
+  if(k==='month'){const r=monthRange(o.jy,o.jm);return{kind:k,from:r.from,to:r.to,label:JM[o.jm-1]+' '+toFa(o.jy),ok:true}}
+  if(k==='season'){
+    const m1=(o.js-1)*3+1;
+    return{kind:k,from:jToIso(o.jy,m1,1),to:jToIso(o.jy,m1+2,daysInJMonth(o.jy,m1+2)),label:'فصل '+SEASONS[o.js-1]+' '+toFa(o.jy),ok:true};
+  }
+  if(k==='year'){const r=yearRange(o.jy);return{kind:k,from:r.from,to:r.to,label:'سال '+toFa(o.jy),ok:true}}
+  if(k==='all'){
+    let mn=null,mx=null;
+    for(const t of o.txs||[]){if(t.type==='transfer')continue;if(!mn||t.date<mn)mn=t.date;if(!mx||t.date>mx)mx=t.date}
+    const td=o.today;if(!mn){mn=td;mx=td}if(mx<td)mx=td;
+    return{kind:k,from:mn,to:mx,label:'کل دوران',ok:true};
+  }
+  let f=o.from,t=o.to;
+  if(!f||!t||!isoValid(f)||!isoValid(t))return{kind:'custom',from:f||'',to:t||'',label:'',ok:false,error:'تاریخ شروع و پایان را درست انتخاب کنید.'};
+  if(f>t){const x=f;f=t;t=x}
+  return{kind:'custom',from:f,to:t,label:'از '+fmtJ(f)+' تا '+fmtJ(t),ok:true};
+}
+/* بازه‌ی قبلی هم‌طول برای مقایسه (برای «کل دوران» ندارد) */
+function prevReportRange(p,today){
+  if(!p||!p.ok||p.kind==='all')return null;
+  let pf,pt;
+  if(p.kind==='month'){const j=isoToJ(p.from),x=addMonths(j.jy,j.jm,-1),r=monthRange(x.jy,x.jm);pf=r.from;pt=r.to}
+  else if(p.kind==='season'){const j=isoToJ(p.from),x=addMonths(j.jy,j.jm,-3);pf=jToIso(x.jy,x.jm,1);const e=addMonths(x.jy,x.jm,2);pt=jToIso(e.jy,e.jm,daysInJMonth(e.jy,e.jm))}
+  else if(p.kind==='year'){const j=isoToJ(p.from),r=yearRange(j.jy-1);pf=r.from;pt=r.to}
+  else{const len=daysBetween(p.from,p.to)+1;pt=addDays(p.from,-1);pf=addDays(p.from,-len)}
+  /* بازه‌ی در جریان: مقایسه فقط تا همان روزِ سپری‌شده */
+  if(today&&p.from<=today&&p.to>today){
+    const el=daysBetween(p.from,today)+1,cap=addDays(pf,el-1);if(cap<pt)pt=cap;
+  }
+  return{from:pf,to:pt};
+}
+const deltaPct=(c,p)=>p>0?(c-p)/p:null;
+function buildPeriodReport(o){
+  const txs=o.txs||[],today=o.today,p=o.period;
+  if(!p||!p.ok)return{ok:false,error:p&&p.error||'بازه‌ی گزارش نامعتبر است.'};
+  const from=p.from,to=p.to,span=daysBetween(from,to)+1;
+  const totals=periodTotals(txs,from,to);
+  const pr=prevReportRange(p,today),prevTotals=pr?periodTotals(txs,pr.from,pr.to):null;
+  const effTo=today&&to>today?(today<from?from:today):to,elapsed=Math.max(1,daysBetween(from,effTo)+1);
+  const inP=txs.filter(t=>t.type!=='transfer'&&inRange(t.date,from,to));
+  const cats=type=>{
+    const cur=byCategory(txs,from,to,type),prv=pr?new Map(byCategory(txs,pr.from,pr.to,type).map(x=>[x.categoryId,x.total])):null;
+    const tot=type==='expense'?totals.expense:totals.income;
+    return cur.map(x=>({categoryId:x.categoryId,total:x.total,share:tot>0?x.total/tot:0,prev:prv?(prv.get(x.categoryId)||0):null,delta:prv?deltaPct(x.total,prv.get(x.categoryId)||0):null}));
+  };
+  /* نمودار: روزانه (تا ۴۵ روز)، ماهانه (تا ۴۸ ماه) یا سالانه */
+  const j1=isoToJ(from),j2=isoToJ(to),months=(j2.jy-j1.jy)*12+(j2.jm-j1.jm)+1;
+  const gran=span<=45?'day':months<=48?'month':'year';
+  const bk=[],idx=new Map();
+  if(gran==='day'){for(let i=0;i<span;i++){const d=addDays(from,i);idx.set(d,bk.length);bk.push({key:d,label:toFa(isoToJ(d).jd),title:fmtJ(d),income:0,expense:0})}}
+  else if(gran==='month'){for(let i=0;i<months;i++){const x=addMonths(j1.jy,j1.jm,i);idx.set(x.jy*100+x.jm,bk.length);bk.push({key:x.jy*100+x.jm,label:JM[x.jm-1],title:JM[x.jm-1]+' '+toFa(x.jy),jy:x.jy,jm:x.jm,income:0,expense:0})}}
+  else{for(let y=j1.jy;y<=j2.jy;y++){idx.set(y,bk.length);bk.push({key:y,label:toFa(y),title:'سال '+toFa(y),income:0,expense:0})}}
+  const dayExp=new Map();
+  for(const t of inP){
+    const j=isoToJ(t.date),i=idx.get(gran==='day'?t.date:gran==='month'?j.jy*100+j.jm:j.jy);
+    if(i===undefined)continue;
+    if(t.type==='income')bk[i].income+=t.amount;else{bk[i].expense+=t.amount;dayExp.set(t.date,(dayExp.get(t.date)||0)+t.amount)}
+  }
+  bk.forEach(b=>{b.income=r6(b.income);b.expense=r6(b.expense);b.net=r6(b.income-b.expense)});
+  let busiest=null;for(const[d,v]of dayExp)if(!busiest||v>busiest.total)busiest={date:d,total:r6(v)};
+  const exps=inP.filter(t=>t.type==='expense').sort((a,b)=>b.amount-a.amount||(a.date<b.date?1:-1)),incs=inP.filter(t=>t.type==='income').sort((a,b)=>b.amount-a.amount);
+  const mini=t=>({id:t.id,date:t.date,amount:t.amount,description:t.description||'',categoryId:t.categoryId||''});
+  /* موجودی حساب‌ها در ابتدا و انتهای بازه */
+  const accs=o.accounts||[],opn=E_balances(accs,txs.filter(t=>t.date<from)),cls=E_balances(accs,txs.filter(t=>t.date<=to));
+  const accRows=accs.map(a=>({id:a.id,opening:opn[a.id]||0,closing:cls[a.id]||0}));
+  const sumOf=k=>r6(accRows.reduce((s,a)=>s+a[k],0));
+  return{ok:true,period:p,from,to,span,elapsed,partial:!!(today&&p.from<=today&&p.to>today),
+    totals,prev:pr,prevTotals,
+    delta:prevTotals?{income:deltaPct(totals.income,prevTotals.income),expense:deltaPct(totals.expense,prevTotals.expense),net:prevTotals.net!==0?(totals.net-prevTotals.net)/Math.abs(prevTotals.net):null}:null,
+    avgDaily:r6(totals.expense/elapsed),avgMonthly:span>=28?r6(totals.expense/Math.max(1,elapsed/30.4375)):null,
+    expenseCount:exps.length,incomeCount:incs.length,
+    expenseCats:cats('expense'),incomeCats:cats('income'),
+    gran,buckets:bk,busiest,
+    topExpenses:exps.slice(0,10).map(mini),topIncomes:incs.slice(0,5).map(mini),
+    accounts:accRows,openingTotal:sumOf('opening'),closingTotal:sumOf('closing'),
+    txCount:inP.length};
+}
+function E_balances(accs,txs){return balances(accs,txs)}
+const P6={ASSET_GROUPS,assetGroupOf,assetGroups,fmtQty,SEASONS,seasonOf,reportPeriod,prevReportRange,buildPeriodReport,deltaPct};
+
+return Object.assign(BASE,ADD,P3,P4,P5,P6);
 })();
 
 </script>
@@ -1351,7 +1526,7 @@ return{open,getAll,put,putMany,del,delMany,replaceAll,isMemory:()=>!!mem};
 (function(){
 'use strict';
 const BRAND=window.__BRAND||'';
-const APP_VERSION='6.1.0';
+const APP_VERSION='6.2.0';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'id-'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);
@@ -2085,7 +2260,7 @@ function obCsv(){
   return E.buildCSV(['نوع','عنوان / طرف حساب','بانک','توضیح / شماره','سررسید شمسی','سررسید میلادی','مبلغ ('+unit()+')','وضعیت','تاریخ پرداخت'],rows);
 }
 function exportCard(){
-  return '<div class="card"><h2 style="margin-bottom:4px">خروجی و گزارش</h2><p class="muted small" style="margin:0 0 12px">فایل CSV در Excel و Google Sheets باز می‌شود. گزارش ماهانه از طریق «چاپ» به PDF تبدیل می‌شود.</p><div class="row"><button class="btn" data-act="csvTx">'+ic('download',16)+'تراکنش‌ها (CSV)</button><button class="btn" data-act="csvOb">'+ic('download',16)+'اقساط و چک‌ها (CSV)</button><button class="btn primary" data-act="reportOpen">'+ic('file',16)+'گزارش ماه '+esc(E.JM[V.jm-1])+'</button></div></div>';
+  return '<div class="card"><h2 style="margin-bottom:4px">خروجی و گزارش</h2><p class="muted small" style="margin:0 0 12px">فایل CSV در Excel و Google Sheets باز می‌شود. گزارش ماهانه از طریق «چاپ» به PDF تبدیل می‌شود.</p><div class="row"><button class="btn" data-act="csvTx">'+ic('download',16)+'تراکنش‌ها (CSV)</button><button class="btn" data-act="csvOb">'+ic('download',16)+'اقساط و چک‌ها (CSV)</button><button class="btn" data-act="reportOpen">'+ic('file',16)+'چاپ گزارش ماه '+esc(E.JM[V.jm-1])+'</button><button class="btn primary" data-act="goReports">'+ic('chart',16)+'گزارش‌های کامل</button></div></div>';
 }
 function repTable(head,rows,cls){return '<table class="'+(cls||'')+'"><thead><tr>'+head.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table>'}
 function buildReport(jy,jm){
@@ -2317,10 +2492,17 @@ function nwSpark(h){
   const xs=h.map((x,i)=>W-6-(W-12)*(i/(h.length-1))),d=h.map((x,i)=>(i?'L':'M')+xs[i].toFixed(1)+' '+(H-8-(H-16)*(x.value-lo)/rng).toFixed(1)).join(' ');
   return '<svg class="sp" viewBox="0 0 '+W+' '+H+'" width="100%" height="64" preserveAspectRatio="none" aria-hidden="true"><path d="'+d+'" fill="none" stroke="#f2b84b" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg>';
 }
-const NW_PARTS={accounts:['حساب‌ها و نقدی','var(--accent)'],assets:['طلا، سکه و ارز','var(--gold)'],receivable:['طلب از اشخاص','var(--income)'],loans:['اقساط باقی‌مانده‌ی وام‌ها','var(--expense)'],debts:['بدهی به اشخاص','#a24bd8']};
+const NW_PARTS={accounts:['حساب‌ها و نقدی','var(--accent)'],assets:['دارایی‌ها (طلا، ارز، بورس و…)','var(--gold)'],receivable:['طلب از اشخاص','var(--income)'],loans:['اقساط باقی‌مانده‌ی وام‌ها','var(--expense)'],debts:['بدهی به اشخاص','#a24bd8']};
 function assetRow(a){
   const k=E.ASSET_KINDS[a.kind]||E.ASSET_KINDS.other,pl=E.assetPnl(a),age=E.priceAge(a,today());
-  return '<div class="rw" role="button" tabindex="0" data-act="editAsset" data-id="'+esc(a.id)+'"><div class="ico" style="--c:var(--gold)">'+esc(k.icon)+'</div><div class="mid"><b>'+esc(a.name)+'</b><div class="s"><span>'+E.fmtNum(a.qty)+' '+esc(a.unit||k.unit)+' × '+E.fmtNum(a.price)+'</span>'+(age!=null&&age>7?'<span class="pill warn">قیمت '+E.toFa(age)+' روز قدیمی</span>':'')+(a.demo?'<span class="pill">نمونه</span>':'')+'</div></div><div style="text-align:end"><div class="n">'+E.fmtNum(E.assetValue(a))+'</div>'+(pl?'<div class="xs '+(pl.pnl>=0?'inc':'dng')+'" style="font-weight:700">'+(pl.pnl>=0?'+':'−')+E.fmtNum(Math.abs(pl.pnl))+(pl.pct!=null?' ('+E.toFa(Math.round(Math.abs(pl.pct)*100))+'٪)':'')+'</div>':'')+'</div></div>';
+  return '<div class="rw" role="button" tabindex="0" data-act="editAsset" data-id="'+esc(a.id)+'"><div class="ico" style="--c:var(--gold)">'+esc(k.icon)+'</div><div class="mid"><b>'+esc(a.name)+'</b><div class="s"><span>'+E.fmtQty(a.qty)+' '+esc(a.unit||k.unit)+' × '+E.fmtNum(a.price)+'</span>'+(age!=null&&age>7?'<span class="pill warn">قیمت '+E.toFa(age)+' روز قدیمی</span>':'')+(a.demo?'<span class="pill">نمونه</span>':'')+'</div></div><div style="text-align:end"><div class="n">'+E.fmtNum(E.assetValue(a))+'</div>'+(pl?'<div class="xs '+(pl.pnl>=0?'inc':'dng')+'" style="font-weight:700">'+(pl.pnl>=0?'+':'−')+E.fmtNum(Math.abs(pl.pnl))+(pl.pct!=null?' ('+E.toFa(Math.round(Math.abs(pl.pct)*100))+'٪)':'')+'</div>':'')+'</div></div>';
+}
+function assetGroupsHtml(){
+  const G=E.assetGroups(S.assets),tot=G.reduce((x,g)=>x+g.value,0),cols={metal:'var(--gold)',fx:'var(--income)',crypto:'#a24bd8',bourse:'var(--accent)',other:'var(--faint)'};
+  let h='';
+  if(G.length>1&&tot>0)h+='<div class="stack" style="margin:2px 0 10px">'+G.map(g=>'<i style="width:'+(g.value/tot*100).toFixed(2)+'%;background:'+cols[g.id]+'" title="'+esc(g.label)+'"></i>').join('')+'</div>';
+  h+=G.map(g=>'<div class="grp"><div class="grp-h"><span class="grp-t"><i class="dot" style="background:'+cols[g.id]+'"></i>'+esc(g.icon)+' <b>'+esc(g.label)+'</b><span class="muted xs">'+E.toFa(g.count)+' مورد | '+E.toFa(Math.round(g.share*100))+'٪</span></span><span class="grp-v"><b>'+E.fmtNum(g.value)+'</b>'+(g.pnl!=null?'<span class="xs '+(g.pnl>=0?'inc':'dng')+'" style="font-weight:700"> '+(g.pnl>=0?'+':'−')+E.fmtNum(Math.abs(g.pnl))+'</span>':'')+'</span></div><div class="rows">'+g.items.slice().sort((a,b)=>E.assetValue(b)-E.assetValue(a)).map(assetRow).join('')+'</div></div>').join('');
+  return h;
 }
 function viewWealth(){
   const nw=nwCompute();recordNw(nw);
@@ -2328,7 +2510,7 @@ function viewWealth(){
   let h='<div class="view"><div class="head"><div><h1>دارایی و ثروت خالص</h1><div class="sub">همه‌ی دارایی‌ها منهای بدهی‌ها، در یک نگاه</div></div><div class="row"><button class="btn" data-act="assetPrices">'+ic('edit',16)+'به‌روزرسانی قیمت‌ها</button><button class="btn primary" data-act="addAsset">'+ic('plus',18)+'دارایی جدید</button></div></div>';
   h+='<section class="hero" aria-label="ثروت خالص"><div class="top"><span>ثروت خالص</span></div><div class="big"><span>'+(nw.total<0?'−':'')+E.fmtNum(Math.abs(nw.total))+'</span><small>'+esc(unit())+'</small></div><div class="split"><span><i class="dot" style="background:#5eead4"></i>دارایی‌ها <b>'+E.fmtNum(nw.accounts+nw.assets+nw.receivable)+'</b></span><span><i class="dot" style="background:#fda4af"></i>بدهی‌ها <b>'+E.fmtNum(nw.loans+nw.debtsOwed)+'</b></span></div>'+nwSpark(S.st.nwHistory)+'</section>';
   h+='<section class="card sec"><h2 style="margin-bottom:10px">ترکیب</h2>'+(possum>0?'<div class="stack">'+pos.map(p=>'<i style="width:'+(p[1]/possum*100).toFixed(2)+'%;background:'+NW_PARTS[p[0]][1]+'" title="'+esc(NW_PARTS[p[0]][0])+'"></i>').join('')+'</div>':'')+'<div class="rows" style="margin-top:6px">'+nw.parts.filter(p=>p[1]!==0).map(p=>'<div class="rw" style="padding:9px 2px"><i class="dot" style="background:'+NW_PARTS[p[0]][1]+';width:11px;height:11px;border-radius:4px;flex:none"></i><div class="mid"><b style="font-size:.9rem">'+esc(NW_PARTS[p[0]][0])+'</b></div><div class="n '+(p[1]<0?'exp':'')+'">'+(p[1]<0?'−':'')+E.fmtNum(Math.abs(p[1]))+'</div></div>').join('')+'</div>'+(neg<0?'':'')+'</section>';
-  h+='<section class="card sec" style="padding:4px 16px"><div class="sec-h" style="padding-top:12px"><h2>دارایی‌های من</h2></div>'+(S.assets.length?'<div class="rows">'+S.assets.slice().sort((a,b)=>E.assetValue(b)-E.assetValue(a)).map(assetRow).join('')+'</div>':'<div class="empty" style="padding:22px 6px"><div class="em">'+ic('coins',28)+'</div><p>طلا، سکه یا ارزی که دارید را ثبت کنید تا در ثروت خالص حساب شود. قیمت روز را خودتان وارد می‌کنید (برنامه آفلاین است).</p><button class="btn primary" data-act="addAsset">'+ic('plus',18)+'دارایی جدید</button></div>')+'</section>';
+  h+='<section class="card sec" style="padding:4px 16px"><div class="sec-h" style="padding-top:12px"><h2>دارایی‌های من</h2></div>'+(S.assets.length?assetGroupsHtml():'<div class="empty" style="padding:22px 6px"><div class="em">'+ic('coins',28)+'</div><p>طلا، سکه، نقره، ارز، ارز دیجیتال، سهام یا صندوق بورسی را ثبت کنید تا در ثروت خالص حساب شود. قیمت روز را خودتان وارد می‌کنید (برنامه آفلاین است).</p><button class="btn primary" data-act="addAsset">'+ic('plus',18)+'دارایی جدید</button></div>')+'</section>';
   const ds=E.debtSummary(S.debts,today());
   if(S.debts.length)h+='<section class="card sec" role="button" tabindex="0" data-act="goDebts"><div class="sec-h"><h2>دفتر اشخاص</h2><span class="link">'+ic('chl',15)+'</span></div><div class="tiles"><div class="card flat tile"><div class="l">طلب از دیگران</div><div class="v inc">'+E.fmtNum(ds.owedToMe)+'</div></div><div class="card flat tile"><div class="l">بدهی به دیگران</div><div class="v exp">'+E.fmtNum(ds.iOwe)+'</div></div></div></section>';
   h+='<p class="hint" style="margin-top:12px">ارزش دارایی‌ها بر اساس قیمتی است که خودتان وارد می‌کنید و ممکن است با قیمت لحظه‌ای بازار فرق داشته باشد. اقساط وام‌ها با مبلغ کل اقساط باقی‌مانده (شامل سود) محاسبه می‌شود.</p>';
@@ -2339,9 +2521,11 @@ function dashWealthCard(){
   const nw=nwCompute();recordNw(nw);
   return '<section class="card sec fcmini" role="button" tabindex="0" data-act="goWealth"><div class="ico" style="--c:var(--gold)">'+ic('coins',20)+'</div><div class="mid"><b>ثروت خالص: '+(nw.total<0?'−':'')+E.fmtNum(Math.abs(nw.total))+' '+esc(unit())+'</b><div class="s"><span>دارایی‌ها: '+E.fmtNum(nw.assets)+'</span><span>طلب‌ها: '+E.fmtNum(nw.receivable)+'</span></div></div>'+ic('chl',18)+'</section>';
 }
+const NAME_FREE=['stock','fund_fixed','fund_equity','fund_mixed','fund_gold','fund_other','crypto_other','fx_other'];
+const assetNameHint=k=>k==='stock'?'نماد یا نام سهم (مثلاً فولاد)':/^fund_/.test(k)?'نماد یا نام صندوق (مثلاً عیار)':k==='crypto_other'?'نام یا نماد ارز دیجیتال':k==='fx_other'?'نام ارز':'';
 function assetFormHtml(a,isNew){
   const kinds=Object.entries(E.ASSET_KINDS);
-  return '<h2>'+(isNew?'دارایی جدید':'ویرایش «'+esc(a.name)+'»')+'</h2><div id="ferr"></div><div class="field"><label for="ak">نوع</label>'+selHtml('ak',kinds.map(([k,v])=>optHtml(k,v.icon+' '+v.label,a.kind||'gold18')).join(''))+'</div><div class="field"><label for="an2">نام</label><input class="inp" id="an2" value="'+esc(a.name||'')+'"></div><div class="grid" style="grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="aq">مقدار <span id="aunit" class="muted">('+esc(a.unit||(E.ASSET_KINDS[a.kind||'gold18']||{}).unit||'')+')</span></label><input class="inp" id="aq" inputmode="decimal" value="'+esc(a.qty!=null?a.qty:'')+'" placeholder="۰"></div><div class="field"><label for="au">واحد</label><input class="inp" id="au" value="'+esc(a.unit||(E.ASSET_KINDS[a.kind||'gold18']||{}).unit||'')+'"></div></div>'+amtField('aprice',a.price!=null?String(a.price):'','قیمت فعلی هر واحد ('+unit()+')')+amtField('abuy',a.buyPrice!=null?String(a.buyPrice):'','قیمت خرید هر واحد (اختیاری، برای سود و زیان)')+'<div class="field"><label for="anote">یادداشت</label><input class="inp" id="anote" value="'+esc(a.note||'')+'"></div><div class="row between foot"><div>'+(isNew?'':'<button class="btn danger" data-act="delAsset" data-id="'+esc(a.id)+'">حذف</button>')+'</div><div class="row"><button class="btn" data-act="closeSheet">بستن</button><button class="btn primary" data-act="saveAsset" data-id="'+esc(a.id||'')+'">ذخیره</button></div></div>';
+  return '<h2>'+(isNew?'دارایی جدید':'ویرایش «'+esc(a.name)+'»')+'</h2><div id="ferr"></div><div class="field"><label for="ak">نوع</label>'+selHtml('ak',E.ASSET_GROUPS.map(g=>'<optgroup label="'+esc(g.icon+' '+g.label)+'">'+kinds.filter(([k,v])=>v.group===g.id).map(([k,v])=>optHtml(k,v.icon+' '+v.label,a.kind||'gold18')).join('')+'</optgroup>').join(''))+'</div><div class="field"><label for="an2">نام</label><input class="inp" id="an2" value="'+esc(a.name||'')+'" placeholder="'+esc(assetNameHint(a.kind||'gold18'))+'"><div class="hint" id="an2-h"></div></div><div class="grid" style="grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="aq">مقدار <span id="aunit" class="muted">('+esc(a.unit||(E.ASSET_KINDS[a.kind||'gold18']||{}).unit||'')+')</span></label><input class="inp" id="aq" inputmode="decimal" autocomplete="off" value="'+esc(a.qty!=null?a.qty:'')+'" placeholder="۰"></div><div class="field"><label for="au">واحد</label><input class="inp" id="au" value="'+esc(a.unit||(E.ASSET_KINDS[a.kind||'gold18']||{}).unit||'')+'"></div></div>'+amtField('aprice',a.price!=null?String(a.price):'','قیمت فعلی هر واحد ('+unit()+')')+amtField('abuy',a.buyPrice!=null?String(a.buyPrice):'','قیمت خرید هر واحد (اختیاری، برای سود و زیان)')+'<div class="field"><label for="anote">یادداشت</label><input class="inp" id="anote" value="'+esc(a.note||'')+'"></div><div class="row between foot"><div>'+(isNew?'':'<button class="btn danger" data-act="delAsset" data-id="'+esc(a.id)+'">حذف</button>')+'</div><div class="row"><button class="btn" data-act="closeSheet">بستن</button><button class="btn primary" data-act="saveAsset" data-id="'+esc(a.id||'')+'">ذخیره</button></div></div>';
 }
 function openAsset(id){
   const a=id?S.assets.find(x=>x.id===id):{kind:'gold18',name:E.ASSET_KINDS.gold18.label};
@@ -2363,7 +2547,7 @@ async function delAsset(id){
 }
 function openAssetPrices(){
   if(!S.assets.length){toast('ابتدا یک دارایی ثبت کنید');return}
-  openSheet('<h2>به‌روزرسانی قیمت‌ها</h2><p class="muted small" style="margin:-6px 0 12px">قیمت امروز هر واحد را وارد کنید ('+esc(unit())+'). فقط مواردی که تغییر کنند ثبت می‌شوند.</p><div id="ferr"></div>'+S.assets.map((a,i)=>'<div class="field"><label for="up'+i+'">'+esc(a.name)+' <span class="muted">('+esc(a.unit||'')+')</span></label><input class="inp" id="up'+i+'" data-amt inputmode="decimal" value="'+esc(String(a.price))+'"><div class="hint" id="up'+i+'-h"></div></div>').join('')+'<div class="row end foot"><button class="btn" data-act="closeSheet">بستن</button><button class="btn primary" data-act="saveAssetPrices">ذخیره</button></div>');
+  openSheet('<h2>به‌روزرسانی قیمت‌ها</h2><p class="muted small" style="margin:-6px 0 12px">قیمت امروز هر واحد را وارد کنید ('+esc(unit())+'). فقط مواردی که تغییر کنند ثبت می‌شوند.</p><div id="ferr"></div>'+(()=>{const ord=S.assets.map((a,i)=>i).sort((x,y)=>E.ASSET_GROUPS.findIndex(g=>g.id===E.assetGroupOf(S.assets[x].kind))-E.ASSET_GROUPS.findIndex(g=>g.id===E.assetGroupOf(S.assets[y].kind)));let last='',o='';for(const i of ord){const a=S.assets[i],gi=E.assetGroupOf(a.kind);if(gi!==last){const g=E.ASSET_GROUPS.find(x=>x.id===gi);o+='<div class="lbl" style="margin:6px 0 8px">'+esc(g.icon+' '+g.label)+'</div>';last=gi}o+='<div class="field"><label for="up'+i+'">'+esc(a.name)+' <span class="muted">('+esc(a.unit||'')+')</span></label><input class="inp" id="up'+i+'" data-amt inputmode="decimal" value="'+esc(String(a.price))+'"><div class="hint" id="up'+i+'-h"></div></div>'}return o})()+'<div class="row end foot"><button class="btn" data-act="closeSheet">بستن</button><button class="btn primary" data-act="saveAssetPrices">ذخیره</button></div>');
   document.querySelectorAll('#overlay [data-amt]').forEach(hintAmt);
 }
 async function saveAssetPrices(){
@@ -2467,7 +2651,7 @@ async function delDebt(id){
 document.addEventListener('change',e=>{
   const t=e.target;
   if(t.id==='ak'){const k=E.ASSET_KINDS[t.value]||E.ASSET_KINDS.other,n=$('#an2'),u=$('#au');
-    const was=Object.values(E.ASSET_KINDS).some(x=>x.label===n.value.trim());if(!n.value.trim()||was)n.value=k.label;u.value=k.unit;const au=$('#aunit');if(au)au.textContent='('+k.unit+')'}
+    const was=Object.values(E.ASSET_KINDS).some(x=>x.label===n.value.trim());if(!n.value.trim()||was)n.value=NAME_FREE.includes(t.value)?'':k.label;n.placeholder=assetNameHint(t.value);u.value=k.unit;const au=$('#aunit');if(au)au.textContent='('+k.unit+')';const nh=$('#an2-h');if(nh)nh.textContent=NAME_FREE.includes(t.value)&&!n.value?'نام یا نماد را بنویسید.':'';if(NAME_FREE.includes(t.value)&&!n.value)n.focus()}
   else if(t.id==='dtx'){const b=$('#dtxacc');if(b)b.style.display=t.checked?'':'none'}
   else if(t.id==='ptx'){const b=$('#ptxacc');if(b)b.style.display=t.checked?'':'none'}
 });
@@ -3033,6 +3217,318 @@ const ACT8={
   licCopyDev:async t=>{try{await navigator.clipboard.writeText(LIC.row.dev);t.textContent='کپی شد ✓'}catch(e){t.textContent='دستی کپی کنید'}}
 };
 
+/* ================= فاز ۷: تاریخ‌انتخاب‌کن شمسی + لیست بازشوی هم‌تم + گزارش‌ها ================= */
+IC.chart='<path d="M5 20V11M12 20V4M19 20v-6"/>';
+
+/* ---------- ۱) تاریخ‌انتخاب‌کن شمسی ---------- */
+const DP={el:null,y:0,m:0,sel:null,focus:null,view:'days',ys:0,clearable:false};
+const DP_SEL='input[data-date],#fdate,input[id^="sm_d"]';
+const DP_WD=['ش','ی','د','س','چ','پ','ج'];
+const DP_DOW=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+const dpIsoDow=iso=>new Date(iso+'T00:00:00Z').getUTCDay();
+function dpHost(){let d=document.getElementById('dp');if(!d){d=document.createElement('div');d.id='dp';document.body.appendChild(d)}return d}
+function dpOpen(input){
+  DP.el=input;
+  const cur=E.parseJDate(input.value),iso=cur||today(),j=E.isoToJ(iso);
+  DP.y=j.jy;DP.m=j.jm;DP.sel=cur||null;DP.focus=iso;DP.view='days';DP.ys=DP.y-5;DP.clearable=input.hasAttribute('placeholder')&&!!input.getAttribute('placeholder');
+  try{input.blur()}catch(e){}
+  dpDraw(true);
+}
+function dpClose(){const h=document.getElementById('dp');if(h)h.innerHTML='';DP.el=null}
+const dpOpened=()=>!!(DP.el&&document.getElementById('dp')&&document.getElementById('dp').innerHTML);
+function dpDraw(focusDay){
+  const h=dpHost(),td=today(),selIso=DP.sel||td,sj=E.isoToJ(selIso);
+  let body='';
+  if(DP.view==='days'){
+    const first=E.jToIso(DP.y,DP.m,1),off=(dpIsoDow(first)+1)%7,n=E.daysInJMonth(DP.y,DP.m);
+    const fj=E.isoToJ(DP.focus),fd=(fj.jy===DP.y&&fj.jm===DP.m)?fj.jd:1;
+    let cells='';
+    for(let i=0;i<off;i++)cells+='<span></span>';
+    for(let d=1;d<=n;d++){
+      const iso=E.jToIso(DP.y,DP.m,d),col=(off+d-1)%7;
+      cells+='<button type="button" class="dp-d'+(iso===DP.sel?' pk':'')+(iso===td?' today':'')+(col===6?' fri':'')+'" data-dp="pick" data-iso="'+iso+'" tabindex="'+(d===fd?0:-1)+'" aria-label="'+esc(E.fmtJLong(iso))+'"'+(iso===DP.sel?' aria-pressed="true"':'')+'>'+E.toFa(d)+'</button>';
+    }
+    body='<div class="dp-nav"><button type="button" class="ib" data-dp="prev" aria-label="ماه قبل">'+ic('chr',18)+'</button><button type="button" class="dp-title" data-dp="title">'+esc(E.JM[DP.m-1]+' '+E.toFa(DP.y))+'<span class="dp-car"></span></button><button type="button" class="ib" data-dp="next" aria-label="ماه بعد">'+ic('chl',18)+'</button></div><div class="dp-wd">'+DP_WD.map((w,i)=>'<span'+(i===6?' class="fri"':'')+'>'+w+'</span>').join('')+'</div><div class="dp-grid" id="dpgrid">'+cells+'</div>';
+  }else if(DP.view==='months'){
+    body='<div class="dp-nav"><button type="button" class="ib" data-dp="prev" aria-label="سال قبل">'+ic('chr',18)+'</button><button type="button" class="dp-title" data-dp="title">'+E.toFa(DP.y)+'<span class="dp-car"></span></button><button type="button" class="ib" data-dp="next" aria-label="سال بعد">'+ic('chl',18)+'</button></div><div class="dp-pick">'+E.JM.map((m,i)=>'<button type="button" class="dp-c'+(DP.sel&&sj.jy===DP.y&&sj.jm===i+1?' pk':'')+(E.isoToJ(td).jy===DP.y&&E.isoToJ(td).jm===i+1?' today':'')+'" data-dp="month" data-v="'+(i+1)+'">'+m+'</button>').join('')+'</div>';
+  }else{
+    let ys='';
+    for(let y=DP.ys;y<DP.ys+12;y++)ys+='<button type="button" class="dp-c'+(DP.sel&&sj.jy===y?' pk':'')+(E.isoToJ(td).jy===y?' today':'')+'" data-dp="year" data-v="'+y+'">'+E.toFa(y)+'</button>';
+    body='<div class="dp-nav"><button type="button" class="ib" data-dp="prev" aria-label="قبل">'+ic('chr',18)+'</button><div class="dp-title static">'+E.toFa(DP.ys)+' – '+E.toFa(DP.ys+11)+'</div><button type="button" class="ib" data-dp="next" aria-label="بعد">'+ic('chl',18)+'</button></div><div class="dp-pick">'+ys+'</div>';
+  }
+  const lbl=DP.el&&DP.el.id&&document.querySelector('label[for="'+DP.el.id+'"]');
+  h.innerHTML='<div class="dp-scrim" data-dp="close"></div><div class="dp" role="dialog" aria-modal="true" aria-label="انتخاب تاریخ">'
+    +'<div class="dp-top"><div class="dp-selw">'+(lbl?esc(lbl.textContent):'تاریخ')+'</div><div class="dp-seld">'+esc(DP_DOW[dpIsoDow(selIso)]+' '+E.toFa(sj.jd)+' '+E.JM[sj.jm-1]+' '+E.toFa(sj.jy))+'</div><div class="dp-selg">'+esc(selIso.replace(/-/g,'/'))+(DP.sel?'':' · امروز')+'</div></div>'
+    +body
+    +'<div class="dp-foot"><button type="button" class="btn sm soft" data-dp="today">امروز</button>'+(DP.clearable?'<button type="button" class="btn sm" data-dp="clear">پاک‌کردن</button>':'')+'<span style="flex:1"></span><button type="button" class="btn sm" data-dp="close">بستن</button></div></div>';
+  if(focusDay){const b=h.querySelector('.dp-d[tabindex="0"]')||h.querySelector('.dp-c.pk');if(b)try{b.focus({preventScroll:true})}catch(e){}}
+}
+function dpSet(iso){
+  const el=DP.el;if(!el)return;
+  el.value=E.fmtJ(iso);dpClose();
+  el.dispatchEvent(new Event('input',{bubbles:true}));
+  el.dispatchEvent(new Event('change',{bubbles:true}));
+  el.dispatchEvent(new CustomEvent('dp:pick',{bubbles:true}));
+}
+function dpAct(b){
+  const a=b.dataset.dp;
+  if(a==='close'){dpClose();return}
+  if(a==='pick'){dpSet(b.dataset.iso);return}
+  if(a==='today'){dpSet(today());return}
+  if(a==='clear'){const el=DP.el;el.value='';dpClose();el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));el.dispatchEvent(new CustomEvent('dp:pick',{bubbles:true}));return}
+  if(a==='title'){DP.view=DP.view==='days'?'months':'years';if(DP.view==='years')DP.ys=DP.y-5;dpDraw();return}
+  if(a==='month'){DP.m=+b.dataset.v;DP.view='days';DP.focus=E.jToIso(DP.y,DP.m,1);dpDraw();return}
+  if(a==='year'){DP.y=+b.dataset.v;DP.view='months';dpDraw();return}
+  if(a==='prev'||a==='next'){
+    const s=a==='next'?1:-1;
+    if(DP.view==='days'){const x=E.addMonths(DP.y,DP.m,s);DP.y=x.jy;DP.m=x.jm;DP.focus=E.jToIso(DP.y,DP.m,1)}
+    else if(DP.view==='months')DP.y+=s;else DP.ys+=12*s;
+    dpDraw();
+  }
+}
+function dpKey(e){
+  if(!dpOpened())return false;
+  if(e.key==='Escape'){e.stopPropagation();e.preventDefault();dpClose();return true}
+  if(DP.view!=='days')return false;
+  const mv={ArrowRight:-1,ArrowLeft:1,ArrowUp:-7,ArrowDown:7}[e.key];
+  if(mv!==undefined&&e.target.closest&&e.target.closest('.dp-grid')){
+    e.preventDefault();e.stopPropagation();
+    const ni=E.addDays(DP.focus,mv),j=E.isoToJ(ni);DP.focus=ni;DP.y=j.jy;DP.m=j.jm;dpDraw();
+    const t=document.querySelector('#dp .dp-d[data-iso="'+ni+'"]');if(t){t.tabIndex=0;t.focus({preventScroll:true})}
+    return true;
+  }
+  if(e.key==='PageDown'||e.key==='PageUp'){
+    e.preventDefault();e.stopPropagation();
+    const x=E.addMonths(DP.y,DP.m,e.key==='PageDown'?1:-1);DP.y=x.jy;DP.m=x.jm;DP.focus=E.jToIso(DP.y,DP.m,1);dpDraw(true);return true;
+  }
+  return false;
+}
+document.addEventListener('focusin',e=>{const t=e.target;if(t&&t.tagName==='INPUT'&&t.matches&&t.matches(DP_SEL))t.setAttribute('inputmode','none')});
+
+/* ---------- ۲) لیست بازشوی هم‌رنگ تم (جایگزین لیست خامِ سیستم‌عامل) ---------- */
+const DD={sel:null,items:[],title:''};
+function ddItems(sel){
+  const out=[];
+  for(const c of sel.children){
+    if(c.tagName==='OPTGROUP'){out.push({g:true,label:c.label});for(const o of c.children)out.push({v:o.value,label:o.textContent,dis:o.disabled,on:o.value===sel.value&&o.selected})}
+    else if(c.tagName==='OPTION')out.push({v:c.value,label:c.textContent,dis:c.disabled,on:c.value===sel.value&&c.selected});
+  }
+  return out;
+}
+function ddListHtml(q){
+  const nq=q?E.cmpText(q):'';let h='',pendG=null,any=false;
+  for(const it of DD.items){
+    if(it.g){pendG=it;continue}
+    if(nq&&E.cmpText(it.label).indexOf(nq)<0)continue;
+    if(pendG){h+='<div class="dd-g">'+esc(pendG.label)+'</div>';pendG=null}
+    any=true;
+    h+='<button type="button" class="dd-i'+(it.on?' on':'')+'" role="option" aria-selected="'+(it.on?'true':'false')+'" data-dd="pick" data-v="'+esc(it.v)+'"'+(it.dis?' disabled':'')+'><span>'+esc(it.label)+'</span>'+(it.on?ic('check',18):'')+'</button>';
+  }
+  return any?h:'<div class="dd-empty">موردی پیدا نشد</div>';
+}
+function ddOpen(sel,wrap){
+  DD.sel=sel;DD.items=ddItems(sel);
+  const lbl=(sel.id&&document.querySelector('label[for="'+sel.id+'"]'))||null;
+  DD.title=(lbl?lbl.textContent:sel.getAttribute('aria-label'))||'';
+  const cnt=DD.items.filter(i=>!i.g).length,wide=window.innerWidth>=700;
+  let st='';
+  if(wide){
+    const r=(wrap||sel).getBoundingClientRect(),below=window.innerHeight-r.bottom-14,above=r.top-14,up=below<240&&above>below,mh=Math.max(180,Math.min(360,up?above:below));
+    st='left:'+Math.max(8,Math.min(r.left,window.innerWidth-Math.max(r.width,230)-8))+'px;width:'+Math.max(r.width,230)+'px;max-height:'+mh+'px;'+(up?'bottom:'+(window.innerHeight-r.top+6)+'px':'top:'+(r.bottom+6)+'px');
+  }
+  const host=document.getElementById('dd')||(()=>{const d=document.createElement('div');d.id='dd';document.body.appendChild(d);return d})();
+  host.innerHTML='<div class="dd-scrim" data-dd="close"></div><div class="dd'+(wide?'':' sheet-m')+'" role="listbox" aria-label="'+esc(DD.title)+'"'+(st?' style="'+st+'"':'')+'>'
+    +(!wide&&DD.title?'<div class="dd-t">'+esc(DD.title)+'</div>':'')
+    +(cnt>12?'<div class="dd-s"><input class="inp" id="dd-q" placeholder="جست‌وجو…" autocomplete="off"></div>':'')
+    +'<div class="dd-list" id="dd-list">'+ddListHtml('')+'</div></div>';
+  const on=host.querySelector('.dd-i.on');
+  if(on){try{on.scrollIntoView({block:'center'})}catch(e){}if(wide||cnt<=12)try{on.focus({preventScroll:true})}catch(e){}}
+  else if(wide){const q=host.querySelector('#dd-q');if(q)q.focus()}
+}
+function ddClose(refocus){const h=document.getElementById('dd');if(h)h.innerHTML='';if(refocus&&DD.sel)try{DD.sel.focus({preventScroll:true})}catch(e){}DD.sel=null}
+const ddOpened=()=>!!(DD.sel&&document.getElementById('dd')&&document.getElementById('dd').innerHTML);
+function ddPick(v){
+  const s=DD.sel;if(!s)return;
+  const changed=s.value!==v;s.value=v;ddClose(true);
+  if(changed){s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}))}
+}
+function ddKey(e){
+  if(!ddOpened())return false;
+  if(e.key==='Escape'){e.stopPropagation();e.preventDefault();ddClose(true);return true}
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    const L=[...document.querySelectorAll('#dd .dd-i:not([disabled])')];if(!L.length)return true;
+    e.preventDefault();e.stopPropagation();
+    const i=L.indexOf(document.activeElement),n=e.key==='ArrowDown'?(i<0?0:Math.min(L.length-1,i+1)):(i<=0?0:i-1);
+    L[n].focus();return true;
+  }
+  return false;
+}
+
+/* ---------- رویدادهای مشترک ---------- */
+document.addEventListener('keydown',e=>{
+  if(dpKey(e))return;if(ddKey(e))return;
+  const t=e.target;
+  if(t&&t.tagName==='SELECT'&&t.closest&&t.closest('.sel')&&!t.disabled&&(e.key==='Enter'||e.key===' '||e.key==='ArrowDown'||e.key==='ArrowUp')){e.preventDefault();ddOpen(t,t.closest('.sel'))}
+},true);
+document.addEventListener('click',e=>{
+  const t=e.target;if(!t||!t.closest)return;
+  const dpb=t.closest('[data-dp]');if(dpb&&dpb.closest('#dp')){e.preventDefault();dpAct(dpb);return}
+  const ddb=t.closest('[data-dd]');if(ddb&&ddb.closest('#dd')){e.preventDefault();if(ddb.dataset.dd==='close')ddClose(true);else if(!ddb.disabled)ddPick(ddb.dataset.v);return}
+  const inp=t.closest(DP_SEL);if(inp&&inp.tagName==='INPUT'&&!inp.disabled&&!inp.readOnly){e.preventDefault();dpOpen(inp);return}
+  const w=t.closest('.sel');if(w){const s=w.querySelector('select');if(s&&!s.disabled){e.preventDefault();ddOpen(s,w)}}
+});
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='dd-q'){const l=document.getElementById('dd-list');if(l)l.innerHTML=ddListHtml(e.target.value)}});
+
+/* ---------- ۳) گزارش‌ها ---------- */
+const RPS={kind:'month',jy:0,jm:0,js:0,from:'',to:'',allExp:false,ready:false};
+function rpInit(){
+  if(RPS.ready)return;
+  const j=E.isoToJ(today());
+  RPS.jy=V&&V.jy?V.jy:j.jy;RPS.jm=V&&V.jm?V.jm:j.jm;RPS.js=E.seasonOf(RPS.jm);
+  RPS.from=E.jToIso(j.jy,j.jm,1);RPS.to=today();RPS.ready=true;
+}
+const rpPeriod=()=>E.reportPeriod({kind:RPS.kind,jy:RPS.jy,jm:RPS.jm,js:RPS.js,from:RPS.from,to:RPS.to,txs:S.txs,today:today()});
+const RP_PREV={month:'ماه قبل',season:'فصل قبل',year:'سال قبل',custom:'بازه‌ی قبل'};
+function rpYears(){
+  const cy=E.isoToJ(today()).jy;let mn=cy-1;
+  for(const t of S.txs){const y=E.isoToJ(t.date).jy;if(y<mn)mn=y}
+  const out=[];for(let y=cy+1;y>=Math.max(mn,cy-15);y--)out.push(y);
+  if(!out.includes(RPS.jy))out.push(RPS.jy);
+  return out.sort((a,b)=>b-a);
+}
+function rpDelta(d,goodUp,label){
+  if(d==null)return '';
+  if(Math.abs(d)<0.005)return '<div class="rp-d">بدون تغییر نسبت به '+esc(label)+'</div>';
+  const up=d>0,good=goodUp?up:!up;
+  return '<div class="rp-d '+(good?'inc':'exp')+'">'+(up?'▲':'▼')+' '+E.toFa(Math.round(Math.abs(d)*100))+'٪ <span class="muted">نسبت به '+esc(label)+'</span></div>';
+}
+function rpChart(R){
+  const b=R.buckets,n=b.length;if(!n)return '';
+  const W=Math.max(300,n*(n>24?15:n>12?24:36)),H=176,pT=8,pB=24,ch=H-pT-pB;
+  const mx=Math.max(1,...b.map(x=>Math.max(x.income,x.expense))),step=W/n,bw=Math.max(3,Math.min(step*.34,16));
+  const every=Math.max(1,Math.ceil(n/Math.floor(W/34)));
+  let g='';
+  for(let k=0;k<=3;k++){const y=pT+ch*k/3;g+='<line x1="0" x2="'+W+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'" class="rp-grid"/>'}
+  b.forEach((x,i)=>{
+    const cx=W-(i+.5)*step,hi=x.income/mx*ch,he=x.expense/mx*ch;
+    g+='<g><title>'+esc(x.title)+'\nدرآمد: '+E.fmtNum(x.income)+'\nهزینه: '+E.fmtNum(x.expense)+'</title>'
+      +'<rect x="'+(cx+1).toFixed(1)+'" y="'+(pT+ch-hi).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(x.income>0?2:0,hi).toFixed(1)+'" rx="2.5" fill="var(--income)"/>'
+      +'<rect x="'+(cx-bw-1).toFixed(1)+'" y="'+(pT+ch-he).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(x.expense>0?2:0,he).toFixed(1)+'" rx="2.5" fill="var(--expense)"/>'
+      +(i%every===0?'<text x="'+cx.toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle">'+esc(x.label)+'</text>':'')+'</g>';
+  });
+  return '<div class="rp-chart"><svg viewBox="0 0 '+W+' '+H+'" style="min-width:'+Math.min(W,2000)+'px;width:100%;height:auto" role="img" aria-label="نمودار درآمد و هزینه">'+g+'</svg></div><div class="row" style="gap:14px;margin-top:6px"><span class="xs muted"><i class="dot" style="background:var(--income)"></i> درآمد</span><span class="xs muted"><i class="dot" style="background:var(--expense)"></i> هزینه</span><span class="xs faint">'+(R.gran==='day'?'روزانه':R.gran==='month'?'ماهانه':'سالانه')+'</span></div>';
+}
+function rpCatRows(list,limit,all,kind){
+  if(!list.length)return '<p class="muted small" style="margin:6px 0">در این بازه ثبت نشده است.</p>';
+  const mx=Math.max(...list.map(x=>x.total)),show=all?list:list.slice(0,limit);
+  let h=show.map(x=>{
+    const c=S.cM.get(x.categoryId),col=catColor(c);
+    const dl=x.delta!=null&&Math.abs(x.delta)>=0.005?'<span class="xs '+((kind==='expense')===(x.delta<0)?'inc':'exp')+'" style="font-weight:700">'+(x.delta>0?'▲':'▼')+E.toFa(Math.round(Math.abs(x.delta)*100))+'٪</span>':'';
+    return '<div class="rpcat"><div class="rpcat-h"><span class="rpcat-n"><span class="ico sm" style="--c:'+col+'">'+esc(c?c.icon||'📦':'📦')+'</span><b>'+esc(c?c.name:'بدون دسته')+'</b></span><span class="rpcat-v"><b>'+E.fmtNum(x.total)+'</b> <span class="muted xs">'+E.toFa(Math.round(x.share*100))+'٪</span> '+dl+'</span></div><div class="prog"><i style="width:'+Math.max(2,x.total/mx*100).toFixed(1)+'%;background:'+col+'"></i></div></div>';
+  }).join('');
+  if(!all&&list.length>limit)h+='<button class="btn sm" style="margin-top:8px" data-act="rpAll" data-v="'+kind+'">نمایش همه‌ی '+E.toFa(list.length)+' دسته</button>';
+  return h;
+}
+function rpControls(){
+  const k=RPS.kind,tabs=[['month','ماهانه'],['season','فصلی'],['year','سالانه'],['all','کل دوران'],['custom','بازه‌ی دلخواه']];
+  let h='<div class="seg scroll" style="margin-bottom:12px">'+tabs.map(([v,l])=>'<button data-act="rpKind" data-v="'+v+'" class="'+(k===v?'on':'')+'">'+l+'</button>').join('')+'</div>';
+  const yrs=rpYears(),yo=yrs.map(y=>optHtml(y,E.toFa(y),RPS.jy)).join('');
+  if(k==='month'||k==='season'||k==='year'){
+    h+='<div class="row" style="flex-wrap:nowrap;margin-bottom:14px"><button class="ib" data-act="rpPrev" aria-label="قبلی">'+ic('chr',18)+'</button><div class="rp-pick">'
+      +(k==='month'?selHtml('rp_m',E.JM.map((m,i)=>optHtml(i+1,m,RPS.jm)).join(''),' aria-label="ماه"'):'')
+      +(k==='season'?selHtml('rp_s',E.SEASONS.map((m,i)=>optHtml(i+1,'فصل '+m,RPS.js)).join(''),' aria-label="فصل"'):'')
+      +selHtml('rp_y',yo,' aria-label="سال"')+'</div><button class="ib" data-act="rpNext" aria-label="بعدی">'+ic('chl',18)+'</button></div>';
+  }else if(k==='custom'){
+    h+='<div class="card flat" style="margin-bottom:14px"><div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">'+dateField('rp_from',RPS.from||today(),'از تاریخ')+dateField('rp_to',RPS.to||today(),'تا تاریخ')+'</div><div class="chips" style="margin-top:2px">'
+      +[['7','۷ روز اخیر'],['30','۳۰ روز اخیر'],['90','۹۰ روز اخیر'],['365','۱۲ ماه اخیر']].map(([d,l])=>'<button class="chip" data-act="rpPreset" data-v="'+d+'">'+l+'</button>').join('')+'<button class="chip on" data-act="rpApply">نمایش گزارش</button></div></div>';
+  }
+  return h;
+}
+function viewReports(){
+  rpInit();
+  const p=rpPeriod();
+  let h='<div class="view"><div class="head"><div><button class="back" data-act="goMore">'+ic('chr',15)+'تنظیمات</button><h1>گزارش‌ها</h1><div class="sub">ماهانه، فصلی، سالانه، کل دوران یا هر بازه‌ی دلخواه</div></div><div class="row">'+topTools()+'</div></div>';
+  h+=rpControls();
+  const R=E.buildPeriodReport({txs:S.txs,accounts:activeAccs(),period:p,today:today()});
+  if(!R.ok){h+='<div class="card empty"><div class="em">'+ic('alert',28)+'</div><p>'+esc(R.error||'بازه‌ی گزارش نامعتبر است.')+'</p></div></div>';return h}
+  const u=esc(unit()),pl=RP_PREV[p.kind]||'';
+  h+='<section class="card rp-head"><div><div class="muted small">گزارش</div><h2 style="margin:0">'+esc(p.label)+'</h2><div class="muted xs">'+esc(E.fmtJ(R.from)+' تا '+E.fmtJ(R.to))+' | '+E.toFa(R.span)+' روز | واحد: '+u+'</div></div><div class="row"><button class="btn" data-act="rpCsv">'+ic('download',16)+'CSV</button><button class="btn primary" data-act="rpPrint">'+ic('file',16)+'چاپ / PDF</button></div></section>';
+  if(R.partial)h+='<div class="note"><span class="t">'+ic('clock',18)+'این بازه هنوز تمام نشده است؛ مقایسه فقط تا همین روز از '+esc(pl)+' انجام شده.</span></div>';
+  if(!R.txCount){h+='<div class="card empty" style="margin-top:14px"><div class="em">'+ic('list',28)+'</div><p>در این بازه تراکنشی ثبت نشده است. بازه‌ی دیگری انتخاب کنید.</p></div></div>';return h}
+  const T=R.totals,d=R.delta;
+  h+='<div class="tiles t4" style="margin-top:14px">'
+    +'<div class="card flat tile"><div class="l">درآمد</div><div class="v inc">'+E.fmtNum(T.income)+'</div>'+rpDelta(d&&d.income,true,pl)+'</div>'
+    +'<div class="card flat tile"><div class="l">هزینه</div><div class="v exp">'+E.fmtNum(T.expense)+'</div>'+rpDelta(d&&d.expense,false,pl)+'</div>'
+    +'<div class="card flat tile"><div class="l">خالص (درآمد − هزینه)</div><div class="v '+(T.net<0?'exp':'inc')+'">'+(T.net<0?'−':'')+E.fmtNum(Math.abs(T.net))+'</div>'+rpDelta(d&&d.net,true,pl)+'</div>'
+    +'<div class="card flat tile"><div class="l">نرخ پس‌انداز</div><div class="v">'+(T.savingsRate==null?'—':E.toFa(Math.round(T.savingsRate*100))+'٪')+'</div>'+(R.prevTotals&&R.prevTotals.savingsRate!=null&&T.savingsRate!=null?'<div class="rp-d muted">'+esc(pl)+': '+E.toFa(Math.round(R.prevTotals.savingsRate*100))+'٪</div>':'')+'</div></div>';
+  h+='<section class="card sec"><h2 style="margin-bottom:8px">روند درآمد و هزینه</h2>'+rpChart(R)+'</section>';
+  h+='<div class="grid cols-2" style="align-items:start"><section class="card sec"><h2 style="margin-bottom:8px">هزینه‌ها بر اساس دسته</h2>'+rpCatRows(R.expenseCats,8,RPS.allExp,'expense')+'</section>'
+    +'<section class="card sec"><h2 style="margin-bottom:8px">درآمدها بر اساس دسته</h2>'+rpCatRows(R.incomeCats,8,RPS.allInc,'income')+'</section></div>';
+  const bz=R.busiest,big=R.topExpenses[0];
+  h+='<section class="card sec"><h2 style="margin-bottom:10px">نگاه آماری</h2><div class="tiles t4">'
+    +'<div class="card flat tile"><div class="l">میانگین هزینه‌ی روزانه</div><div class="v">'+E.fmtNum(Math.round(R.avgDaily))+'</div></div>'
+    +(R.avgMonthly!=null?'<div class="card flat tile"><div class="l">میانگین هزینه‌ی ماهانه</div><div class="v">'+E.fmtNum(Math.round(R.avgMonthly))+'</div></div>':'<div class="card flat tile"><div class="l">تعداد تراکنش</div><div class="v">'+E.toFa(R.txCount)+'</div></div>')
+    +'<div class="card flat tile"><div class="l">پرهزینه‌ترین روز</div><div class="v">'+(bz?E.fmtNum(bz.total):'—')+'</div>'+(bz?'<div class="rp-d muted">'+esc(E.fmtJ(bz.date))+'</div>':'')+'</div>'
+    +'<div class="card flat tile"><div class="l">بزرگ‌ترین هزینه</div><div class="v">'+(big?E.fmtNum(big.amount):'—')+'</div>'+(big?'<div class="rp-d muted">'+esc(big.description||budName(big.categoryId))+'</div>':'')+'</div></div></section>';
+  if(R.topExpenses.length)h+='<section class="card sec" style="padding:4px 16px"><div class="sec-h" style="padding-top:12px"><h2>بزرگ‌ترین هزینه‌ها</h2></div><div class="rows">'+R.topExpenses.map(t=>{const x=S.txs.find(q=>q.id===t.id);return x?txRow(x):''}).join('')+'</div></section>';
+  if(R.accounts.length&&(R.openingTotal!==0||R.closingTotal!==0)){
+    h+='<section class="card sec"><h2 style="margin-bottom:6px">موجودی حساب‌ها</h2><p class="muted xs" style="margin:0 0 8px">از ابتدا تا انتهای بازه (با احتساب انتقال‌ها)</p><div class="rows">'
+      +R.accounts.map(a=>{const ac=S.aM.get(a.id),df=a.closing-a.opening;return '<div class="rw" style="cursor:default;padding:10px 2px"><div class="mid"><b style="font-size:.9rem">'+esc(ac?ac.name:'—')+'</b><div class="s"><span>ابتدا: '+(a.opening<0?'−':'')+E.fmtNum(Math.abs(a.opening))+'</span></div></div><div style="text-align:end"><div class="n">'+(a.closing<0?'−':'')+E.fmtNum(Math.abs(a.closing))+'</div><div class="xs '+(df>=0?'inc':'exp')+'" style="font-weight:700">'+(df>=0?'+':'−')+E.fmtNum(Math.abs(df))+'</div></div></div>'}).join('')
+      +'</div></section>';
+  }
+  return h+'</div>';
+}
+/* نسخه‌ی چاپی (PDF) */
+function buildPeriodHtml(R){
+  const f=n=>E.fmtNum(n),u=esc(unit()),T=R.totals,pl=RP_PREV[R.period.kind]||'';
+  let h='<div class="rep"><header><div><div class="rb">'+esc(BRAND)+'</div><h1>گزارش مالی | '+esc(R.period.label)+'</h1><div class="muted">'+esc(E.fmtJ(R.from)+' تا '+E.fmtJ(R.to))+'</div></div><div class="muted">تاریخ تهیه: '+esc(E.fmtJLong(today()))+'<br>واحد: '+u+'</div></header>';
+  const pt=R.prevTotals,row=(l,a,b)=>[l,a].concat(pt?[b]:[]);
+  h+='<h2>خلاصه</h2>'+repTable(['شاخص','این بازه'].concat(pt?[pl]:[]),[row('درآمد',f(T.income),pt&&f(pt.income)),row('هزینه',f(T.expense),pt&&f(pt.expense)),row('خالص',(T.net<0?'−':'')+f(Math.abs(T.net)),pt&&((pt.net<0?'−':'')+f(Math.abs(pt.net)))),row('نرخ پس‌انداز',T.savingsRate==null?'—':E.toFa(Math.round(T.savingsRate*100))+'٪',pt&&(pt.savingsRate==null?'—':E.toFa(Math.round(pt.savingsRate*100))+'٪')),row('تعداد تراکنش',E.toFa(T.count),pt&&E.toFa(pt.count)),row('میانگین هزینه‌ی روزانه',f(Math.round(R.avgDaily)),'—')]);
+  if(R.gran!=='day'&&R.buckets.length>1)h+='<h2>روند '+(R.gran==='month'?'ماهانه':'سالانه')+'</h2>'+repTable([R.gran==='month'?'ماه':'سال','درآمد','هزینه','خالص'],R.buckets.map(b=>[esc(b.title),f(b.income),f(b.expense),(b.net<0?'−':'')+f(Math.abs(b.net))]));
+  if(R.expenseCats.length)h+='<h2>هزینه‌ها بر اساس دسته</h2>'+repTable(['دسته','مبلغ','سهم'].concat(pt?['تغییر']:[]),R.expenseCats.map(x=>[esc(budName(x.categoryId)),f(x.total),T.expense?E.toFa(Math.round(x.share*100))+'٪':'—'].concat(pt?[x.delta==null?'جدید':(x.delta>0?'+':'−')+E.toFa(Math.round(Math.abs(x.delta)*100))+'٪']:[])));
+  if(R.incomeCats.length)h+='<h2>درآمدها بر اساس دسته</h2>'+repTable(['دسته','مبلغ','سهم'],R.incomeCats.map(x=>[esc(budName(x.categoryId)),f(x.total),T.income?E.toFa(Math.round(x.share*100))+'٪':'—']));
+  if(R.topExpenses.length)h+='<h2>بزرگ‌ترین هزینه‌ها</h2>'+repTable(['تاریخ','شرح','دسته','مبلغ'],R.topExpenses.map(t=>[E.fmtJ(t.date),esc(t.description||'—'),esc(budName(t.categoryId)),f(t.amount)]));
+  if(R.accounts.length&&(R.openingTotal!==0||R.closingTotal!==0))h+='<h2>موجودی حساب‌ها</h2>'+repTable(['حساب','ابتدای بازه','انتهای بازه'],R.accounts.map(a=>{const ac=S.aM.get(a.id);return[esc(ac?ac.name:'—'),(a.opening<0?'−':'')+f(Math.abs(a.opening)),(a.closing<0?'−':'')+f(Math.abs(a.closing))]}).concat([['<b>جمع</b>','<b>'+(R.openingTotal<0?'−':'')+f(Math.abs(R.openingTotal))+'</b>','<b>'+(R.closingTotal<0?'−':'')+f(Math.abs(R.closingTotal))+'</b>']]));
+  return h+'<footer>تهیه‌شده با '+esc(BRAND)+' | داده‌ها فقط روی دستگاه شما نگهداری می‌شود</footer></div>';
+}
+function rpReport(){return E.buildPeriodReport({txs:S.txs,accounts:activeAccs(),period:rpPeriod(),today:today()})}
+function rpGo(){render();window.scrollTo(0,0)}
+const ACT9={
+  goReports:()=>go('reports'),
+  rpKind:t=>{RPS.kind=t.dataset.v;RPS.allExp=false;RPS.allInc=false;rpGo()},
+  rpAll:t=>{if(t.dataset.v==='income')RPS.allInc=true;else RPS.allExp=true;render()},
+  rpPrev:()=>rpStep(-1),rpNext:()=>rpStep(1),rpApply:()=>{rpReadDates();render()},
+  rpPreset:t=>{const n=+t.dataset.v;RPS.to=today();RPS.from=E.addDays(today(),-(n-1));render()},
+  rpPrint:()=>{
+    const R=rpReport();if(!R.ok||!R.txCount){toast('در این بازه تراکنشی برای گزارش نیست');return}
+    const p=$('#print');p.innerHTML=buildPeriodHtml(R);document.body.classList.add('printing');
+    const done=()=>{document.body.classList.remove('printing');window.removeEventListener('afterprint',done)};
+    window.addEventListener('afterprint',done);setTimeout(()=>{try{window.print()}catch(e){done()}},80);
+  },
+  rpCsv:()=>{
+    const p=rpPeriod();if(!p.ok){toast(p.error);return}
+    const list=S.txs.filter(t=>E.inRange(t.date,p.from,p.to));
+    if(!list.length){toast('در این بازه تراکنشی نیست');return}
+    download('transactions-'+p.from+'_'+p.to+'.csv',txCsv(list),'text/csv;charset=utf-8');toast(E.toFa(list.length)+' تراکنش در فایل CSV ذخیره شد');
+  }
+};
+function rpStep(s){
+  if(RPS.kind==='month'){const x=E.addMonths(RPS.jy,RPS.jm,s);RPS.jy=x.jy;RPS.jm=x.jm;RPS.js=E.seasonOf(x.jm)}
+  else if(RPS.kind==='season'){RPS.js+=s;if(RPS.js>4){RPS.js=1;RPS.jy++}else if(RPS.js<1){RPS.js=4;RPS.jy--}RPS.jm=(RPS.js-1)*3+1}
+  else RPS.jy+=s;
+  render();
+}
+document.addEventListener('change',e=>{
+  const t=e.target,id=t&&t.id;
+  if(id==='rp_m'){RPS.jm=+t.value;RPS.js=E.seasonOf(RPS.jm);render()}
+  else if(id==='rp_s'){RPS.js=+t.value;RPS.jm=(RPS.js-1)*3+1;render()}
+  else if(id==='rp_y'){RPS.jy=+t.value;render()}
+});
+/* مقدار تایپ‌شده فقط ذخیره می‌شود (بدون رندر تا فوکوس از دست نرود)؛ با انتخاب از تقویم یا دکمه‌ی «نمایش گزارش» اعمال می‌شود */
+function rpReadDates(){const f=E.parseJDate($('#rp_from').value),t=E.parseJDate($('#rp_to').value);if(f)RPS.from=f;if(t)RPS.to=t}
+document.addEventListener('change',e=>{const id=e.target&&e.target.id;if(id==='rp_from'||id==='rp_to')rpReadDates()});
+document.addEventListener('dp:pick',e=>{const id=e.target&&e.target.id;if(id==='rp_from'||id==='rp_to'){rpReadDates();render()}});
+
 
 /* ---------- ابزارهای مشترک ---------- */
 function download(name,text,mime){
@@ -3375,7 +3871,7 @@ function viewMore(){
   const nd=S.txs.filter(t=>t.demo).length+S.loans.filter(l=>l.demo).length+S.cheques.filter(c=>c.demo).length+S.recurring.filter(c=>c.demo).length+S.budgets.filter(c=>c.demo).length+S.assets.filter(c=>c.demo).length+S.debts.filter(c=>c.demo).length+S.goals.filter(c=>c.demo).length;
   const notifyOk=typeof Notification!=='undefined';
   let h='<div class="view"><div class="head"><div><h1>تنظیمات</h1><div class="sub">'+esc(BRAND)+' نسخه '+E.toFa(APP_VERSION)+' | همه‌چیز فقط روی همین دستگاه</div></div></div><div class="grid cols-2" style="align-items:start">';
-  h+='<div class="grid"><div class="card" style="padding:4px 16px"><div class="rows">'+settingRow('sms','ثبت از پیامک بانکی','چسباندن متن پیامک (ایران‌زمین و سایر بانک‌ها)','smsOpen')+settingRow('coins','دارایی و ثروت خالص','طلا، سکه، ارز، بدهی و طلب‌ها','goWealth')+settingRow('flag','اهداف و صندوق‌های پس‌انداز','صندوق برای گوشی، سفر و پس‌انداز اضطراری','goGoals')+settingRow('target','بودجه‌ی ماهانه','سقف هزینه برای هر دسته و هشدار عبور از سقف','goBudget')+settingRow('bank','حساب‌ها','انواع حساب بانکی، کارت اعتباری، کیف پول و نقدی','goAcc')+settingRow('tag','دسته‌بندی‌ها','افزودن و ویرایش دسته، آیکون و رنگ','goCats')+'</div></div>';
+  h+='<div class="grid"><div class="card" style="padding:4px 16px"><div class="rows">'+settingRow('sms','ثبت از پیامک بانکی','چسباندن متن پیامک (ایران‌زمین و سایر بانک‌ها)','smsOpen')+settingRow('chart','گزارش‌ها','ماهانه، فصلی، سالانه، کل دوران و بازه‌ی دلخواه','goReports')+settingRow('coins','دارایی و ثروت خالص','طلا، نقره، ارز، ارز دیجیتال، بورس، بدهی و طلب‌ها','goWealth')+settingRow('flag','اهداف و صندوق‌های پس‌انداز','صندوق برای گوشی، سفر و پس‌انداز اضطراری','goGoals')+settingRow('target','بودجه‌ی ماهانه','سقف هزینه برای هر دسته و هشدار عبور از سقف','goBudget')+settingRow('bank','حساب‌ها','انواع حساب بانکی، کارت اعتباری، کیف پول و نقدی','goAcc')+settingRow('tag','دسته‌بندی‌ها','افزودن و ویرایش دسته، آیکون و رنگ','goCats')+'</div></div>';
   h+='<div class="card"><h2 style="margin-bottom:10px">ظاهر</h2><div class="seg">'+[['system','خودکار'],['light','روشن'],['dark','تیره']].map(([k,v])=>'<button data-act="theme" data-v="'+k+'" class="'+(S.st.theme===k?'on':'')+'">'+v+'</button>').join('')+'</div></div>';
   h+='<div class="card"><h2 style="margin-bottom:4px">یادآور سررسید</h2><p class="muted small" style="margin:0 0 12px">قسط‌ها و چک‌ها قبل از موعد روی داشبورد و صفحه‌ی تعهدات برجسته می‌شوند.</p><div class="field"><label for="remSel">چند روز قبل یادآوری شود؟</label>'+selHtml('remSel',[0,1,2,3,5,7,10].map(d=>optHtml(d,d===0?'فقط در روز سررسید':E.toFa(d)+' روز قبل',lead())).join(''),' data-set="remindDays"')+'</div><div class="row"><button class="btn soft" data-act="exportICS">'+ic('download',16)+'فایل تقویم گوشی</button>'+(notifyOk||isIos()?'<button class="btn" data-act="toggleNotify">'+ic('bell',16)+(S.st.notify?'اعلان: روشن':'روشن‌کردن اعلان')+'</button>':'')+(S.st.notify?'<button class="btn sm" data-act="testNotify">اعلان آزمایشی</button>':'')+'</div><p class="hint" style="margin-top:10px">'+notifStatusHtml()+'</p></div>'+securityCard()+licenseCard()+exportCard()+'</div>';
   h+='<div class="grid"><div class="card"><h2 style="margin-bottom:4px">واحد پول</h2><p class="muted small" style="margin:0 0 12px">واحد فعلی: <b>'+esc(unit())+'</b>. مبلغ‌ها بدون اجازه‌ی شما تبدیل نمی‌شوند.</p><div class="row"><div class="sel" style="min-width:170px"><select class="inp" id="curSel">'+Object.entries(E.UNITS).map(([k,v])=>optHtml(k,v,S.st.currency)).join('')+'</select></div><button class="btn" data-act="setCur">فقط تغییر برچسب</button></div>'+(conv.length?'<div style="margin-top:14px"><div class="lbl" style="margin-bottom:6px">تبدیل مبلغ‌ها (مثلاً با حذف چهار صفر)</div><div class="row">'+conv.map(([k,v])=>'<button class="btn sm" data-act="convert" data-v="'+k+'">'+esc(E.UNITS[S.st.currency])+' ← '+esc(E.UNITS[v.to])+'</button>').join('')+'</div></div>':'')+'</div>';
@@ -3432,13 +3928,13 @@ async function wipe(){
 }
 
 /* ---------- ناوبری و رندر ---------- */
-const NAV=[['dash','home','خانه'],['tx','list','تراکنش‌ها'],['budget','target','بودجه'],['goals','flag','اهداف و صندوق‌ها'],['wealth','coins','دارایی'],['acc','bank','حساب‌ها'],['oblig','cal','تعهدات'],['cats','tag','دسته‌بندی‌ها'],['more','sliders','تنظیمات']];
+const NAV=[['dash','home','خانه'],['tx','list','تراکنش‌ها'],['budget','target','بودجه'],['goals','flag','اهداف و صندوق‌ها'],['wealth','coins','دارایی'],['reports','chart','گزارش‌ها'],['acc','bank','حساب‌ها'],['oblig','cal','تعهدات'],['cats','tag','دسته‌بندی‌ها'],['more','sliders','تنظیمات']];
 function render(){
   const rt=R.route,main=$('#main');
   if(LIC.blocked){showLicense();return}
   if(S.locked){showLock();return}
-  main.innerHTML=rt==='dash'?viewDash():rt==='tx'?viewTx():rt==='oblig'?viewOb():rt==='acc'?viewAcc():rt==='cats'?viewCats():rt==='budget'?viewBudget():rt==='wealth'?viewWealth():rt==='goals'?viewGoals():viewMore();
-  const bd=dueBadge(),active=k=>(rt===k||((rt==='acc'||rt==='cats'||rt==='budget'||rt==='wealth'||rt==='goals')&&k==='more'));
+  main.innerHTML=rt==='dash'?viewDash():rt==='tx'?viewTx():rt==='oblig'?viewOb():rt==='acc'?viewAcc():rt==='cats'?viewCats():rt==='budget'?viewBudget():rt==='wealth'?viewWealth():rt==='goals'?viewGoals():rt==='reports'?viewReports():viewMore();
+  const bd=dueBadge(),active=k=>(rt===k||((rt==='acc'||rt==='cats'||rt==='budget'||rt==='wealth'||rt==='goals'||rt==='reports')&&k==='more'));
   const sbtn=([k,i,l])=>'<button class="nav'+(rt===k?' on':'')+'" data-act="nav" data-v="'+k+'" '+(rt===k?'aria-current="page"':'')+'>'+ic(i,20)+'<span>'+l+'</span>'+(k==='oblig'&&bd?'<span class="badge">'+E.toFa(bd)+'</span>':'')+'</button>';
   const bbtn=(k,i,l)=>'<button class="nav'+(active(k)?' on':'')+'" data-act="nav" data-v="'+k+'">'+ic(i,22)+'<span>'+l+'</span>'+(k==='oblig'&&bd?'<span class="badge">'+E.toFa(bd)+'</span>':'')+'</button>';
   $('#side').innerHTML='<div class="brand">'+MARK+'<span>'+esc(BRAND)+'</span></div>'+NAV.map(sbtn).join('')+'<button class="btn primary cta" data-act="addTx">'+ic('plus',18)+'ثبت تراکنش</button><div class="foot">'+ic('lock',15)+'<span>داده‌ها فقط روی همین دستگاه</span></div>';
@@ -3489,7 +3985,7 @@ const ACT={
   setCur:async()=>{const v=$('#curSel').value;if(v===S.st.currency)return;if(!await ask('تغییر برچسب واحد','فقط نام واحد عوض می‌شود و مبلغ‌ها تغییر نمی‌کنند. برای تبدیل مبلغ‌ها از دکمه‌های «تبدیل مبلغ‌ها» استفاده کنید.','تغییر برچسب'))return;S.st.currency=v;await saveSt();render()},
   convert:t=>openConvert(t.dataset.v),loadDemo,rmDemo,wipe
 };
-Object.assign(ACT,ACT3,ACT4,ACT5,ACT6,ACT7,ACT8);
+Object.assign(ACT,ACT3,ACT4,ACT5,ACT6,ACT7,ACT8,ACT9);
 document.addEventListener('click',e=>{
   const t=e.target.closest('[data-act]');if(!t)return;
   if(t.closest('button')&&t.closest('button')!==t&&t.tagName!=='BUTTON'){/* دکمه‌ی داخلی ردیف خودش مدیریت می‌شود */}
@@ -3522,7 +4018,7 @@ document.addEventListener('change',e=>{
 });
 async function startApp(){S.locked=!!S.st.pinHash;await initFs();render();if(!S.locked&&!LIC.blocked){maybeNotify();autoPostRecurring()}}
 load().then(async()=>{await licInit();await startApp()}).catch(e=>{console.error('init');document.getElementById('main').innerHTML='<div class="card err">راه‌اندازی برنامه ناموفق بود. صفحه را دوباره باز کنید یا مرورگر دیگری امتحان کنید.</div>'});
-window.__malyar={S,F,V,R,ACT,render,go,openTx,newDraft,D:()=>D,E,smsRun,smsSaveAll,buildReport,openRecPost,autoPostRecurring,pinHash,lockNow,unlock:tryUnlock,DB,buildQueue,syncQueue,toggleNotify,faNumWords,voice:VOICE,goalAutoAlloc,insightList,LIC,licBackground,licActivate,licVerify,licInit};
+window.__malyar={S,F,V,R,ACT,render,go,openTx,newDraft,D:()=>D,E,smsRun,smsSaveAll,buildReport,openRecPost,autoPostRecurring,pinHash,lockNow,unlock:tryUnlock,DB,buildQueue,syncQueue,toggleNotify,faNumWords,voice:VOICE,goalAutoAlloc,insightList,RPS,rpReport,dpOpen,ddOpen,LIC,licBackground,licActivate,licVerify,licInit};
 })();
 
 </script>
