@@ -369,8 +369,6 @@ input[data-date],#fdate,input[id^=sm_d]{cursor:pointer;padding-left:44px;backgro
 .dp-c:hover{background:var(--surface2)}.dp-c.today{border-color:var(--accent)}.dp-c.pk{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .dp-foot{display:flex;gap:8px;align-items:center;margin-top:12px}
 .dd{position:fixed;z-index:72;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;animation:fin .12s}
-.dd.sheet-m{inset-inline:0;bottom:0;max-height:72dvh;border-radius:24px 24px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom)}
-.dd-t{padding:14px 18px 6px;font-weight:800;font-size:.92rem}
 .dd-s{padding:8px 10px 4px}.dd-s .inp{min-height:40px;padding:8px 12px;border-radius:11px}
 .dd-list{overflow:auto;padding:6px;overscroll-behavior:contain}
 .dd-i{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:start;border:0;background:none;color:var(--text);padding:11px 12px;border-radius:11px;font-size:.93rem}
@@ -386,6 +384,12 @@ input[data-date],#fdate,input[id^=sm_d]{cursor:pointer;padding-left:44px;backgro
 .rpcat{margin-bottom:12px}.rpcat-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
 .rpcat-n{display:flex;align-items:center;gap:9px;min-width:0}.rpcat-n b{font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rpcat-v{text-align:end;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.acts{display:flex;flex-direction:column;gap:4px;flex:none}
+.ib.sm{width:30px;height:30px;border-radius:9px}
+.ib.sm:hover{color:var(--accent)}
+.acts .ib.sm:last-child:hover{color:var(--danger)}
+.grp-v{white-space:nowrap}.rw .mid{min-width:0}
 
 </style>
 </head>
@@ -1082,13 +1086,14 @@ function splitSms(raw){
 function smsSig(r){return[r.date||'',r.time||'',r.amount||'',r.balance==null?'':r.balance].join('|')}
 /* ---------- دارایی و ثروت خالص ---------- */
 const ASSET_KINDS={
-gold18:{label:'طلای ۱۸ عیار',unit:'گرم',icon:'🥇',group:'metal'},gold24:{label:'طلای ۲۴ عیار',unit:'گرم',icon:'🥇',group:'metal'},
-coin_emami:{label:'سکه‌ی تمام (امامی)',unit:'عدد',icon:'🪙',group:'metal'},coin_half:{label:'نیم‌سکه',unit:'عدد',icon:'🪙',group:'metal'},coin_quarter:{label:'ربع‌سکه',unit:'عدد',icon:'🪙',group:'metal'},coin_gram:{label:'سکه‌ی گرمی',unit:'عدد',icon:'🪙',group:'metal'},
-silver:{label:'نقره‌ی ۹۹۹ (شمش و ساچمه)',unit:'گرم',icon:'🥈',group:'metal'},silver925:{label:'نقره‌ی ۹۲۵ (زیورآلات)',unit:'گرم',icon:'🥈',group:'metal'},
-usd:{label:'دلار آمریکا',unit:'دلار',icon:'💵',group:'fx'},eur:{label:'یورو',unit:'یورو',icon:'💶',group:'fx'},gbp:{label:'پوند انگلیس',unit:'پوند',icon:'💷',group:'fx'},aed:{label:'درهم امارات',unit:'درهم',icon:'💴',group:'fx'},try:{label:'لیر ترکیه',unit:'لیر',icon:'💴',group:'fx'},fx_other:{label:'ارز دیگر',unit:'واحد',icon:'💱',group:'fx'},
-btc:{label:'بیت‌کوین (BTC)',unit:'BTC',icon:'₿',group:'crypto'},eth:{label:'اتریوم (ETH)',unit:'ETH',icon:'Ξ',group:'crypto'},usdt:{label:'تتر (USDT)',unit:'USDT',icon:'₮',group:'crypto'},bnb:{label:'بایننس‌کوین (BNB)',unit:'BNB',icon:'◈',group:'crypto'},sol:{label:'سولانا (SOL)',unit:'SOL',icon:'◎',group:'crypto'},ton:{label:'تون‌کوین (TON)',unit:'TON',icon:'💎',group:'crypto'},trx:{label:'ترون (TRX)',unit:'TRX',icon:'⬡',group:'crypto'},xrp:{label:'ریپل (XRP)',unit:'XRP',icon:'✕',group:'crypto'},crypto_other:{label:'ارز دیجیتال دیگر',unit:'واحد',icon:'🪙',group:'crypto'},
-stock:{label:'سهام بورسی',unit:'سهم',icon:'📈',group:'bourse'},fund_fixed:{label:'صندوق درآمد ثابت',unit:'واحد',icon:'🏦',group:'bourse'},fund_equity:{label:'صندوق سهامی',unit:'واحد',icon:'📊',group:'bourse'},fund_mixed:{label:'صندوق مختلط',unit:'واحد',icon:'⚖️',group:'bourse'},fund_gold:{label:'صندوق طلا',unit:'واحد',icon:'🏅',group:'bourse'},fund_other:{label:'صندوق دیگر (اهرمی، شاخصی…)',unit:'واحد',icon:'📉',group:'bourse'},
-other:{label:'سایر',unit:'واحد',icon:'📦',group:'other'}};
+gold18:{label:'طلای ۱۸ عیار',unit:'گرم',icon:'🥇',group:'metal',pop:1},gold24:{label:'طلای ۲۴ عیار',unit:'گرم',icon:'🥇',group:'metal',pop:1},
+coin_emami:{label:'سکه‌ی تمام (امامی)',unit:'عدد',icon:'🪙',group:'metal',pop:1},coin_half:{label:'نیم‌سکه',unit:'عدد',icon:'🪙',group:'metal',pop:1},coin_quarter:{label:'ربع‌سکه',unit:'عدد',icon:'🪙',group:'metal',pop:1},coin_gram:{label:'سکه‌ی گرمی',unit:'عدد',icon:'🪙',group:'metal'},
+silver:{label:'نقره‌ی ۹۹۹ (شمش و ساچمه)',unit:'گرم',icon:'🥈',group:'metal',pop:1},silver925:{label:'نقره‌ی ۹۲۵ (زیورآلات)',unit:'گرم',icon:'🥈',group:'metal'},
+usd:{label:'دلار آمریکا',unit:'دلار',icon:'💵',group:'fx',pop:1},eur:{label:'یورو',unit:'یورو',icon:'💶',group:'fx',pop:1},gbp:{label:'پوند انگلیس',unit:'پوند',icon:'💷',group:'fx'},aed:{label:'درهم امارات',unit:'درهم',icon:'💴',group:'fx'},try:{label:'لیر ترکیه',unit:'لیر',icon:'💴',group:'fx'},fx_other:{label:'ارز دیگر (نام دلخواه)',unit:'واحد',icon:'💱',group:'fx',pop:1},
+btc:{label:'بیت‌کوین (BTC)',unit:'BTC',icon:'₿',group:'crypto',pop:1},eth:{label:'اتریوم (ETH)',unit:'ETH',icon:'Ξ',group:'crypto',pop:1},usdt:{label:'تتر (USDT)',unit:'USDT',icon:'₮',group:'crypto',pop:1},bnb:{label:'بایننس‌کوین (BNB)',unit:'BNB',icon:'◈',group:'crypto'},sol:{label:'سولانا (SOL)',unit:'SOL',icon:'◎',group:'crypto'},ton:{label:'تون‌کوین (TON)',unit:'TON',icon:'💎',group:'crypto'},trx:{label:'ترون (TRX)',unit:'TRX',icon:'⬡',group:'crypto'},xrp:{label:'ریپل (XRP)',unit:'XRP',icon:'✕',group:'crypto'},crypto_other:{label:'ارز دیجیتال دیگر (نام دلخواه)',unit:'واحد',icon:'🪙',group:'crypto',pop:1},
+stock:{label:'سهام بورسی (نام دلخواه)',unit:'سهم',icon:'📈',group:'bourse',pop:1},fund_other:{label:'صندوق بورسی (نام دلخواه)',unit:'واحد',icon:'📉',group:'bourse',pop:1},fund_fixed:{label:'صندوق درآمد ثابت',unit:'واحد',icon:'🏦',group:'bourse'},fund_equity:{label:'صندوق سهامی',unit:'واحد',icon:'📊',group:'bourse'},fund_mixed:{label:'صندوق مختلط',unit:'واحد',icon:'⚖️',group:'bourse'},fund_gold:{label:'صندوق طلا',unit:'واحد',icon:'🏅',group:'bourse'},
+house:{label:'خانه و آپارتمان',unit:'عدد',icon:'🏠',group:'property',pop:1,nw:1},land:{label:'زمین و ملک',unit:'عدد',icon:'🏞️',group:'property',pop:1,nw:1},car:{label:'خودرو و موتورسیکلت',unit:'عدد',icon:'🚗',group:'property',pop:1,nw:1},appliances:{label:'لوازم اساسی منزل',unit:'عدد',icon:'🛋️',group:'property',pop:1,nw:0},electronics:{label:'لپ‌تاپ، موبایل و لوازم دیجیتال',unit:'عدد',icon:'💻',group:'property',pop:1,nw:0},property_other:{label:'اموال دیگر (نام دلخواه)',unit:'عدد',icon:'🧰',group:'property',pop:1,nw:0},
+other:{label:'سایر',unit:'واحد',icon:'📦',group:'other',pop:1}};
 function validateAsset(a){
   const e=[];
   if(!a||!a.name||!String(a.name).trim())e.push('نام دارایی را وارد کنید.');
@@ -1106,7 +1111,7 @@ function assetPnl(a){
 function priceAge(a,today){return a.priceDate&&isoValid(a.priceDate)?daysBetween(a.priceDate,today):null}
 function debtRemaining(d){return r6(Math.max(0,(d.amount||0)-(d.payments||[]).reduce((s,p)=>s+(p.amount||0),0)))}
 function netWorth(o){
-  const assets=r6((o.assets||[]).reduce((s,a)=>s+assetValue(a),0));
+  const assets=r6((o.assets||[]).filter(a=>!a.excludeNw).reduce((s,a)=>s+assetValue(a),0));
   let recv=0,owe=0;
   for(const d of o.debts||[]){const r=debtRemaining(d);if(d.direction==='owed')recv+=r;else owe+=r}
   const loans=r6((o.loans||[]).filter(l=>l.active!==false).reduce((s,l)=>s+loanSummary(l,o.today).remainingAmount,0));
@@ -1356,6 +1361,7 @@ const ASSET_GROUPS=[
   {id:'fx',label:'ارز',icon:'💵'},
   {id:'crypto',label:'ارز دیجیتال',icon:'₿'},
   {id:'bourse',label:'بورس (سهام و صندوق‌ها)',icon:'📈'},
+  {id:'property',label:'املاک و اموال (خانه، زمین، خودرو، لوازم)',icon:'🏠'},
   {id:'other',label:'سایر',icon:'📦'}
 ];
 const assetGroupOf=kind=>{const k=ASSET_KINDS[kind];return k&&k.group||'other'};
@@ -1363,13 +1369,15 @@ const assetGroupOf=kind=>{const k=ASSET_KINDS[kind];return k&&k.group||'other'};
 function assetGroups(assets){
   const m=new Map();let total=0;
   for(const a of assets||[]){
-    const g=assetGroupOf(a.kind);if(!m.has(g))m.set(g,{items:[],value:0,cost:0,cval:0});
-    const o=m.get(g),v=assetValue(a);o.items.push(a);o.value+=v;total+=v;
+    const g=assetGroupOf(a.kind);if(!m.has(g))m.set(g,{items:[],value:0,cost:0,cval:0,excl:0});
+    const o=m.get(g);o.items.push(a);
+    if(a.excludeNw){o.excl++;continue}
+    const v=assetValue(a);o.value+=v;total+=v;
     const p=assetPnl(a);if(p){o.cost+=p.cost;o.cval+=p.value}
   }
   return ASSET_GROUPS.filter(g=>m.has(g.id)).map(g=>{
     const o=m.get(g.id),pnl=o.cost>0?r6(o.cval-o.cost):null;
-    return{id:g.id,label:g.label,icon:g.icon,count:o.items.length,items:o.items,value:r6(o.value),share:total>0?o.value/total:0,pnl,pct:o.cost>0?pnl/o.cost:null};
+    return{id:g.id,label:g.label,icon:g.icon,count:o.items.length,excluded:o.excl,items:o.items,value:r6(o.value),share:total>0?o.value/total:0,pnl,pct:o.cost>0?pnl/o.cost:null};
   }).sort((a,b)=>b.value-a.value);
 }
 /* مقدار دارایی: تا ۸ رقم اعشار (برای ارز دیجیتال) بدون صفرهای اضافی */
@@ -1526,7 +1534,7 @@ return{open,getAll,put,putMany,del,delMany,replaceAll,isMemory:()=>!!mem};
 (function(){
 'use strict';
 const BRAND=window.__BRAND||'';
-const APP_VERSION='6.2.0';
+const APP_VERSION='6.2.1';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'id-'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);
@@ -2222,16 +2230,17 @@ function securityCard(){
   return '<div class="card"><h2 style="margin-bottom:4px">امنیت و حریم خصوصی</h2><p class="muted small" style="margin:0 0 12px">قفل PIN فقط برای جلوگیری از دیده‌شدن اطلاعات توسط دیگران است؛ داده‌ها رمزنگاری نمی‌شوند.</p><div class="row" style="margin-bottom:12px">'+(has?'<button class="btn primary" data-act="lockNow">'+ic('lock',16)+'قفل کن</button><button class="btn" data-act="pinChange">تغییر PIN</button><button class="btn" data-act="pinRemove">حذف PIN</button>':'<button class="btn primary" data-act="pinSet">'+ic('lock',16)+'تعیین PIN</button>')+'<button class="btn" data-act="toggleHide">'+ic(S.st.hideAmt?'eyeoff':'eye',16)+(S.st.hideAmt?'نمایش مبلغ‌ها':'پنهان‌کردن مبلغ‌ها')+'</button></div>'+(has?'<div class="field" style="margin:0"><label for="alSel">قفل خودکار بعد از ترک برنامه</label>'+selHtml('alSel',[[0,'بلافاصله'],[1,'۱ دقیقه'],[5,'۵ دقیقه'],[15,'۱۵ دقیقه']].map(([v,l])=>optHtml(v,l,S.st.autoLockMin)).join(''),' data-set="autoLockMin"')+'</div>':'')+'</div>';
 }
 /* پنهان‌کردن مبلغ‌ها در حالت حریم خصوصی */
-const AMT_RE=/[۰-۹]{1,3}(?:,[۰-۹]{3})+|[۰-۹٫]+\s?(?:میلیارد|میلیون|هزار)/g;
+const AMT_RE=/[۰-۹]{1,3}(?:[٬,،][۰-۹]{3})+(?:٫[۰-۹]+)?|[۰-۹٫]+\s?(?:میلیارد|میلیون|هزار)/g;
+const MASK_SKIP=/^(SCRIPT|STYLE|TEXTAREA|OPTION|NOSCRIPT|INPUT)$/;
 let masking=false;
 function maskAmounts(){
   if(!S.st.hideAmt||masking||S.locked)return;
   masking=true;
-  try{for(const sel of ['#main','#side']){const root=$(sel);if(!root)continue;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),L=[];let n;while((n=w.nextNode()))L.push(n);
-    for(const t of L){const v=t.nodeValue;if(v&&/[۰-۹]/.test(v)){const nv=v.replace(AMT_RE,'•••');if(nv!==v)t.nodeValue=nv}}}}finally{masking=false}
+  try{for(const sel of ['#main','#side','#overlay']){const root=$(sel);if(!root)continue;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),L=[];let n;while((n=w.nextNode()))L.push(n);
+    for(const t of L){const v=t.nodeValue;if(v&&/[۰-۹]/.test(v)&&!(t.parentElement&&MASK_SKIP.test(t.parentElement.tagName))){const nv=v.replace(AMT_RE,'•••');if(nv!==v)t.nodeValue=nv}}}}finally{masking=false}
 }
 function initMask(){
-  try{const mo=new MutationObserver(()=>{if(S.st.hideAmt)maskAmounts()});mo.observe($('#main'),{childList:true,subtree:true})}catch(e){}
+  try{const mo=new MutationObserver(()=>{if(S.st.hideAmt)maskAmounts()});['#main','#side','#overlay'].forEach(q=>{const el=$(q);if(el)mo.observe(el,{childList:true,subtree:true})})}catch(e){}
   document.addEventListener('visibilitychange',()=>{
     if(!S.st.pinHash)return;
     if(document.hidden)S.hiddenAt=Date.now();
@@ -2494,11 +2503,11 @@ function nwSpark(h){
 }
 const NW_PARTS={accounts:['حساب‌ها و نقدی','var(--accent)'],assets:['دارایی‌ها (طلا، ارز، بورس و…)','var(--gold)'],receivable:['طلب از اشخاص','var(--income)'],loans:['اقساط باقی‌مانده‌ی وام‌ها','var(--expense)'],debts:['بدهی به اشخاص','#a24bd8']};
 function assetRow(a){
-  const k=E.ASSET_KINDS[a.kind]||E.ASSET_KINDS.other,pl=E.assetPnl(a),age=E.priceAge(a,today());
-  return '<div class="rw" role="button" tabindex="0" data-act="editAsset" data-id="'+esc(a.id)+'"><div class="ico" style="--c:var(--gold)">'+esc(k.icon)+'</div><div class="mid"><b>'+esc(a.name)+'</b><div class="s"><span>'+E.fmtQty(a.qty)+' '+esc(a.unit||k.unit)+' × '+E.fmtNum(a.price)+'</span>'+(age!=null&&age>7?'<span class="pill warn">قیمت '+E.toFa(age)+' روز قدیمی</span>':'')+(a.demo?'<span class="pill">نمونه</span>':'')+'</div></div><div style="text-align:end"><div class="n">'+E.fmtNum(E.assetValue(a))+'</div>'+(pl?'<div class="xs '+(pl.pnl>=0?'inc':'dng')+'" style="font-weight:700">'+(pl.pnl>=0?'+':'−')+E.fmtNum(Math.abs(pl.pnl))+(pl.pct!=null?' ('+E.toFa(Math.round(Math.abs(pl.pct)*100))+'٪)':'')+'</div>':'')+'</div></div>';
+  const k=E.ASSET_KINDS[a.kind]||E.ASSET_KINDS.other,pl=E.assetPnl(a),age=E.priceAge(a,today()),prop=E.assetGroupOf(a.kind)==='property';
+  return '<div class="rw" role="button" tabindex="0" data-act="editAsset" data-id="'+esc(a.id)+'"><div class="ico" style="--c:var(--gold)">'+esc(k.icon)+'</div><div class="mid"><b>'+esc(a.name)+'</b><div class="s"><span>'+E.fmtQty(a.qty)+' '+esc(a.unit||k.unit)+' × '+E.fmtNum(a.price)+'</span>'+(!prop&&age!=null&&age>7?'<span class="pill warn">قیمت '+E.toFa(age)+' روز قدیمی</span>':'')+(a.excludeNw?'<span class="pill">خارج از ثروت خالص</span>':'')+(a.demo?'<span class="pill">نمونه</span>':'')+'</div></div><div style="text-align:end"><div class="n">'+E.fmtNum(E.assetValue(a))+'</div>'+(pl?'<div class="xs '+(pl.pnl>=0?'inc':'dng')+'" style="font-weight:700">'+(pl.pnl>=0?'+':'−')+E.fmtNum(Math.abs(pl.pnl))+(pl.pct!=null?' ('+E.toFa(Math.round(Math.abs(pl.pct)*100))+'٪)':'')+'</div>':'')+'</div><div class="acts"><button class="ib sm" data-act="editAsset" data-id="'+esc(a.id)+'" aria-label="ویرایش «'+esc(a.name)+'»" title="ویرایش">'+ic('edit',15)+'</button><button class="ib sm" data-act="delAsset" data-id="'+esc(a.id)+'" aria-label="حذف «'+esc(a.name)+'»" title="حذف">'+ic('trash',15)+'</button></div></div>';
 }
 function assetGroupsHtml(){
-  const G=E.assetGroups(S.assets),tot=G.reduce((x,g)=>x+g.value,0),cols={metal:'var(--gold)',fx:'var(--income)',crypto:'#a24bd8',bourse:'var(--accent)',other:'var(--faint)'};
+  const G=E.assetGroups(S.assets),tot=G.reduce((x,g)=>x+g.value,0),cols={metal:'var(--gold)',fx:'var(--income)',crypto:'#a24bd8',bourse:'var(--accent)',property:'#e0693c',other:'var(--faint)'};
   let h='';
   if(G.length>1&&tot>0)h+='<div class="stack" style="margin:2px 0 10px">'+G.map(g=>'<i style="width:'+(g.value/tot*100).toFixed(2)+'%;background:'+cols[g.id]+'" title="'+esc(g.label)+'"></i>').join('')+'</div>';
   h+=G.map(g=>'<div class="grp"><div class="grp-h"><span class="grp-t"><i class="dot" style="background:'+cols[g.id]+'"></i>'+esc(g.icon)+' <b>'+esc(g.label)+'</b><span class="muted xs">'+E.toFa(g.count)+' مورد | '+E.toFa(Math.round(g.share*100))+'٪</span></span><span class="grp-v"><b>'+E.fmtNum(g.value)+'</b>'+(g.pnl!=null?'<span class="xs '+(g.pnl>=0?'inc':'dng')+'" style="font-weight:700"> '+(g.pnl>=0?'+':'−')+E.fmtNum(Math.abs(g.pnl))+'</span>':'')+'</span></div><div class="rows">'+g.items.slice().sort((a,b)=>E.assetValue(b)-E.assetValue(a)).map(assetRow).join('')+'</div></div>').join('');
@@ -2521,11 +2530,12 @@ function dashWealthCard(){
   const nw=nwCompute();recordNw(nw);
   return '<section class="card sec fcmini" role="button" tabindex="0" data-act="goWealth"><div class="ico" style="--c:var(--gold)">'+ic('coins',20)+'</div><div class="mid"><b>ثروت خالص: '+(nw.total<0?'−':'')+E.fmtNum(Math.abs(nw.total))+' '+esc(unit())+'</b><div class="s"><span>دارایی‌ها: '+E.fmtNum(nw.assets)+'</span><span>طلب‌ها: '+E.fmtNum(nw.receivable)+'</span></div></div>'+ic('chl',18)+'</section>';
 }
-const NAME_FREE=['stock','fund_fixed','fund_equity','fund_mixed','fund_gold','fund_other','crypto_other','fx_other'];
-const assetNameHint=k=>k==='stock'?'نماد یا نام سهم (مثلاً فولاد)':/^fund_/.test(k)?'نماد یا نام صندوق (مثلاً عیار)':k==='crypto_other'?'نام یا نماد ارز دیجیتال':k==='fx_other'?'نام ارز':'';
+const NAME_FREE=['stock','fund_fixed','fund_equity','fund_mixed','fund_gold','fund_other','crypto_other','fx_other','property_other'];
+const PROP_HINT='ارزش فعلی را برآورد قیمت بازار بنویسید؛ قیمت خرید فقط برای سود و زیان است. اگر نمی‌خواهید در ثروت خالص بیاید، تیک پایین را بردارید.';
+const assetNameHint=k=>k==='property_other'?'نام مال (مثلاً دوربین، طلای خانه)':k==='stock'?'نماد یا نام سهم (مثلاً فولاد)':/^fund_/.test(k)?'نماد یا نام صندوق (مثلاً عیار)':k==='crypto_other'?'نام یا نماد ارز دیجیتال':k==='fx_other'?'نام ارز':'';
 function assetFormHtml(a,isNew){
-  const kinds=Object.entries(E.ASSET_KINDS);
-  return '<h2>'+(isNew?'دارایی جدید':'ویرایش «'+esc(a.name)+'»')+'</h2><div id="ferr"></div><div class="field"><label for="ak">نوع</label>'+selHtml('ak',E.ASSET_GROUPS.map(g=>'<optgroup label="'+esc(g.icon+' '+g.label)+'">'+kinds.filter(([k,v])=>v.group===g.id).map(([k,v])=>optHtml(k,v.icon+' '+v.label,a.kind||'gold18')).join('')+'</optgroup>').join(''))+'</div><div class="field"><label for="an2">نام</label><input class="inp" id="an2" value="'+esc(a.name||'')+'" placeholder="'+esc(assetNameHint(a.kind||'gold18'))+'"><div class="hint" id="an2-h"></div></div><div class="grid" style="grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="aq">مقدار <span id="aunit" class="muted">('+esc(a.unit||(E.ASSET_KINDS[a.kind||'gold18']||{}).unit||'')+')</span></label><input class="inp" id="aq" inputmode="decimal" autocomplete="off" value="'+esc(a.qty!=null?a.qty:'')+'" placeholder="۰"></div><div class="field"><label for="au">واحد</label><input class="inp" id="au" value="'+esc(a.unit||(E.ASSET_KINDS[a.kind||'gold18']||{}).unit||'')+'"></div></div>'+amtField('aprice',a.price!=null?String(a.price):'','قیمت فعلی هر واحد ('+unit()+')')+amtField('abuy',a.buyPrice!=null?String(a.buyPrice):'','قیمت خرید هر واحد (اختیاری، برای سود و زیان)')+'<div class="field"><label for="anote">یادداشت</label><input class="inp" id="anote" value="'+esc(a.note||'')+'"></div><div class="row between foot"><div>'+(isNew?'':'<button class="btn danger" data-act="delAsset" data-id="'+esc(a.id)+'">حذف</button>')+'</div><div class="row"><button class="btn" data-act="closeSheet">بستن</button><button class="btn primary" data-act="saveAsset" data-id="'+esc(a.id||'')+'">ذخیره</button></div></div>';
+  const cur=a.kind||'gold18',kinds=Object.entries(E.ASSET_KINDS).filter(([k,v])=>v.pop||k===cur),k0=E.ASSET_KINDS[cur]||E.ASSET_KINDS.other,nwOn=isNew?k0.nw!==0:!a.excludeNw;
+  return '<h2>'+(isNew?'دارایی جدید':'ویرایش «'+esc(a.name)+'»')+'</h2><div id="ferr"></div><div class="field"><label for="ak">نوع</label>'+selHtml('ak',E.ASSET_GROUPS.map(g=>'<optgroup label="'+esc(g.icon+' '+g.label)+'">'+kinds.filter(([k,v])=>v.group===g.id).map(([k,v])=>optHtml(k,v.icon+' '+v.label,a.kind||'gold18')).join('')+'</optgroup>').join(''))+'</div><div class="field"><label for="an2">نام</label><input class="inp" id="an2" value="'+esc(a.name||'')+'" placeholder="'+esc(assetNameHint(a.kind||'gold18'))+'"><div class="hint" id="an2-h"></div></div><div class="grid" style="grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="aq">مقدار <span id="aunit" class="muted">('+esc(a.unit||(E.ASSET_KINDS[a.kind||'gold18']||{}).unit||'')+')</span></label><input class="inp" id="aq" inputmode="decimal" autocomplete="off" value="'+esc(a.qty!=null?a.qty:'')+'" placeholder="۰"></div><div class="field"><label for="au">واحد</label><input class="inp" id="au" value="'+esc(a.unit||(E.ASSET_KINDS[a.kind||'gold18']||{}).unit||'')+'"></div></div>'+amtField('aprice',a.price!=null?String(a.price):'','قیمت فعلی هر واحد ('+unit()+')')+amtField('abuy',a.buyPrice!=null?String(a.buyPrice):'','قیمت خرید هر واحد (اختیاری، برای سود و زیان)')+'<div class="hint" id="ahint" style="margin:-8px 0 12px">'+(E.assetGroupOf(cur)==='property'?esc(PROP_HINT):'')+'</div><label class="chk"><input type="checkbox" id="anw"'+(nwOn?' checked':'')+'> در ثروت خالص حساب شود</label>'+'<div class="field"><label for="anote">یادداشت</label><input class="inp" id="anote" value="'+esc(a.note||'')+'"></div><div class="row between foot"><div>'+(isNew?'':'<button class="btn danger" data-act="delAsset" data-id="'+esc(a.id)+'">حذف</button>')+'</div><div class="row"><button class="btn" data-act="closeSheet">بستن</button><button class="btn primary" data-act="saveAsset" data-id="'+esc(a.id||'')+'">ذخیره</button></div></div>';
 }
 function openAsset(id){
   const a=id?S.assets.find(x=>x.id===id):{kind:'gold18',name:E.ASSET_KINDS.gold18.label};
@@ -2534,7 +2544,7 @@ function openAsset(id){
 async function saveAsset(id){
   const name=$('#an2').value.trim(),qty=E.parseAmount($('#aq').value||'0'),price=readAmt('aprice'),buyRaw=$('#abuy').value.trim(),buy=buyRaw===''?null:readAmt('abuy');
   const old=id?S.assets.find(x=>x.id===id):null;
-  const a=Object.assign({createdAt:Date.now()},old||{},{id:id||uid(),kind:$('#ak').value,name,qty,unit:$('#au').value.trim(),price,buyPrice:buy});
+  const a=Object.assign({createdAt:Date.now()},old||{},{id:id||uid(),kind:$('#ak').value,name,qty,unit:$('#au').value.trim(),price,buyPrice:buy,excludeNw:!$('#anw').checked});
   if(!old||old.price!==price)a.priceDate=today();
   const e=E.validateAsset(a);if(e.length){showErr(e);return}
   try{await DB.put('assets',a)}catch(x){showErr(['ذخیره انجام نشد.']);return}
@@ -2651,7 +2661,8 @@ async function delDebt(id){
 document.addEventListener('change',e=>{
   const t=e.target;
   if(t.id==='ak'){const k=E.ASSET_KINDS[t.value]||E.ASSET_KINDS.other,n=$('#an2'),u=$('#au');
-    const was=Object.values(E.ASSET_KINDS).some(x=>x.label===n.value.trim());if(!n.value.trim()||was)n.value=NAME_FREE.includes(t.value)?'':k.label;n.placeholder=assetNameHint(t.value);u.value=k.unit;const au=$('#aunit');if(au)au.textContent='('+k.unit+')';const nh=$('#an2-h');if(nh)nh.textContent=NAME_FREE.includes(t.value)&&!n.value?'نام یا نماد را بنویسید.':'';if(NAME_FREE.includes(t.value)&&!n.value)n.focus()}
+    const was=Object.values(E.ASSET_KINDS).some(x=>x.label===n.value.trim());if(!n.value.trim()||was)n.value=NAME_FREE.includes(t.value)?'':k.label;n.placeholder=assetNameHint(t.value);u.value=k.unit;const au=$('#aunit');if(au)au.textContent='('+k.unit+')';const nh=$('#an2-h');if(nh)nh.textContent=NAME_FREE.includes(t.value)&&!n.value?'نام یا نماد را بنویسید.':'';if(NAME_FREE.includes(t.value)&&!n.value)n.focus();const isP=E.assetGroupOf(t.value)==='property',ah=$('#ahint');if(ah)ah.textContent=isP?PROP_HINT:'';const qe=$('#aq');if(isP&&qe&&!qe.value.trim())qe.value='1';const nw=$('#anw');if(nw&&!nw.dataset.touched)nw.checked=k.nw!==0}
+  else if(t.id==='anw'){t.dataset.touched='1'}
   else if(t.id==='dtx'){const b=$('#dtxacc');if(b)b.style.display=t.checked?'':'none'}
   else if(t.id==='ptx'){const b=$('#ptxacc');if(b)b.style.display=t.checked?'':'none'}
 });
@@ -3326,24 +3337,29 @@ function ddListHtml(q){
   }
   return any?h:'<div class="dd-empty">موردی پیدا نشد</div>';
 }
+function ddPlace(){
+  const host=document.getElementById('dd'),d=host&&host.querySelector('.dd');if(!d||!DD.sel)return;
+  const w=DD.wrap||DD.sel,r=w.getBoundingClientRect(),vv=window.visualViewport,vh=vv?vv.height:window.innerHeight,vw=window.innerWidth;
+  if(r.bottom<0||r.top>vh){ddClose();return}
+  const width=Math.min(Math.max(r.width,210),vw-16),left=Math.max(8,Math.min(r.left,vw-width-8));
+  const below=vh-r.bottom-10,above=r.top-10,want=Math.min(340,d.scrollHeight);
+  const up=below<Math.min(want,200)&&above>below,room=Math.max(120,up?above:below);
+  d.style.width=width+'px';d.style.left=left+'px';d.style.maxHeight=Math.min(340,room)+'px';
+  if(up){d.style.top='auto';d.style.bottom=(window.innerHeight-r.top+6)+'px'}else{d.style.bottom='auto';d.style.top=(r.bottom+6)+'px'}
+}
 function ddOpen(sel,wrap){
-  DD.sel=sel;DD.items=ddItems(sel);
+  DD.sel=sel;DD.wrap=wrap||sel.closest('.sel')||sel;DD.items=ddItems(sel);
   const lbl=(sel.id&&document.querySelector('label[for="'+sel.id+'"]'))||null;
   DD.title=(lbl?lbl.textContent:sel.getAttribute('aria-label'))||'';
-  const cnt=DD.items.filter(i=>!i.g).length,wide=window.innerWidth>=700;
-  let st='';
-  if(wide){
-    const r=(wrap||sel).getBoundingClientRect(),below=window.innerHeight-r.bottom-14,above=r.top-14,up=below<240&&above>below,mh=Math.max(180,Math.min(360,up?above:below));
-    st='left:'+Math.max(8,Math.min(r.left,window.innerWidth-Math.max(r.width,230)-8))+'px;width:'+Math.max(r.width,230)+'px;max-height:'+mh+'px;'+(up?'bottom:'+(window.innerHeight-r.top+6)+'px':'top:'+(r.bottom+6)+'px');
-  }
+  const cnt=DD.items.filter(i=>!i.g).length,touch=window.matchMedia&&window.matchMedia('(pointer:coarse)').matches;
   const host=document.getElementById('dd')||(()=>{const d=document.createElement('div');d.id='dd';document.body.appendChild(d);return d})();
-  host.innerHTML='<div class="dd-scrim" data-dd="close"></div><div class="dd'+(wide?'':' sheet-m')+'" role="listbox" aria-label="'+esc(DD.title)+'"'+(st?' style="'+st+'"':'')+'>'
-    +(!wide&&DD.title?'<div class="dd-t">'+esc(DD.title)+'</div>':'')
+  host.innerHTML='<div class="dd-scrim" data-dd="close"></div><div class="dd" role="listbox" aria-label="'+esc(DD.title)+'">'
     +(cnt>12?'<div class="dd-s"><input class="inp" id="dd-q" placeholder="جست‌وجو…" autocomplete="off"></div>':'')
     +'<div class="dd-list" id="dd-list">'+ddListHtml('')+'</div></div>';
+  ddPlace();
   const on=host.querySelector('.dd-i.on');
-  if(on){try{on.scrollIntoView({block:'center'})}catch(e){}if(wide||cnt<=12)try{on.focus({preventScroll:true})}catch(e){}}
-  else if(wide){const q=host.querySelector('#dd-q');if(q)q.focus()}
+  if(on){try{on.scrollIntoView({block:'center'})}catch(e){}if(!touch||cnt<=12)try{on.focus({preventScroll:true})}catch(e){}}
+  else if(!touch){const q=host.querySelector('#dd-q');if(q)q.focus()}
 }
 function ddClose(refocus){const h=document.getElementById('dd');if(h)h.innerHTML='';if(refocus&&DD.sel)try{DD.sel.focus({preventScroll:true})}catch(e){}DD.sel=null}
 const ddOpened=()=>!!(DD.sel&&document.getElementById('dd')&&document.getElementById('dd').innerHTML);
@@ -3377,7 +3393,9 @@ document.addEventListener('click',e=>{
   const inp=t.closest(DP_SEL);if(inp&&inp.tagName==='INPUT'&&!inp.disabled&&!inp.readOnly){e.preventDefault();dpOpen(inp);return}
   const w=t.closest('.sel');if(w){const s=w.querySelector('select');if(s&&!s.disabled){e.preventDefault();ddOpen(s,w)}}
 });
-document.addEventListener('input',e=>{if(e.target&&e.target.id==='dd-q'){const l=document.getElementById('dd-list');if(l)l.innerHTML=ddListHtml(e.target.value)}});
+['scroll','resize'].forEach(ev=>window.addEventListener(ev,()=>{if(ddOpened())ddPlace()},true));
+if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{if(ddOpened())ddPlace()});
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='dd-q'){const l=document.getElementById('dd-list');if(l){l.innerHTML=ddListHtml(e.target.value);ddPlace()}}});
 
 /* ---------- ۳) گزارش‌ها ---------- */
 const RPS={kind:'month',jy:0,jm:0,js:0,from:'',to:'',allExp:false,ready:false};
@@ -3390,11 +3408,9 @@ function rpInit(){
 const rpPeriod=()=>E.reportPeriod({kind:RPS.kind,jy:RPS.jy,jm:RPS.jm,js:RPS.js,from:RPS.from,to:RPS.to,txs:S.txs,today:today()});
 const RP_PREV={month:'ماه قبل',season:'فصل قبل',year:'سال قبل',custom:'بازه‌ی قبل'};
 function rpYears(){
-  const cy=E.isoToJ(today()).jy;let mn=cy-1;
-  for(const t of S.txs){const y=E.isoToJ(t.date).jy;if(y<mn)mn=y}
-  const out=[];for(let y=cy+1;y>=Math.max(mn,cy-15);y--)out.push(y);
+  const out=[];for(let y=1388;y<=1430;y++)out.push(y);
   if(!out.includes(RPS.jy))out.push(RPS.jy);
-  return out.sort((a,b)=>b-a);
+  return out.sort((x,y)=>x-y);
 }
 function rpDelta(d,goodUp,label){
   if(d==null)return '';
@@ -3513,9 +3529,11 @@ const ACT9={
   }
 };
 function rpStep(s){
+  const o={jy:RPS.jy,jm:RPS.jm,js:RPS.js};
   if(RPS.kind==='month'){const x=E.addMonths(RPS.jy,RPS.jm,s);RPS.jy=x.jy;RPS.jm=x.jm;RPS.js=E.seasonOf(x.jm)}
   else if(RPS.kind==='season'){RPS.js+=s;if(RPS.js>4){RPS.js=1;RPS.jy++}else if(RPS.js<1){RPS.js=4;RPS.jy--}RPS.jm=(RPS.js-1)*3+1}
   else RPS.jy+=s;
+  if(RPS.jy<1388||RPS.jy>1430){Object.assign(RPS,o);toast('بازه‌ی گزارش از سال ۱۳۸۸ تا ۱۴۳۰ است');return}
   render();
 }
 document.addEventListener('change',e=>{
