@@ -1485,16 +1485,25 @@ const STORES=['transactions','accounts','categories','settings','loans','cheques
 const KEY={transactions:'id',accounts:'id',categories:'id',settings:'key',loans:'id',cheques:'id',budgets:'id',recurring:'id',assets:'id',debts:'id',goals:'id'};
 let db=null,mem=null;
 function mkMem(){const m={};STORES.forEach(s=>m[s]=new Map());return m}
+let failWhy='';
 function open(){
+  /* بازکردن IndexedDB با تحمل خطای گذرا: «blocked» (تب قدیمی هنوز باز است) تا ۸ ثانیه منتظر می‌ماند و یک بار هم دوباره تلاش می‌کنیم؛
+     فقط اگر واقعاً ممکن نباشد به حافظه‌ی موقت می‌رویم و دلیلش ثبت می‌شود تا برنامه هشدار صریح نشان دهد. */
   return new Promise(res=>{
-    const fail=()=>{mem=mkMem();res(false)};
-    try{
-      if(!window.indexedDB)return fail();
-      const req=indexedDB.open('PersonalFinanceDB',5);
-      req.onupgradeneeded=()=>{const d=req.result;STORES.forEach(s=>{if(!d.objectStoreNames.contains(s))d.createObjectStore(s,{keyPath:KEY[s]})})};
-      req.onsuccess=()=>{db=req.result;res(true)};
-      req.onerror=fail;req.onblocked=fail;
-    }catch(e){fail()}
+    let settled=false,retried=false,blockTimer=null;
+    const ok=()=>{if(settled)return;settled=true;clearTimeout(blockTimer);res(true)};
+    const fail=why=>{if(settled)return;settled=true;clearTimeout(blockTimer);failWhy=String(why||'unknown');mem=mkMem();res(false)};
+    const attempt=()=>{
+      try{
+        if(!window.indexedDB)return fail('no-indexeddb');
+        const req=indexedDB.open('PersonalFinanceDB',5);
+        req.onupgradeneeded=()=>{const d=req.result;STORES.forEach(s=>{if(!d.objectStoreNames.contains(s))d.createObjectStore(s,{keyPath:KEY[s]})})};
+        req.onsuccess=()=>{if(settled){try{req.result.close()}catch(e){}return}db=req.result;db.onversionchange=()=>{try{db.close()}catch(e){}};db.onclose=()=>{db=null};ok()};
+        req.onerror=()=>{const n=req.error&&req.error.name;if(!retried&&!settled){retried=true;setTimeout(attempt,350)}else fail(n||'open-error')};
+        req.onblocked=()=>{if(!blockTimer)blockTimer=setTimeout(()=>fail('blocked'),8000)};
+      }catch(e){if(!retried&&!settled){retried=true;setTimeout(attempt,350)}else fail(e&&e.name)}
+    };
+    attempt();
   });
 }
 const done=tx=>new Promise((res,rej)=>{tx.oncomplete=()=>res();tx.onerror=tx.onabort=()=>rej(tx.error||new Error('خطای ذخیره‌سازی'))});
@@ -1526,7 +1535,7 @@ async function replaceAll(data){
   STORES.forEach(s=>{const st=tx.objectStore(s);st.clear();(data[s]||[]).forEach(o=>st.put(o))});
   return done(tx);
 }
-return{open,getAll,put,putMany,del,delMany,replaceAll,isMemory:()=>!!mem};
+return{open,getAll,put,putMany,del,delMany,replaceAll,isMemory:()=>!!mem,failReason:()=>failWhy};
 })();
 
 </script>
@@ -1534,7 +1543,7 @@ return{open,getAll,put,putMany,del,delMany,replaceAll,isMemory:()=>!!mem};
 (function(){
 'use strict';
 const BRAND=window.__BRAND||'';
-const APP_VERSION='6.2.1';
+const APP_VERSION='6.3.0';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'id-'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);
@@ -1660,6 +1669,22 @@ function seedDefaults(){
   return{cats,accs};
 }
 const DEF_ST={currency:'toman',theme:'system',lastBackupAt:null,lastAccountId:null,schema:E.SCHEMA,remindDays:3,notify:false,lastNotifyDay:null,pinHash:null,pinSalt:null,pinLen:4,autoLockMin:1,hideAmt:false,smsUnit:'rial',smsRules:{},nwHistory:[]};
+/* ثبت مهاجرت‌ها: هر آیتم {to:شماره‌ی schema مقصد, run:async()=>{}}. run روی S.* و DB کار می‌کند.
+   قبل از اولین مهاجرتِ لازم، یک عکس فوری از همه‌ی داده در settings/premigrate ذخیره می‌شود (یک ردیف؛ هر بار جایگزین می‌شود). */
+const MIGRATIONS=[];
+async function runMigrations(from){
+  const todo=MIGRATIONS.filter(m=>m.to>from&&m.to<=E.SCHEMA).sort((x,y)=>x.to-y.to);
+  if(!todo.length)return;
+  try{await DB.put('settings',{key:'premigrate',value:{at:Date.now(),from,snapshot:backupObj()}})}catch(e){}
+  for(const m of todo)await m.run();
+}
+function memBanner(){
+  let h='';
+  if(DB.isMemory())h+='<div class="note bad" role="alert"><span class="t">'+ic('alert',18)+'ذخیره‌سازی دائم روی این دستگاه کار نمی‌کند'+(DB.failReason()?' ('+esc(DB.failReason())+')':'')+'؛ هرچه ثبت کنید با بستن برنامه از بین می‌رود. برنامه را در مرورگر اصلی گوشی باز کنید یا حافظه‌ی دستگاه را آزاد کنید، و تا آن زمان بعد از هر ثبت مهم Backup بگیرید.</span><button class="btn sm primary" data-act="backup">دانلود Backup</button></div>';
+  if(S.newerData)h+='<div class="note bad" role="alert"><span class="t">'+ic('alert',18)+'این داده با نسخه‌ی جدیدتری از برنامه ساخته شده است. برای جلوگیری از آسیب، برنامه را به‌روز کنید و تا آن زمان اطلاعات مهم را تغییر ندهید.</span></div>';
+  if(S.migrationError)h+='<div class="note bad" role="alert"><span class="t">'+ic('alert',18)+'به‌روزرسانی ساختار داده کامل نشد. داده‌ی شما دست‌نخورده است؛ از «دانلود Backup» استفاده کنید و به پشتیبانی خبر دهید.</span><button class="btn sm" data-act="backup">دانلود Backup</button></div>';
+  return h;
+}
 async function load(){
   S.persist=await DB.open();
   const [a,c,t,s,lo,ch,bu,rc,as,db,gl]=await Promise.all(['accounts','categories','transactions','settings','loans','cheques','budgets','recurring','assets','debts','goals'].map(x=>DB.getAll(x)));
@@ -1670,7 +1695,14 @@ async function load(){
     const d=seedDefaults();S.accounts=d.accs;S.categories=d.cats;
     await DB.putMany('accounts',d.accs);await DB.putMany('categories',d.cats);
   }
-  S.st.schema=E.SCHEMA;await saveSt();
+  /* مهاجرت رکوردها: فقط وقتی داده‌ی نسخه‌ی قدیمی‌تر است؛ نشان schema فقط بعد از موفقیت ثبت می‌شود.
+     داده‌ای که با نسخه‌ی جدیدتر ساخته شده (کاربر APK/نسخه‌ی قدیمی را باز کرده) هرگز دست‌کاری یا «تنزل» داده نمی‌شود. */
+  const from=Number(S.st.schema)||0;
+  S.newerData=from>E.SCHEMA;S.migrationError=false;
+  if(!S.newerData&&from>0&&from<E.SCHEMA){
+    try{await runMigrations(from)}catch(e){S.migrationError=true;console.error('migrate',e)}
+  }
+  if(!S.newerData&&!S.migrationError){S.st.schema=E.SCHEMA;await saveSt()}
   reindex();applyTheme();
   const j=E.isoToJ(today());V.jy=j.jy;V.jm=j.jm;
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().then(v=>{S.persisted=v})}catch(e){}
@@ -1724,7 +1756,6 @@ function backupBanner(){
   if(S.fs&&S.fs.state==='ok')return '';
   if(S.fs&&S.fs.state==='needperm')return '<div class="note warn"><span class="t">'+ic('lock',18)+'ذخیره‌ی خودکار فایل نیاز به تأیید مجدد دارد.</span><button class="btn sm primary" data-act="fsResume">فعال‌سازی</button></div>';
   const last=S.st.lastBackupAt,age=last?(Date.now()-last)/864e5:Infinity;
-  if(DB.isMemory())return '<div class="note bad"><span class="t">'+ic('alert',18)+'ذخیره‌سازی دائم مرورگر در دسترس نیست و داده‌ها با بستن صفحه از بین می‌روند. حتماً Backup بگیرید.</span><button class="btn sm" data-act="backup">دانلود Backup</button></div>';
   if(age>7)return '<div class="note warn"><span class="t">'+ic('lock',18)+(last?'آخرین Backup شما '+E.toFa(Math.floor(age))+' روز پیش بود.':'هنوز Backup نگرفته‌اید.')+' داده‌ها فقط روی همین مرورگر هستند.</span><button class="btn sm primary" data-act="backup">دانلود Backup</button></div>';
   return '';
 }
@@ -2173,8 +2204,27 @@ async function pinHash(pin,salt){
   try{if(window.crypto&&crypto.subtle&&window.TextEncoder){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+':'+pin));return 'h1:'+[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}}catch(e){}
   return 'h0:'+hash(salt+pin)+'-'+hash(pin+salt+pin);
 }
-const verifyPin=async pin=>(await pinHash(pin,S.st.pinSalt))===S.st.pinHash;
-let lockBuf='',lockFails=0,lockUntil=0,lockBusy=false;
+/* h2: کلیدگشایی PBKDF2 (۱۲۰ هزار دور)؛ هش‌های قدیمی h1/h0 هنوز تأیید می‌شوند و با اولین ورود موفق به h2 ارتقا می‌یابند */
+async function pinHash2(pin,salt){
+  const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(String(pin)),'PBKDF2',false,['deriveBits']);
+  const b=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:new TextEncoder().encode('polino:'+salt),iterations:120000},km,256);
+  return 'h2:'+[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+const hasPbkdf=()=>{try{return !!(window.crypto&&crypto.subtle&&window.TextEncoder)}catch(e){return false}};
+const mkPinHash=async(pin,salt)=>hasPbkdf()?pinHash2(pin,salt).catch(()=>pinHash(pin,salt)):pinHash(pin,salt);
+async function verifyPin(pin){
+  pin=String(pin);const cur=S.st.pinHash||'';
+  if(cur.indexOf('h2:')===0)return (await pinHash2(pin,S.st.pinSalt).catch(()=>null))===cur;
+  const ok=(await pinHash(pin,S.st.pinSalt))===cur;
+  if(ok&&hasPbkdf()){try{S.st.pinHash=await pinHash2(pin,S.st.pinSalt);await saveSt()}catch(e){}}
+  return ok;
+}
+/* محدودیت تلاش PIN پایدار است (localStorage)؛ با بستن/بازکردن برنامه صفر نمی‌شود. پلکانی: ۵→۳۰ثانیه، ۱۰→۵دقیقه، ۱۵→۳۰دقیقه */
+const PINF_KEY='polino.pinfail';
+function pinfLoad(){try{const o=JSON.parse(localStorage.getItem(PINF_KEY)||'null');return o&&typeof o.n==='number'?o:{n:0,until:0}}catch(e){return{n:0,until:0}}}
+function pinfSave(o){try{if(o.n)localStorage.setItem(PINF_KEY,JSON.stringify(o));else localStorage.removeItem(PINF_KEY)}catch(e){}}
+let lockBuf='',lockFails=pinfLoad().n,lockUntil=pinfLoad().until,lockBusy=false;
+const pinfDelay=n=>n>=15?30*60e3:n>=10?5*60e3:n>=5?30e3:0;
 function lockDots(){const n=S.st.pinLen||4;return Array.from({length:n},(_,i)=>'<i class="'+(i<lockBuf.length?'on':'')+'"></i>').join('')}
 function showLock(){
   document.body.classList.add('locked');
@@ -2192,12 +2242,13 @@ async function lockKey(v){
   if(lockBuf.length===(S.st.pinLen||4)){
     lockBusy=true;const pin=lockBuf,ok=await tryUnlock(pin);lockBusy=false;
     if(!ok){lockBuf='';lockFails++;const dd=$('#ldots');if(dd){dd.classList.add('shake');setTimeout(()=>{dd.classList.remove('shake');dd.innerHTML=lockDots()},420)}
-      if(lockFails>=5){lockUntil=Date.now()+30000;lockFails=0;if(msg)msg.textContent='تلاش‌های ناموفق زیاد؛ ۳۰ ثانیه صبر کنید.'}else if(msg)msg.textContent='PIN اشتباه است.'}
+      const dl=pinfDelay(lockFails);if(dl&&lockFails%5===0){lockUntil=Date.now()+dl;if(msg)msg.textContent='تلاش‌های ناموفق زیاد؛ '+(dl>=6e4?E.toFa(Math.round(dl/6e4))+' دقیقه':E.toFa(Math.round(dl/1e3))+' ثانیه')+' صبر کنید.'}else if(msg)msg.textContent='PIN اشتباه است.';
+      pinfSave({n:lockFails,until:lockUntil})}
   }
 }
 async function tryUnlock(pin){
   if(!await verifyPin(String(pin)))return false;
-  S.locked=false;lockBuf='';lockFails=0;document.body.classList.remove('locked');$('#lock').innerHTML='';
+  S.locked=false;lockBuf='';lockFails=0;lockUntil=0;pinfSave({n:0,until:0});document.body.classList.remove('locked');$('#lock').innerHTML='';
   render();maybeNotify();autoPostRecurring();return true;
 }
 function lockNow(){
@@ -2207,9 +2258,9 @@ function lockNow(){
 async function lockForgot(){
   if(!await ask('فراموشی PIN','برای ورود بدون PIN، همه‌ی داده‌های برنامه روی این دستگاه پاک می‌شود. اگر فایل Backup دارید، بعد از آن می‌توانید بازیابی کنید. ادامه می‌دهید؟','پاک‌کردن و ورود',true))return;
   const d=seedDefaults(),st=Object.assign({},DEF_ST,{currency:S.st.currency,theme:S.st.theme});
-  await DB.replaceAll({transactions:[],accounts:d.accs,categories:d.cats,loans:[],cheques:[],budgets:[],recurring:[],settings:[{key:'app',value:st}]});
-  S.txs=[];S.loans=[];S.cheques=[];S.budgets=[];S.recurring=[];S.accounts=d.accs;S.categories=d.cats;S.st=st;reindex();
-  S.locked=false;document.body.classList.remove('locked');$('#lock').innerHTML='';R.route='dash';render();toast('داده‌ها پاک شد؛ PIN حذف شد');
+  await DB.replaceAll({transactions:[],accounts:d.accs,categories:d.cats,loans:[],cheques:[],budgets:[],recurring:[],assets:[],debts:[],goals:[],settings:[{key:'app',value:st}]});
+  S.txs=[];S.loans=[];S.cheques=[];S.budgets=[];S.recurring=[];S.assets=[];S.debts=[];S.goals=[];S.accounts=d.accs;S.categories=d.cats;S.st=st;reindex();
+  lockFails=0;lockUntil=0;pinfSave({n:0,until:0});S.locked=false;document.body.classList.remove('locked');$('#lock').innerHTML='';R.route='dash';render();toast('داده‌ها پاک شد؛ PIN حذف شد');
 }
 function openPin(mode){
   D={pinMode:mode};
@@ -2223,7 +2274,7 @@ async function savePin(){
   const a=g('pn1'),b=g('pn2');
   if(!/^\d{4,6}$/.test(a)){showErr(['PIN باید ۴ تا ۶ رقم باشد.']);return}
   if(a!==b){showErr(['دو PIN یکسان نیستند.']);return}
-  const salt=uid();S.st.pinSalt=salt;S.st.pinHash=await pinHash(a,salt);S.st.pinLen=a.length;await saveSt();closeSheet();toast('PIN تنظیم شد');render();
+  const salt=uid();S.st.pinSalt=salt;S.st.pinHash=await mkPinHash(a,salt);S.st.pinLen=a.length;await saveSt();closeSheet();toast('PIN تنظیم شد');render();
 }
 function securityCard(){
   const has=!!S.st.pinHash;
@@ -2784,6 +2835,18 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 setInterval(()=>{if(S.st&&S.st.notify&&document.visibilityState==='visible'&&!S.locked)pingSw()},60000);
 const ACT5={testNotify:async()=>{if(typeof Notification==='undefined'||Notification.permission!=='granted'){toast('ابتدا اعلان را روشن کنید');return}const ok=await showLocal(BRAND+' | اعلان آزمایشی','یادآورهای سررسید به همین شکل نمایش داده می‌شوند.','test');toast(ok?'اعلان آزمایشی ارسال شد':'نمایش اعلان ممکن نشد')}};
 
+/* به‌روزرسانی امن برنامه: نسخه‌ی جدید سرویس‌ورکر منتظر می‌ماند؛ کاربر با دکمه اعمالش می‌کند و صفحه یک‌بار بازخوانی می‌شود */
+function updBanner(){
+  if(!window.__swWaiting)return '';
+  return '<div class="note warn" role="status"><span class="t">'+ic('alert',18)+'نسخه‌ی جدید برنامه آماده است. داده‌های شما حفظ می‌شود.</span><button class="btn sm primary" data-act="swUpdate">به‌روزرسانی</button></div>';
+}
+function swUpdate(){
+  const w=window.__swWaiting;if(!w)return;
+  window.__swUserReload=true;try{w.postMessage({type:'SKIP_WAITING'})}catch(e){location.reload()}
+  setTimeout(()=>{if(window.__swUserReload)location.reload()},3000);
+}
+window.addEventListener('polino-update',()=>{try{if(!S.locked&&!LIC.blocked&&!document.querySelector('#overlay .sheet'))render()}catch(e){}});
+
 /* تبدیل عددهای حرفی فارسی در متن گفتاری به رقم: «دو میلیون و پانصد هزار تومان ناهار» → «2500000 تومان ناهار»
    فقط وقتی تبدیل می‌کند که عدد «مبلغ‌گونه» باشد (واحد هزار/میلیون/میلیارد، صدگان یا ≥۲۰)؛ تا «یک ناهار» یا «دو تا نان» دست نخورد. */
 function faNumWords(text){
@@ -3111,12 +3174,17 @@ const LIC_MSG={
   net:'اتصال به سرور برقرار نشد. VPN را روشن کنید و دوباره تلاش کنید، یا از «فعال‌سازی دستی» پایین صفحه استفاده کنید.',
   nokey:'کلید عمومی لایسنس در این نسخه تنظیم نشده است (مخصوص سازنده برنامه).'
 };
+/* LIC_API می‌تواند چند آدرس با ویرگول باشد (مثلاً دامنه‌ی اختصاصی + workers.dev)؛ اولین پاسخ غیرشبکه‌ای معتبر است */
 async function licCall(action,extra){
-  const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),15000);
-  try{
-    const r=await fetch(LIC_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({action},extra)),signal:ctl.signal});
-    const j=await r.json();return r.status>=500?{net:true}:j;
-  }catch(e){return{net:true}}finally{clearTimeout(t)}
+  const urls=String(LIC_API).split(',').map(x=>x.trim()).filter(Boolean),body=JSON.stringify(Object.assign({action},extra));
+  for(const u of urls){
+    const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),12000);
+    try{
+      const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body,signal:ctl.signal});
+      const j=await r.json();if(r.status>=500)continue;return j;
+    }catch(e){}finally{clearTimeout(t)}
+  }
+  return{net:true};
 }
 async function licInit(){
   await licLoad();
@@ -3893,8 +3961,9 @@ function viewMore(){
   h+='<div class="card"><h2 style="margin-bottom:10px">ظاهر</h2><div class="seg">'+[['system','خودکار'],['light','روشن'],['dark','تیره']].map(([k,v])=>'<button data-act="theme" data-v="'+k+'" class="'+(S.st.theme===k?'on':'')+'">'+v+'</button>').join('')+'</div></div>';
   h+='<div class="card"><h2 style="margin-bottom:4px">یادآور سررسید</h2><p class="muted small" style="margin:0 0 12px">قسط‌ها و چک‌ها قبل از موعد روی داشبورد و صفحه‌ی تعهدات برجسته می‌شوند.</p><div class="field"><label for="remSel">چند روز قبل یادآوری شود؟</label>'+selHtml('remSel',[0,1,2,3,5,7,10].map(d=>optHtml(d,d===0?'فقط در روز سررسید':E.toFa(d)+' روز قبل',lead())).join(''),' data-set="remindDays"')+'</div><div class="row"><button class="btn soft" data-act="exportICS">'+ic('download',16)+'فایل تقویم گوشی</button>'+(notifyOk||isIos()?'<button class="btn" data-act="toggleNotify">'+ic('bell',16)+(S.st.notify?'اعلان: روشن':'روشن‌کردن اعلان')+'</button>':'')+(S.st.notify?'<button class="btn sm" data-act="testNotify">اعلان آزمایشی</button>':'')+'</div><p class="hint" style="margin-top:10px">'+notifStatusHtml()+'</p></div>'+securityCard()+licenseCard()+exportCard()+'</div>';
   h+='<div class="grid"><div class="card"><h2 style="margin-bottom:4px">واحد پول</h2><p class="muted small" style="margin:0 0 12px">واحد فعلی: <b>'+esc(unit())+'</b>. مبلغ‌ها بدون اجازه‌ی شما تبدیل نمی‌شوند.</p><div class="row"><div class="sel" style="min-width:170px"><select class="inp" id="curSel">'+Object.entries(E.UNITS).map(([k,v])=>optHtml(k,v,S.st.currency)).join('')+'</select></div><button class="btn" data-act="setCur">فقط تغییر برچسب</button></div>'+(conv.length?'<div style="margin-top:14px"><div class="lbl" style="margin-bottom:6px">تبدیل مبلغ‌ها (مثلاً با حذف چهار صفر)</div><div class="row">'+conv.map(([k,v])=>'<button class="btn sm" data-act="convert" data-v="'+k+'">'+esc(E.UNITS[S.st.currency])+' ← '+esc(E.UNITS[v.to])+'</button>').join('')+'</div></div>':'')+'</div>';
-  h+='<div class="card"><h2 style="margin-bottom:4px">پشتیبان‌گیری و بازیابی</h2><p class="muted small" style="margin:0 0 12px">آخرین Backup: '+(last?E.fmtJ(E.todayIso(new Date(last)))+' ('+E.toFa(Math.floor((Date.now()-last)/864e5))+' روز پیش)':'هنوز گرفته نشده')+'<br>ذخیره‌سازی مرورگر: '+(DB.isMemory()?'<b class="exp">موقت (ناپایدار)</b>':(S.persisted?'پایدار':'استاندارد'))+'</p><div class="row"><button class="btn primary" data-act="backup">'+ic('download',16)+'دانلود Backup</button><label class="btn" style="cursor:pointer">'+ic('upload',16)+'بازیابی از فایل<input type="file" id="restoreFile" accept=".json,application/json" hidden></label></div></div>';
+  h+='<div class="card"><h2 style="margin-bottom:4px">پشتیبان‌گیری و بازیابی</h2><p class="muted small" style="margin:0 0 12px">آخرین Backup: '+(last?E.fmtJ(E.todayIso(new Date(last)))+' ('+E.toFa(Math.floor((Date.now()-last)/864e5))+' روز پیش)':'هنوز گرفته نشده')+'<br>ذخیره‌سازی مرورگر: '+(DB.isMemory()?'<b class="exp">موقت (ناپایدار)</b>':(S.persisted?'پایدار':'استاندارد'))+'</p><div class="row"><button class="btn primary" data-act="backup">'+ic('download',16)+'دانلود Backup</button><label class="btn" style="cursor:pointer">'+ic('upload',16)+'بازیابی از فایل<input type="file" id="restoreFile" accept=".json,application/json,text/plain,*/*" hidden></label></div><div class="row" style="margin-top:8px"><button class="btn sm" data-act="copyBackup">کپی Backup (متن)</button><button class="btn sm" data-act="restoreText">بازیابی از متن</button></div></div>';
   h+=fsCard();
+  h+='<div class="card"><h2 style="margin-bottom:4px">حریم خصوصی</h2><p class="muted small" style="margin:0 0 10px">داده‌های مالی شما فقط روی همین دستگاه می‌ماند.</p><a class="btn sm" style="text-decoration:none" href="../privacy.html" target="_blank" rel="noopener">مشاهده‌ی سیاست حریم خصوصی</a></div>';
   h+='<div class="card"><h2 style="margin-bottom:4px">داده‌ی نمونه</h2><p class="muted small" style="margin:0 0 12px">۳ ماه تراکنش، دو وام و چند چک آزمایشی برای آشنایی؛ بعداً با یک کلیک حذف می‌شود.</p><div class="row"><button class="btn" data-act="loadDemo">بارگذاری داده‌ی نمونه</button>'+(nd?'<button class="btn" data-act="rmDemo">حذف نمونه‌ها ('+E.toFa(nd)+')</button>':'')+'</div></div>';
   h+='<div class="card"><h2 class="dng" style="margin-bottom:4px">منطقه‌ی خطر</h2><p class="muted small" style="margin:0 0 12px">پاک‌کردن همه‌ی اطلاعات. پیش از آن یک Backup خودکار دانلود می‌شود.</p><button class="btn danger" data-act="wipe">پاک‌کردن کل داده‌ها</button></div></div></div></div>';
   return h;
@@ -3910,6 +3979,17 @@ async function restoreFromFile(file){
     try{await DB.replaceAll({transactions:d.transactions,accounts:d.accounts,categories:d.categories,loans:d.loans||[],cheques:d.cheques||[],budgets:d.budgets||[],recurring:d.recurring||[],assets:d.assets||[],debts:d.debts||[],goals:d.goals||[],settings:[{key:'app',value:keep}]})}catch(e){toast('بازیابی ناموفق بود؛ داده‌ی قبلی دست‌نخورده است.');return}
     S.txs=d.transactions;S.accounts=d.accounts;S.categories=d.categories;S.loans=d.loans||[];S.cheques=d.cheques||[];S.budgets=d.budgets||[];S.recurring=d.recurring||[];S.assets=d.assets||[];S.debts=d.debts||[];S.goals=d.goals||[];S.st=keep;reindex();applyTheme();closeSheet();toast('بازیابی انجام شد');render();
   };
+}
+/* مسیرهای جایگزین برای فایل (مثلاً در WebView/TWA که انتخاب/دانلود فایل ممکن است محدود باشد): کپی Backup به کلیپ‌بورد و بازیابی از متن چسبانده‌شده */
+async function copyBackup(){
+  const txt=JSON.stringify(backupObj());
+  try{await navigator.clipboard.writeText(txt);S.st.lastBackupAt=Date.now();await saveSt();toast('Backup کپی شد؛ آن را در یک یادداشت یا پیام خودتان ذخیره کنید');render();return}catch(e){}
+  openSheet('<h2>کپی دستی Backup</h2><p class="muted small">کپی خودکار ممکن نشد. همه‌ی متن زیر را انتخاب و کپی کنید و جای امنی نگه دارید.</p><textarea class="inp" id="bkTxt" rows="8" readonly dir="ltr" style="width:100%"></textarea><div class="row end"><button class="btn" data-act="closeSheet">بستن</button></div>');
+  const ta=$('#bkTxt');if(ta){ta.value=txt;ta.focus();ta.select()}
+}
+function restoreText(){
+  openSheet('<h2>بازیابی از متن Backup</h2><p class="muted small">متن Backup را که قبلاً کپی کرده‌اید اینجا بچسبانید.</p><textarea class="inp" id="bkIn" rows="8" dir="ltr" placeholder="{&quot;app&quot;:&quot;malyar&quot;,…}" style="width:100%"></textarea><div class="row end"><button class="btn" data-act="closeSheet">انصراف</button><button class="btn primary" id="bkGo">ادامه</button></div>');
+  $('#bkGo').onclick=()=>{const v=($('#bkIn').value||'').trim();if(!v){toast('متنی وارد نشده است');return}closeSheet();restoreFromFile({text:async()=>v})};
 }
 function openConvert(key){
   const c=E.CONVERSIONS[key],from=E.UNITS[S.st.currency],to=E.UNITS[c.to],sample=2500000,res=E.convertAmounts({transactions:[{amount:sample}],accounts:[]},c.factor);
@@ -3952,6 +4032,7 @@ function render(){
   if(LIC.blocked){showLicense();return}
   if(S.locked){showLock();return}
   main.innerHTML=rt==='dash'?viewDash():rt==='tx'?viewTx():rt==='oblig'?viewOb():rt==='acc'?viewAcc():rt==='cats'?viewCats():rt==='budget'?viewBudget():rt==='wealth'?viewWealth():rt==='goals'?viewGoals():rt==='reports'?viewReports():viewMore();
+  { const g=memBanner()+(typeof updBanner==='function'?updBanner():''); if(g)main.insertAdjacentHTML('afterbegin',g); }
   const bd=dueBadge(),active=k=>(rt===k||((rt==='acc'||rt==='cats'||rt==='budget'||rt==='wealth'||rt==='goals'||rt==='reports')&&k==='more'));
   const sbtn=([k,i,l])=>'<button class="nav'+(rt===k?' on':'')+'" data-act="nav" data-v="'+k+'" '+(rt===k?'aria-current="page"':'')+'>'+ic(i,20)+'<span>'+l+'</span>'+(k==='oblig'&&bd?'<span class="badge">'+E.toFa(bd)+'</span>':'')+'</button>';
   const bbtn=(k,i,l)=>'<button class="nav'+(active(k)?' on':'')+'" data-act="nav" data-v="'+k+'">'+ic(i,22)+'<span>'+l+'</span>'+(k==='oblig'&&bd?'<span class="badge">'+E.toFa(bd)+'</span>':'')+'</button>';
@@ -3998,7 +4079,7 @@ const ACT={
   chDir:t=>{R.chDir=t.dataset.v;render()},chSt:t=>{R.chSt=t.dataset.v;render()},
   chDirSet:t=>{readChq();D.dir=t.dataset.v;$('#overlay .sheet').innerHTML=chequeSheetHtml();document.querySelectorAll('#overlay [data-amt]').forEach(hintAmt)},
   chClear:()=>{readChq();openClear(D.chId)},chBounce:()=>setChequeStatus('bounced','چک «برگشتی» ثبت شد'),chCancel:()=>setChequeStatus('cancelled','چک باطل شد'),chRestore:restoreCheque,delCheque:deleteCheque,
-  exportICS,toggleNotify,backup:doBackup,
+  exportICS,toggleNotify,backup:doBackup,copyBackup,restoreText,swUpdate,
   theme:async t=>{S.st.theme=t.dataset.v;applyTheme();await saveSt();render()},
   setCur:async()=>{const v=$('#curSel').value;if(v===S.st.currency)return;if(!await ask('تغییر برچسب واحد','فقط نام واحد عوض می‌شود و مبلغ‌ها تغییر نمی‌کنند. برای تبدیل مبلغ‌ها از دکمه‌های «تبدیل مبلغ‌ها» استفاده کنید.','تغییر برچسب'))return;S.st.currency=v;await saveSt();render()},
   convert:t=>openConvert(t.dataset.v),loadDemo,rmDemo,wipe
@@ -4034,14 +4115,30 @@ document.addEventListener('change',e=>{
   else if(t.id==='fcat'&&t.value==='__new__')quickNewCat();
   else if(t.tagName==='SELECT'&&document.getElementById(t.id+'-o')){const o=document.getElementById(t.id+'-o');o.style.display=t.value==='__o__'?'':'none';if(t.value==='__o__')o.focus();if(t.id==='abank'&&D&&D.type!==undefined)syncAccForm()}
 });
-async function startApp(){S.locked=!!S.st.pinHash;await initFs();render();if(!S.locked&&!LIC.blocked){maybeNotify();autoPostRecurring()}}
-load().then(async()=>{await licInit();await startApp()}).catch(e=>{console.error('init');document.getElementById('main').innerHTML='<div class="card err">راه‌اندازی برنامه ناموفق بود. صفحه را دوباره باز کنید یا مرورگر دیگری امتحان کنید.</div>'});
+/* میان‌بر‌های manifest (لانچر اندروید): ?a=add | reports | oblig */
+function runShortcut(){
+  try{
+    const a=new URLSearchParams(location.search).get('a');if(!a)return;
+    history.replaceState(null,'',location.pathname);
+    if(S.locked||LIC.blocked)return;
+    if(a==='add')openTx(newDraft('expense'));else if(a==='reports')go('reports');else if(a==='oblig')go('oblig');
+  }catch(e){}
+}
+async function startApp(){S.locked=!!S.st.pinHash;await initFs();render();if(!S.locked&&!LIC.blocked){maybeNotify();autoPostRecurring();runShortcut()}}
+load().then(async()=>{await licInit();await startApp()}).catch(e=>{console.error('init',e);document.getElementById('main').innerHTML='<div class="card err" role="alert"><b>راه‌اندازی برنامه ناموفق بود.</b><p>داده‌های شما پاک نشده‌اند. ابتدا یک بار برنامه را کاملاً ببندید و دوباره باز کنید. اگر ادامه داشت، حافظه‌ی خالی دستگاه و به‌روز بودن مرورگر/Android System WebView را بررسی کنید و با پشتیبانی (@aihub_tools) تماس بگیرید.</p><button class="btn primary" onclick="location.reload()">تلاش دوباره</button></div>'});
 window.__malyar={S,F,V,R,ACT,render,go,openTx,newDraft,D:()=>D,E,smsRun,smsSaveAll,buildReport,openRecPost,autoPostRecurring,pinHash,lockNow,unlock:tryUnlock,DB,buildQueue,syncQueue,toggleNotify,faNumWords,voice:VOICE,goalAutoAlloc,insightList,RPS,rpReport,dpOpen,ddOpen,LIC,licBackground,licActivate,licVerify,licInit};
 })();
 
 </script>
-<script>/* PWA: فقط روی http/https؛ در file:// بی‌اثر است */
-if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){addEventListener('load',function(){navigator.serviceWorker.register('../service-worker.js').catch(function(){})})}
+<script>/* PWA: فقط روی http/https؛ در file:// بی‌اثر است. نسخه‌ی جدید «منتظر» می‌ماند تا کاربر خودش اعمالش کند (وسط کار صفحه عوض نمی‌شود) */
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){
+ var sigUpd=function(w){window.__swWaiting=w;try{window.dispatchEvent(new Event('polino-update'))}catch(e){}};
+ navigator.serviceWorker.addEventListener('controllerchange',function(){if(window.__swUserReload){window.__swUserReload=false;location.reload()}});
+ addEventListener('load',function(){navigator.serviceWorker.register('../service-worker.js').then(function(reg){
+  if(reg.waiting&&navigator.serviceWorker.controller)sigUpd(reg.waiting);
+  reg.addEventListener('updatefound',function(){var n=reg.installing;if(!n)return;n.addEventListener('statechange',function(){if(n.state==='installed'&&navigator.serviceWorker.controller)sigUpd(n)})});
+  setInterval(function(){reg.update().catch(function(){})},6*36e5);
+ }).catch(function(){})})}
 </script>
 </body>
 </html>

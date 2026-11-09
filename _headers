@@ -9,3 +9,9 @@
   Cache-Control: no-cache
 /assets/*
   Cache-Control: public, max-age=604800
+/.well-known/assetlinks.json
+  Content-Type: application/json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600
+/privacy.html
+  Cache-Control: no-cache

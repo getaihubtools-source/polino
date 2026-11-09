@@ -1,7 +1,7 @@
 /* پولینو — Service Worker
    • فقط فایل‌های برنامه را کش می‌کند (Cache Storage). به IndexedDB دست نمی‌زند؛ داده‌ی کاربر در به‌روزرسانی حفظ می‌شود.
-   • نسخه‌ی کش با هر انتشار (build) عوض می‌شود: a6e95b1afc هنگام ساخت جایگزین می‌شود. */
-const BUILD = 'a6e95b1afc';
+   • نسخه‌ی کش با هر انتشار (build) عوض می‌شود: 38207c2e4d هنگام ساخت جایگزین می‌شود. */
+const BUILD = '38207c2e4d';
 const PREFIX = 'polino-shell-';
 const LEGACY_PREFIX = 'malyar-shell-'; /* کش نسخه‌ی قبلی (قبل از تغییر نام) */
 const CACHE = PREFIX + BUILD;
@@ -10,7 +10,7 @@ const SHELL = [
   './assets/fonts/vazirmatn-arabic-wght-normal.woff2',
   './assets/fonts/vazirmatn-latin-wght-normal.woff2',
   './assets/icons/icon.svg', './assets/icons/icon-192.png', './assets/icons/icon-512.png',
-  './assets/icons/icon-maskable-192.png', './assets/icons/icon-maskable-512.png',
+  './assets/icons/icon-maskable-192.png', './assets/icons/icon-maskable-512.png', './assets/icons/icon-monochrome-512.png', './privacy.html',
   './assets/icons/apple-touch-icon.png', './assets/icons/favicon-32.png', './assets/icons/favicon-48.png',
   './assets/shots/desktop.webp', './assets/shots/dash.webp', './assets/shots/budget.webp',
   './assets/shots/forecast.webp', './assets/shots/wealth.webp', './assets/shots/people.webp', './assets/shots/sms.webp'
@@ -27,7 +27,6 @@ self.addEventListener('install', e => {
       try { const r = await fetch(new Request(p, { cache: 'reload' })); if (r.ok && !r.redirected) await c.put(keyOf(p), r); else if (must.includes(p)) throw new Error(p); }
       catch (err) { if (must.includes(p)) throw err; }
     }));
-    await self.skipWaiting();
   })());
 });
 
@@ -82,7 +81,12 @@ async function checkReminders() {
   } finally { db.close(); }
 }
 /* ۱) از صفحه، وقتی برنامه باز است */
-self.addEventListener('message', e => { if (e.data && e.data.type === 'check-reminders') e.waitUntil(checkReminders()); });
+self.addEventListener('message', e => {
+  if (!e.data) return;
+  if (e.data.type === 'check-reminders') e.waitUntil(checkReminders());
+  /* فعال‌سازی نسخه‌ی جدید فقط با درخواست کاربر (دکمه‌ی «به‌روزرسانی» در برنامه) */
+  if (e.data.type === 'SKIP_WAITING') self.skipWaiting();
+});
 /* ۲) بررسی دوره‌ای مرورگر (فقط Chrome/Edge برنامه‌ی نصب‌شده؛ زمان‌بندی با مرورگر است) */
 self.addEventListener('periodicsync', e => { if (e.tag === Q_TAG) e.waitUntil(checkReminders()); });
 /* ۳) Push از سرور اختیاری. در iOS هر Push باید اعلان نمایش بدهد (بدون نمایش، اشتراک لغو می‌شود) */
