@@ -1,7 +1,7 @@
 /* پولینو — Service Worker
    • فقط فایل‌های برنامه را کش می‌کند (Cache Storage). به IndexedDB دست نمی‌زند؛ داده‌ی کاربر در به‌روزرسانی حفظ می‌شود.
-   • نسخه‌ی کش با هر انتشار (build) عوض می‌شود: 38207c2e4d هنگام ساخت جایگزین می‌شود. */
-const BUILD = '38207c2e4d';
+   • نسخه‌ی کش با هر انتشار (build) عوض می‌شود: f9b46d17a2 هنگام ساخت جایگزین می‌شود. */
+const BUILD = 'f9b46d17a2';
 const PREFIX = 'polino-shell-';
 const LEGACY_PREFIX = 'malyar-shell-'; /* کش نسخه‌ی قبلی (قبل از تغییر نام) */
 const CACHE = PREFIX + BUILD;
