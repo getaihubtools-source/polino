@@ -1,7 +1,7 @@
 /* پولینو — Service Worker
    • فقط فایل‌های برنامه را کش می‌کند (Cache Storage). به IndexedDB دست نمی‌زند؛ داده‌ی کاربر در به‌روزرسانی حفظ می‌شود.
-   • نسخه‌ی کش با هر انتشار (build) عوض می‌شود: f9b46d17a2 هنگام ساخت جایگزین می‌شود. */
-const BUILD = 'f9b46d17a2';
+   • نسخه‌ی کش با هر انتشار (build) عوض می‌شود: a4c81e63d9 هنگام ساخت جایگزین می‌شود. */
+const BUILD = 'a4c81e63d9';
 const PREFIX = 'polino-shell-';
 const LEGACY_PREFIX = 'malyar-shell-'; /* کش نسخه‌ی قبلی (قبل از تغییر نام) */
 const CACHE = PREFIX + BUILD;
@@ -46,6 +46,15 @@ self.addEventListener('fetch', e => {
   if (url.pathname.endsWith('/service-worker.js')) return;
   e.respondWith((async () => {
     const c = await caches.open(CACHE), key = keyOf(req.url), hit = await c.match(key);
+    /* صفحه‌ها (HTML): اول شبکه (بدون کش HTTP، حداکثر ۳ ثانیه)، وگرنه کش → نسخه‌ی جدید بلافاصله در اولین باز کردن می‌آید و آفلاین هم کار می‌کند */
+    if (req.mode === 'navigate') {
+      const fresh = await Promise.race([
+        fetch(new Request(req.url, { cache: 'no-cache' })).then(r => (r && r.ok && r.type === 'basic' && !r.redirected) ? (c.put(key, r.clone()), r) : null).catch(() => null),
+        new Promise(res => setTimeout(() => res(null), 3000))
+      ]);
+      if (fresh) return fresh;
+      if (hit) return hit;
+    }
     /* هم‌زمان نسخه‌ی تازه را در پس‌زمینه می‌گیریم (stale-while-revalidate)؛ دفعه‌ی بعد اعمال می‌شود */
     const net = fetch(req).then(r => { if (r && r.ok && r.type === 'basic' && !r.redirected) c.put(key, r.clone()); return r; }).catch(() => null);
     if (hit) { e.waitUntil(net); return hit; }
