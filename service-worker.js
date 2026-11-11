@@ -1,7 +1,7 @@
 /* پولینو — Service Worker
    • فقط فایل‌های برنامه را کش می‌کند (Cache Storage). به IndexedDB دست نمی‌زند؛ داده‌ی کاربر در به‌روزرسانی حفظ می‌شود.
-   • نسخه‌ی کش با هر انتشار (build) عوض می‌شود: a4c81e63d9 هنگام ساخت جایگزین می‌شود. */
-const BUILD = 'a4c81e63d9';
+   • نسخه‌ی کش با هر انتشار (build) عوض می‌شود: b7d25f08e1 هنگام ساخت جایگزین می‌شود. */
+const BUILD = 'b7d25f08e1';
 const PREFIX = 'polino-shell-';
 const LEGACY_PREFIX = 'malyar-shell-'; /* کش نسخه‌ی قبلی (قبل از تغییر نام) */
 const CACHE = PREFIX + BUILD;
@@ -12,8 +12,7 @@ const SHELL = [
   './assets/icons/icon.svg', './assets/icons/icon-192.png', './assets/icons/icon-512.png',
   './assets/icons/icon-maskable-192.png', './assets/icons/icon-maskable-512.png', './assets/icons/icon-monochrome-512.png', './privacy.html',
   './assets/icons/apple-touch-icon.png', './assets/icons/favicon-32.png', './assets/icons/favicon-48.png',
-  './assets/shots/desktop.webp', './assets/shots/dash.webp', './assets/shots/budget.webp',
-  './assets/shots/forecast.webp', './assets/shots/wealth.webp', './assets/shots/people.webp', './assets/shots/sms.webp'
+  './assets/shots/desktop.webp', './assets/shots/dash.webp', './assets/shots/budget.webp', './assets/shots/forecast.webp', './assets/shots/wealth.webp', './assets/shots/people.webp', './assets/shots/sms.webp', './assets/shots/desktop-dark.webp', './assets/shots/dash-dark.webp', './assets/shots/budget-dark.webp', './assets/shots/forecast-dark.webp', './assets/shots/wealth-dark.webp', './assets/shots/people-dark.webp', './assets/shots/sms-dark.webp'
 ];
 /* آدرس را یکسان می‌کنیم: بدون query/hash و index.html → پوشه */
 const keyOf = u => { const x = new URL(u, self.location.href); x.search = ''; x.hash = ''; x.pathname = x.pathname.replace(/index\.html$/, ''); return x.href; };

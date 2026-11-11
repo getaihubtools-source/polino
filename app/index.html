@@ -1716,7 +1716,7 @@ return{open,getAll,put,putMany,del,delMany,replaceAll,isMemory:()=>!!mem,failRea
 (function(){
 'use strict';
 const BRAND=window.__BRAND||'';
-const APP_VERSION='6.8.1';
+const APP_VERSION='6.9.0';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'id-'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);

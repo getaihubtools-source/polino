@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>پولینو | داشبورد مالی شخصی فارسی، آفلاین و بدون ثبت‌نام</title>
 <meta name="description" content="پولینو؛ دفتر مالی شخصی با تاریخ شمسی: ثبت سریع هزینه و درآمد، بودجه، وام و چک، پیش‌بینی نقدینگی و ثروت خالص. داده‌ها فقط روی دستگاه شما می‌ماند و برنامه آفلاین کار می‌کند.">
-<meta name="theme-color" content="#070c1c">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#F4F7F9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1220" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <meta property="og:title" content="پولینو | داشبورد مالی شخصی">
 <meta property="og:description" content="فارسی، شمسی، آفلاین و بدون ثبت‌نام. داده‌ها فقط روی دستگاه شما.">
 <meta property="og:type" content="website">
@@ -18,7 +19,8 @@
 <style>
 @font-face{font-family:'Vazirmatn Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(assets/fonts/vazirmatn-arabic-wght-normal.woff2) format('woff2');unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
 @font-face{font-family:'Vazirmatn Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(assets/fonts/vazirmatn-latin-wght-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-:root{--bg:#070c1c;--surface:#0f1730;--surface2:#16203f;--text:#e8ecfa;--muted:#8e99bd;--faint:#6a7498;--line:#1f2a4d;--accent:#8aa0ff;--accent-ink:#0a1230;--accent-soft:#18265a;--gold:#f2b84b;--gold-soft:#3a2d10;--income:#3ed6a0;--expense:#ff7189;--hero-a:#1b2f8f;--hero-b:#0e1a55;--hero-c:#0a1240;--ring:rgba(138,160,255,.4);--shadow:0 30px 80px -24px rgba(0,0,0,.75)}
+:root{color-scheme:light dark;--bg:#F4F7F9;--surface:#fff;--surface2:#EBF0F4;--text:#0F1B2D;--muted:#4F5E75;--faint:#5F6E85;--line:#DDE4EA;--border-strong:#BFC9D5;--accent:#4338CA;--accent-ink:#fff;--accent-text:#342BA3;--accent-soft:#EEEDFA;--gold:#F2A33A;--gold-soft:#FFF4E0;--warn:#8F5500;--income:#11774F;--expense:#B52F2F;--hero-a:#342BA3;--hero-b:#29227E;--hero-c:#1E195E;--ring:rgba(67,56,202,.35);--primary-glow:rgba(67,56,202,.45);--hero-glow:rgba(67,56,202,.13);--shadow:0 24px 60px -24px rgba(15,27,45,.38)}
+@media(prefers-color-scheme:dark){:root{--bg:#0A1220;--surface:#121D30;--surface2:#1A273D;--text:#EAF0F6;--muted:#A9B6C7;--faint:#7F8DA1;--line:#243249;--border-strong:#34445E;--accent:#7E76DB;--accent-ink:#0B1524;--accent-text:#AFAAE8;--accent-soft:rgba(126,118,219,.16);--gold:#F5B14F;--gold-soft:rgba(245,177,79,.14);--warn:#F0B04A;--income:#4CC898;--expense:#F27A7A;--ring:rgba(126,118,219,.45);--primary-glow:rgba(126,118,219,.35);--hero-glow:rgba(126,118,219,.22);--shadow:0 30px 80px -24px rgba(0,0,0,.75)}}
 *{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);font-family:'Vazirmatn Variable',Vazirmatn,Tahoma,system-ui,sans-serif;line-height:1.85;overflow-x:hidden}
 a{color:inherit;text-decoration:none}img{display:block;max-width:100%;height:auto}
@@ -27,66 +29,67 @@ a{color:inherit;text-decoration:none}img{display:block;max-width:100%;height:aut
 section{position:relative;padding:76px 0}
 h1,h2,h3{margin:0;line-height:1.35;letter-spacing:-.01em}
 h2{font-size:clamp(1.55rem,4.2vw,2.2rem);font-weight:800}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;color:var(--gold);background:var(--gold-soft);padding:3px 13px;border-radius:99px;margin-bottom:14px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;color:var(--accent-text);background:var(--accent-soft);padding:3px 13px;border-radius:99px;margin-bottom:14px}
 .lead{color:var(--muted);font-size:1.02rem;max-width:62ch;margin:10px 0 0}
 .sec-h{margin-bottom:34px}.sec-h.c{text-align:center}.sec-h.c .lead{margin-inline:auto}
 /* دکمه‌ها */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:0 24px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-weight:700;font-size:.97rem;cursor:pointer;transition:transform .15s,background .2s,box-shadow .2s,border-color .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 24px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-weight:700;font-size:.97rem;cursor:pointer;transition:transform .15s,background .2s,box-shadow .2s,border-color .2s}
 .btn:hover{transform:translateY(-2px);border-color:var(--accent)}
-.btn.primary{background:linear-gradient(135deg,#9db0ff,#7088f5);color:var(--accent-ink);border-color:transparent;box-shadow:0 12px 34px -12px rgba(138,160,255,.7)}
-.btn.primary:hover{box-shadow:0 16px 40px -10px rgba(138,160,255,.85)}
-.btn.gold{background:linear-gradient(135deg,#ffd98a,#f2b84b);color:#2a1d02;border-color:transparent;box-shadow:0 12px 34px -14px rgba(242,184,75,.7)}
+.btn:active{transform:none}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent;box-shadow:0 12px 30px -12px var(--primary-glow)}
+.btn.primary:hover{box-shadow:0 16px 36px -10px var(--primary-glow);border-color:transparent}
+.btn.gold{background:var(--surface);color:var(--accent-text);border-color:var(--border-strong);box-shadow:none}
 .btn svg{width:19px;height:19px;flex:none}
 .btn[hidden]{display:none}
 /* ناوبری */
-.top{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(7,12,28,.72);border-bottom:1px solid rgba(31,42,77,.7)}
+.top{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:var(--bg);background:color-mix(in srgb,var(--bg) 84%,transparent);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:16px;min-height:66px}
 .brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:1.12rem}
-.brand img{width:38px;height:38px;border-radius:11px;box-shadow:0 0 0 1px rgba(138,160,255,.28),0 6px 18px -6px rgba(88,118,255,.6)}
+.brand img{width:38px;height:38px;border-radius:11px;box-shadow:0 0 0 1px var(--line),0 6px 18px -6px var(--primary-glow)}
 .top nav{display:flex;gap:4px;margin-inline-start:18px}
 .top nav a{padding:6px 13px;border-radius:11px;color:var(--muted);font-size:.9rem;font-weight:600}
 .top nav a:hover{color:var(--text);background:var(--surface2)}
 .top .btn{min-height:42px;padding:0 18px;border-radius:13px;font-size:.88rem;margin-inline-start:auto}
 /* هیرو */
-.hero{padding:64px 0 40px;background:radial-gradient(700px 420px at 85% -10%,rgba(242,184,75,.16),transparent 62%),radial-gradient(760px 520px at 8% 20%,rgba(88,118,255,.26),transparent 62%)}
-.hero:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='white' stroke-opacity='.06'%3E%3Crect x='6.4' y='6.4' width='31.2' height='31.2'/%3E%3Cpath d='M22 0L44 22 22 44 0 22z'/%3E%3C/g%3E%3C/svg%3E");-webkit-mask-image:linear-gradient(180deg,#000 0,transparent 78%);mask-image:linear-gradient(180deg,#000 0,transparent 78%)}
+.hero{padding:64px 0 40px;background:radial-gradient(700px 420px at 85% -10%,var(--gold-soft),transparent 62%),radial-gradient(760px 520px at 8% 20%,var(--hero-glow),transparent 62%)}
+.hero:before{filter:invert(1);opacity:.8;content:"";position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='white' stroke-opacity='.06'%3E%3Crect x='6.4' y='6.4' width='31.2' height='31.2'/%3E%3Cpath d='M22 0L44 22 22 44 0 22z'/%3E%3C/g%3E%3C/svg%3E");-webkit-mask-image:linear-gradient(180deg,#000 0,transparent 78%);mask-image:linear-gradient(180deg,#000 0,transparent 78%)}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.02fr 1fr;gap:34px;align-items:center}
 .hero h1{font-size:clamp(2.1rem,6.2vw,3.5rem);font-weight:900}
-.hero h1 em{font-style:normal;background:linear-gradient(120deg,#ffd98a,#f2b84b 55%,#ffb35c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent-text),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.lead{font-size:1.08rem}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
-.chip{display:inline-flex;align-items:center;gap:7px;font-size:.84rem;color:var(--muted);background:rgba(22,32,63,.7);border:1px solid var(--line);border-radius:99px;padding:4px 13px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:.84rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 13px}
 .chip i{width:7px;height:7px;border-radius:50%;background:var(--income)}
 .note-i{margin-top:12px;font-size:.8rem;color:var(--faint)}
 .stage{position:relative;min-height:430px}
-.laptop{position:absolute;inset-inline-start:0;top:20px;width:92%;border-radius:16px;overflow:hidden;border:1px solid #2a3a73;background:#0a1030;box-shadow:var(--shadow)}
-.laptop .bar{display:flex;gap:6px;align-items:center;padding:9px 12px;background:#0d1538;border-bottom:1px solid var(--line)}
-.laptop .bar b{width:9px;height:9px;border-radius:50%;background:#2a3a73}
+.laptop{position:absolute;inset-inline-start:0;top:20px;width:92%;border-radius:16px;overflow:hidden;border:1px solid var(--border-strong);background:var(--surface);box-shadow:var(--shadow)}
+.laptop .bar{display:flex;gap:6px;align-items:center;padding:9px 12px;background:var(--surface2);border-bottom:1px solid var(--line)}
+.laptop .bar b{width:9px;height:9px;border-radius:50%;background:var(--border-strong)}
 .laptop .bar span{flex:1;text-align:center;font-size:.7rem;color:var(--faint);direction:ltr}
-.phone{border-radius:34px;padding:7px;background:linear-gradient(160deg,#2a3a73,#111a45);box-shadow:var(--shadow),inset 0 0 0 1px rgba(255,255,255,.08);position:relative}
-.phone img{border-radius:28px;width:100%;background:#070c1c}
+.phone{border-radius:34px;padding:7px;background:linear-gradient(160deg,#342BA3,#1E195E);box-shadow:var(--shadow),inset 0 0 0 1px rgba(255,255,255,.08);position:relative}
+.phone img{border-radius:28px;width:100%;background:var(--bg)}
 .phone:before{content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);width:64px;height:5px;border-radius:9px;background:rgba(255,255,255,.14);z-index:2}
 .stage .phone{position:absolute;inset-inline-end:2%;bottom:0;width:36%;max-width:230px;transform:rotate(-3deg)}
 .floaty{animation:fl 7s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-8px) rotate(-3deg)}}
 /* آمار */
 .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
-.fact{background:linear-gradient(180deg,var(--surface),rgba(15,23,48,.55));border:1px solid var(--line);border-radius:20px;padding:18px 18px}
-.fact b{display:block;font-size:1.08rem;color:var(--gold);font-weight:800}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 18px}
+.fact b{display:block;font-size:1.08rem;color:var(--accent-text);font-weight:800}
 .fact span{font-size:.85rem;color:var(--muted)}
 /* امکانات */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.card{background:linear-gradient(180deg,var(--surface),rgba(15,23,48,.6));border:1px solid var(--line);border-radius:24px;padding:24px;transition:transform .2s,border-color .2s}
-.card:hover{transform:translateY(-4px);border-color:#34478f}
-.ico{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-bottom:16px}
-.ico.g{background:var(--gold-soft);color:var(--gold)}.ico.i{background:rgba(62,214,160,.13);color:var(--income)}.ico.e{background:rgba(255,113,137,.13);color:var(--expense)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--border-strong)}
+.ico{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-text);margin-bottom:16px}
+.ico.g{background:var(--gold-soft);color:var(--warn)}.ico.i{background:rgba(17,166,110,.13);color:var(--income)}.ico.e{background:rgba(242,90,90,.12);color:var(--expense)}
 .ico svg{width:24px;height:24px}
 .card h3{font-size:1.06rem;font-weight:800;margin-bottom:6px}
 .card p{margin:0;color:var(--muted);font-size:.92rem}
 /* پیش‌نمایش */
 .gal-wrap{position:relative}
-.gal{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 26px;scrollbar-width:thin;scrollbar-color:#34478f transparent}
-.gal::-webkit-scrollbar{height:8px}.gal::-webkit-scrollbar-thumb{background:#34478f;border-radius:9px}
+.gal{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 26px;scrollbar-width:thin;scrollbar-color:var(--border-strong) transparent}
+.gal::-webkit-scrollbar{height:8px}.gal::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:9px}
 .shot{flex:0 0 auto;width:min(270px,72vw);scroll-snap-align:center}
 .shot .cap{margin-top:16px;text-align:center}
 .shot .cap b{display:block;font-weight:800}.shot .cap span{font-size:.85rem;color:var(--muted)}
@@ -97,7 +100,7 @@ h2{font-size:clamp(1.55rem,4.2vw,2.2rem);font-weight:800}
 /* مراحل */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
 .step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:26px 24px 24px}
-.step:before{counter-increment:s;content:counter(s,persian);position:absolute;top:-16px;inset-inline-start:22px;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#ffd98a,#f2b84b);color:#2a1d02;font-weight:850}
+.step:before{counter-increment:s;content:counter(s,persian);position:absolute;top:-16px;inset-inline-start:22px;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font-weight:850}
 .step h3{margin-bottom:6px;font-size:1.04rem}.step p{margin:0;color:var(--muted);font-size:.92rem}
 /* داده و حریم خصوصی */
 .priv{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -110,21 +113,23 @@ h2{font-size:clamp(1.55rem,4.2vw,2.2rem);font-weight:800}
 /* پرسش‌ها */
 .faq{display:grid;gap:10px;max-width:820px;margin:0 auto}
 details{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:2px 20px}
-details[open]{border-color:#34478f}
+details[open]{border-color:var(--border-strong)}
 summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;font-weight:700}
 summary::-webkit-details-marker{display:none}
-summary:after{content:"+";font-size:1.4rem;color:var(--accent);line-height:1}
+summary:after{content:"+";font-size:1.4rem;color:var(--accent-text);line-height:1}
 details[open] summary:after{content:"−"}
 details p{margin:0 0 16px;color:var(--muted);font-size:.93rem}
 /* CTA پایانی */
-.final{text-align:center;border-radius:32px;padding:56px 22px;overflow:hidden;position:relative;isolation:isolate;background:radial-gradient(420px 220px at 90% -20%,rgba(242,184,75,.3),transparent 62%),radial-gradient(380px 260px at 0% 120%,rgba(88,118,255,.38),transparent 60%),linear-gradient(155deg,var(--hero-a),var(--hero-b) 55%,var(--hero-c));border:1px solid #2a3a73}
-.final h2{margin-bottom:10px}.final p{margin:0 auto 26px;color:#c9d1f6;max-width:52ch}
+.final{text-align:center;border-radius:32px;padding:56px 22px;overflow:hidden;position:relative;isolation:isolate;color:#fff;background:radial-gradient(420px 220px at 90% -20%,rgba(242,163,58,.28),transparent 62%),radial-gradient(380px 260px at 0% 120%,rgba(126,118,219,.4),transparent 60%),linear-gradient(155deg,var(--hero-a),var(--hero-b) 55%,var(--hero-c));border:1px solid var(--border-strong)}
+.final h2{margin-bottom:10px}.final p{margin:0 auto 26px;color:#D5D3F3;max-width:52ch}
+.final .btn.primary{background:#fff;color:#342BA3;box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
+.final .btn.gold{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.38)}
 .final .cta{justify-content:center;margin:0}
 footer{padding:34px 0 46px;border-top:1px solid var(--line);color:var(--faint);font-size:.85rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between}
 footer a{color:var(--muted)}footer a:hover{color:var(--text)}
 /* دیالوگ نصب */
-dialog{border:1px solid #34478f;background:var(--surface);color:var(--text);border-radius:26px;padding:26px;max-width:min(440px,92vw);box-shadow:var(--shadow);font-family:inherit}
+dialog{border:1px solid var(--border-strong);background:var(--surface);color:var(--text);border-radius:26px;padding:26px;max-width:min(440px,92vw);box-shadow:var(--shadow);font-family:inherit}
 dialog::backdrop{background:rgba(3,6,16,.72);backdrop-filter:blur(4px)}
 dialog h3{margin:0 0 10px}dialog ol{margin:0 0 16px;padding-inline-start:20px;color:var(--muted);font-size:.93rem}
 dialog .btn{width:100%}
@@ -158,8 +163,8 @@ dialog .btn{width:100%}
    <div class="chips"><span class="chip"><i></i>بدون ثبت‌نام و حساب کاربری</span><span class="chip"><i></i>داده فقط روی دستگاه شما</span><span class="chip"><i></i>آفلاین پس از اولین بارگذاری</span></div>
   </div>
   <div class="stage" aria-hidden="true">
-   <div class="laptop"><div class="bar"><b></b><b></b><b></b><span>polino / app</span></div><img src="assets/shots/desktop.webp" width="1920" height="1200" alt="" fetchpriority="high"></div>
-   <div class="phone floaty"><img src="assets/shots/dash.webp" width="780" height="1688" alt="" fetchpriority="high"></div>
+   <div class="laptop"><div class="bar"><b></b><b></b><b></b><span>polino / app</span></div><picture><source media="(prefers-color-scheme: dark)" srcset="assets/shots/desktop-dark.webp"><img src="assets/shots/desktop.webp" width="1920" height="1200" alt="" fetchpriority="high"></picture></div>
+   <div class="phone floaty"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/shots/dash-dark.webp"><img src="assets/shots/dash.webp" width="780" height="1688" alt="" fetchpriority="high"></picture></div>
   </div>
  </div>
 </section>
@@ -198,15 +203,15 @@ dialog .btn{width:100%}
 
 <section id="preview" style="padding-top:20px">
  <div class="wrap">
-  <div class="sec-h c reveal"><span class="eyebrow">پیش‌نمایش واقعی</span><h2>همین چیزی که پس از ورود می‌بینید</h2><p class="lead">تصاویر زیر از خود برنامه (تم تیره) و با داده‌ی نمونه گرفته شده‌اند؛ نه طرح گرافیکی.</p></div>
+  <div class="sec-h c reveal"><span class="eyebrow">پیش‌نمایش واقعی</span><h2>همین چیزی که پس از ورود می‌بینید</h2><p class="lead">تصاویر زیر از خود برنامه (تم روشن یا تیره، مطابق دستگاه شما) و با داده‌ی نمونه گرفته شده‌اند؛ نه طرح گرافیکی.</p></div>
   <div class="gal-wrap">
    <div class="gal" id="gal" tabindex="0" aria-label="تصاویر برنامه">
-    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/dash.webp" width="780" height="1688" alt="داشبورد پولینو: جریان نقدی ماه، نرخ پس‌انداز و دارایی حساب‌ها"></div><figcaption class="cap"><b>داشبورد</b><span>جریان نقدی ماه و سررسیدها</span></figcaption></figure>
-    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/budget.webp" width="780" height="1688" alt="صفحه بودجه ماهانه با سقف دسته‌ها"></div><figcaption class="cap"><b>بودجه ماهانه</b><span>سقف هر دسته و هشدار عبور</span></figcaption></figure>
-    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/forecast.webp" width="780" height="1688" alt="پیش‌بینی نقدینگی ۳۰ تا ۹۰ روز آینده"></div><figcaption class="cap"><b>پیش‌بینی نقدینگی</b><span>تا ۹۰ روز آینده</span></figcaption></figure>
-    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/wealth.webp" width="780" height="1688" alt="دارایی و ثروت خالص"></div><figcaption class="cap"><b>دارایی و ثروت خالص</b><span>طلا، سکه، ارز و بدهی‌ها</span></figcaption></figure>
-    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/people.webp" width="780" height="1688" alt="دفتر اشخاص: بدهی و طلب"></div><figcaption class="cap"><b>دفتر اشخاص</b><span>بدهی و طلب با پرداخت قسطی</span></figcaption></figure>
-    <figure class="shot" style="margin:0"><div class="phone"><img loading="lazy" src="assets/shots/sms.webp" width="780" height="1688" alt="ثبت تراکنش از متن پیامک بانکی"></div><figcaption class="cap"><b>ثبت از پیامک</b><span>چسباندن، بررسی و ثبت</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/shots/dash-dark.webp"><img loading="lazy" src="assets/shots/dash.webp" width="780" height="1688" alt="داشبورد پولینو: جریان نقدی ماه، نرخ پس‌انداز و دارایی حساب‌ها"></picture></div><figcaption class="cap"><b>داشبورد</b><span>جریان نقدی ماه و سررسیدها</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/shots/budget-dark.webp"><img loading="lazy" src="assets/shots/budget.webp" width="780" height="1688" alt="صفحه بودجه ماهانه با سقف دسته‌ها"></picture></div><figcaption class="cap"><b>بودجه ماهانه</b><span>سقف هر دسته و هشدار عبور</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/shots/forecast-dark.webp"><img loading="lazy" src="assets/shots/forecast.webp" width="780" height="1688" alt="پیش‌بینی نقدینگی ۳۰ تا ۹۰ روز آینده"></picture></div><figcaption class="cap"><b>پیش‌بینی نقدینگی</b><span>تا ۹۰ روز آینده</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/shots/wealth-dark.webp"><img loading="lazy" src="assets/shots/wealth.webp" width="780" height="1688" alt="دارایی و ثروت خالص"></picture></div><figcaption class="cap"><b>دارایی و ثروت خالص</b><span>طلا، سکه، ارز و بدهی‌ها</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/shots/people-dark.webp"><img loading="lazy" src="assets/shots/people.webp" width="780" height="1688" alt="دفتر اشخاص: بدهی و طلب"></picture></div><figcaption class="cap"><b>دفتر اشخاص</b><span>بدهی و طلب با پرداخت قسطی</span></figcaption></figure>
+    <figure class="shot" style="margin:0"><div class="phone"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/shots/sms-dark.webp"><img loading="lazy" src="assets/shots/sms.webp" width="780" height="1688" alt="ثبت تراکنش از متن پیامک بانکی"></picture></div><figcaption class="cap"><b>ثبت از پیامک</b><span>چسباندن، بررسی و ثبت</span></figcaption></figure>
    </div>
    <div class="arrows"><button type="button" id="gNext" aria-label="بعدی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" id="gPrev" aria-label="قبلی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div>
   </div>
@@ -271,7 +276,7 @@ dialog .btn{width:100%}
 </section>
 </main>
 
-<footer><div class="wrap"><span>© پولینو · نسخه ۶٫۳</span><span><a href="#features">امکانات</a> · <a href="#data">داده‌های شما</a> · <a href="privacy.html">حریم خصوصی</a> · <a href="app/">ورود به برنامه</a></span></div></footer>
+<footer><div class="wrap"><span>© پولینو · نسخه ۶٫۸</span><span><a href="#features">امکانات</a> · <a href="#data">داده‌های شما</a> · <a href="privacy.html">حریم خصوصی</a> · <a href="app/">ورود به برنامه</a></span></div></footer>
 
 <dialog id="help" aria-labelledby="hTitle">
  <h3 id="hTitle">نصب پولینو</h3>
